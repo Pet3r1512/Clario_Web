@@ -3,11 +3,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Pet3r1512/DevIniter">
-    <img src="public/logos/FullLogo.png" alt="Logo" width="278.7" height="80">
-  </a>
+  <!-- <a href="https://github.com/Pet3r1512/DevIniter"> -->
+    <img src="public/logo/Full_Logo.png" alt="Logo" width="278.7" height="80">
+  <!-- </a> -->
 
-<h3 align="center">Vite - React.js - TypeScript - Starter Template</h3>
+<h3 align="center">Clario - Finance Assitant for genZ</h3>
 
 </div>
 
