@@ -8,7 +8,7 @@ export default function Sidebar() {
       <DrawerTrigger className="lg:hidden relative top-8 left-5">
         <Menu />
       </DrawerTrigger>
-      <DrawerContent className="h-[100dvh] w-2/3 !rounded-l-none rounded-r-xl px-5 py-12 flex flex-col gap-y-5">
+      <DrawerContent className="h-dvh w-2/3 rounded-l-none! rounded-r-xl px-5 py-12 flex flex-col gap-y-5">
         <ThemeToggle />
         <a
           href="https://github.com/Pet3r1512/DevIniter_CLI/tree/master/templates/nextjs"
