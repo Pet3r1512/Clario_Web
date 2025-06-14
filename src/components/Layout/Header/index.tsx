@@ -9,7 +9,7 @@ export default function Header() {
         <ThemeToggle />
         <a
           href="https://github.com/Pet3r1512/DevIniter_CLI/tree/master/templates/vite"
-          className="!size-8 !lg:size-10 rounded-full bg-gray-500 dark:bg-gray-200 p-2"
+          className="size-8! !lg:size-10 rounded-full bg-gray-500 dark:bg-gray-200 p-2"
         >
           <svg
             viewBox="0 0 20 20"
