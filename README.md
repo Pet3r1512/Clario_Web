@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <!-- <a href="https://github.com/Pet3r1512/DevIniter"> -->
-    <img src="public/logo/Full_Logo.png" alt="Logo" width="278.7" height="80">
+    <img src="public/logo/Full_Logo.png" alt="Logo">
   <!-- </a> -->
 
 <h3 align="center">Clario - Finance Assitant for genZ</h3>
