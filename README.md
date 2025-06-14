@@ -17,10 +17,6 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://deviniter.vercel.app/) -->
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Why Clario?
-
 Many members of Gen Z struggle with managing their finances and planning for the future. <strong>Clario</strong> is designed to provide greater <strong>clarity</strong> around spending habits and financial decisions.
 
 In its initial release, <strong>Clario</strong> offers a simple platform where users can easily track their expenses, make notes about their spending, and visualize their income and expenses through intuitive charts.
