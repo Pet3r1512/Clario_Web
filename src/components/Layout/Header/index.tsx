@@ -1,5 +1,4 @@
-import ThemeToggle from "../../ThemeToggle";
-import Sidebar from "./Sidebar";
+import Logo from "../Logo";
 
 export default function Header() {
   return (
