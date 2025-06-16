@@ -27,6 +27,8 @@ jobs:
 
       - run: pnpm install
 
+      - run: pnpm exec playwright install
+
       - run: pnpm test
 
       - run: pnpm build
