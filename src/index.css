@@ -1,11 +1,11 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-primary: #11998e;
+  --color-primary: #25a18e;
   --color-secondary: #38ef7d;
 
   --color-pink: #ff99c8;
@@ -102,13 +102,4 @@
 }
 
 @layer base {
-  body {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url("/backgrounds/background-light.jpg");
-  }
-  .dark body {
-    background-image: url("/backgrounds/background.png");
-  }
 }
