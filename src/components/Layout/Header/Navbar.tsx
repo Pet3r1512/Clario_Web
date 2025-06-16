@@ -1,9 +1,11 @@
+import ThemeToggle from "@/components/ThemeToggle";
 import navigations from "@/lib/navigations";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   return (
     <ul className="flex items-center gap-x-7 text-md lg:text-lg font-semibold">
+      <ThemeToggle />
       {navigations.map((nav) => {
         return (
           <li key={nav.name}>
