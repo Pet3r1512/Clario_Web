@@ -29,7 +29,7 @@ export default function Navbar() {
           );
         })}
       </ul>
-      <Menu className="md:hidden" />
+      <Menu data-testid="menu-icon" className="md:hidden" />
     </>
   );
 }
