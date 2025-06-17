@@ -9,6 +9,10 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    viewport: {
+      value: "desktop",
+      isRotated: false,
+    },
   },
 };
 
