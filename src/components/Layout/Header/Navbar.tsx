@@ -6,7 +6,10 @@ import { Menu } from "lucide-react";
 export default function Navbar() {
   return (
     <>
-      <ul className="hidden md:flex items-center gap-x-7 text-md lg:text-lg font-semibold">
+      <ul
+        data-testid="navbar"
+        className="hidden md:flex items-center gap-x-7 text-md lg:text-lg font-semibold"
+      >
         <ThemeToggle />
         {navigations.map((nav) => {
           return (
@@ -26,7 +29,7 @@ export default function Navbar() {
           );
         })}
       </ul>
-      <Menu className="md:hidden" />
+      <Menu data-testid="menu-icon" className="md:hidden" />
     </>
   );
 }
