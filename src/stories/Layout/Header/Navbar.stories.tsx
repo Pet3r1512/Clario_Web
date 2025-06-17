@@ -25,7 +25,7 @@ export const DesktopNavbar: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await expect(canvas.getAllByTestId("navbar")[0]).toBeInTheDocument();
+    await expect(canvas.getByTestId("navbar")).toBeVisible();
   },
 };
 
