@@ -12,7 +12,7 @@ import { Menu } from "lucide-react";
 export default function Sidebar() {
   return (
     <Drawer direction="right">
-      <DrawerTrigger data-testid="menu-icon" className="">
+      <DrawerTrigger data-testid="menu-icon" className="lg:hidden">
         <Menu />
       </DrawerTrigger>
       <DrawerHeader className="hidden">
