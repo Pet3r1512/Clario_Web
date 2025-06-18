@@ -1,14 +1,26 @@
 import ThemeToggle from "@/components/ThemeToggle";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Menu } from "lucide-react";
 
 export default function Sidebar() {
   return (
-    <Drawer direction="left">
-      <DrawerTrigger className="lg:hidden relative top-8 left-5">
+    <Drawer direction="right">
+      <DrawerTrigger data-testid="menu-icon" className="lg:hidden">
         <Menu />
       </DrawerTrigger>
-      <DrawerContent className="h-dvh w-2/3 rounded-l-none! rounded-r-xl px-5 py-12 flex flex-col gap-y-5">
+      <DrawerHeader className="hidden">
+        <VisuallyHidden className="hidden" asChild>
+          <DrawerTitle>Hidden Drawer Title</DrawerTitle>
+        </VisuallyHidden>
+      </DrawerHeader>
+      <DrawerContent className="h-dvh px-5 py-12 !w-2/3 !max-w-sm rounded-r-none flex flex-col gap-y-5">
         <ThemeToggle />
         <a
           href="https://github.com/Pet3r1512/DevIniter_CLI/tree/master/templates/nextjs"
@@ -24,7 +36,7 @@ export default function Sidebar() {
             <g
               id="SVGRepo_tracerCarrier"
               strokeLinecap="round"
-              stroke-linejoin="round"
+              strokeLinejoin="round"
             ></g>
             <g id="SVGRepo_iconCarrier">
               {" "}

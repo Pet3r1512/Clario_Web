@@ -20,6 +20,8 @@ export default defineConfig({
         "storybook-static/**",
         "src/lib/**",
         "src/components/ui/**",
+        "src/app.tsx",
+        "src/main.tsx",
         ...coverageConfigDefaults.exclude,
       ],
     },
