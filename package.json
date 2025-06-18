@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
+    "test-watch": "vitest --watch",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "coverage": "vitest run --coverage",

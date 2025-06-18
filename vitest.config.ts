@@ -1,3 +1,4 @@
+import path from "path";
 import { defineConfig, coverageConfigDefaults } from "vitest/config";
 
 export default defineConfig({
@@ -26,5 +27,9 @@ export default defineConfig({
       ],
     },
   },
-  resolve: {},
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
 });
