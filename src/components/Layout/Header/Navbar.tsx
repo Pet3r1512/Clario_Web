@@ -1,7 +1,7 @@
 import ThemeToggle from "@/components/ThemeToggle";
 import navigations from "@/lib/navigations";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
+import Sidebar from "./Sidebar";
 
 export default function Navbar() {
   return (
@@ -29,7 +29,7 @@ export default function Navbar() {
           );
         })}
       </ul>
-      <Menu data-testid="menu-icon" className="md:hidden" />
+      <Sidebar />
     </>
   );
 }
