@@ -13,7 +13,7 @@ import Logo from "../Logo";
 export default function Sidebar() {
   return (
     <Drawer direction="right">
-      <DrawerTrigger data-testid="menu-icon" className="lg:hidden">
+      <DrawerTrigger data-testid="menu-icon" className="md:hidden">
         <Menu />
       </DrawerTrigger>
       <DrawerHeader className="hidden">
