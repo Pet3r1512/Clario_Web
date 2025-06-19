@@ -9,6 +9,7 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Menu } from "lucide-react";
 import Logo from "../Logo";
+import { mobileAuthNavLinks } from "@/lib/navigations";
 
 export default function Sidebar() {
   return (
@@ -18,6 +19,7 @@ export default function Sidebar() {
       </DrawerTrigger>
       <DrawerHeader className="hidden">
         <VisuallyHidden className="hidden" asChild>
+          {/* Don't care about this =)) */}
           <DrawerTitle>Hidden Drawer Title</DrawerTitle>
         </VisuallyHidden>
       </DrawerHeader>
@@ -31,18 +33,13 @@ export default function Sidebar() {
           </div>
         </div>
         <div className="mt-auto flex flex-col gap-y-3.5">
-          <a
-            className="bg-white shadow-2xl text-primary px-4 py-3 rounded-2xl mt-auto text-center font-semibold border-[1px] border-gray-200"
-            href={"/auth/signin"}
-          >
-            {"Log In"}
-          </a>
-          <a
-            className="bg-primary text-white px-4 py-3 rounded-2xl mt-auto text-center font-semibold"
-            href={"/auth/signup"}
-          >
-            {"Sign Up"}
-          </a>
+          {mobileAuthNavLinks.map((nav) => {
+            return (
+              <a key={nav.name} href={nav.link} className={nav.className}>
+                {nav.name}
+              </a>
+            );
+          })}
         </div>
       </DrawerContent>
     </Drawer>
