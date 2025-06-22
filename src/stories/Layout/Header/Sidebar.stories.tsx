@@ -1,6 +1,6 @@
 import Sidebar from "@/components/Layout/Header/Sidebar";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { userEvent, within } from "@storybook/testing-library";
+import { userEvent, within, screen } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
 
 const meta: Meta<typeof Sidebar> = {
@@ -18,10 +18,8 @@ export default meta;
 type Story = StoryObj<typeof Sidebar>;
 
 export const DesktopSidebar: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    await expect(canvas.getByTestId("menu-icon")).not.toBeVisible();
+  play: async () => {
+    await expect(screen.queryByRole("button")).not.toBeInTheDocument();
   },
 };
 
