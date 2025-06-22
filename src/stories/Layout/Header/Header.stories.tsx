@@ -1,6 +1,6 @@
 import Header from "@/components/Layout/Header";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { within } from "@storybook/testing-library";
+import { within, screen } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
 
 const meta: Meta<typeof Header> = {
@@ -40,7 +40,7 @@ export const DesktopHeader: Story = {
 
     await expect(canvas.getByTestId("logo-wrapper")).toBeVisible();
 
-    await expect(canvas.getByTestId("menu-icon")).not.toBeVisible();
+    await expect(screen.queryByRole("button")).not.toBeInTheDocument();
   },
 };
 
@@ -58,6 +58,6 @@ export const MobileHeader: Story = {
 
     await expect(canvas.getByTestId("navbar")).not.toBeVisible();
 
-    await expect(canvas.getByTestId("menu-icon")).toBeVisible();
+    await expect(screen.queryByRole("button")).toBeVisible();
   },
 };
