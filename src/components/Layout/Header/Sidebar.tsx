@@ -14,7 +14,7 @@ import { mobileAuthNavLinks } from "@/lib/navigations";
 export default function Sidebar() {
   return (
     <Drawer direction="right">
-      <DrawerTrigger data-testid="menu-icon" className="md:hidden">
+      <DrawerTrigger className="md:hidden">
         <Menu />
       </DrawerTrigger>
       <DrawerHeader className="hidden">
