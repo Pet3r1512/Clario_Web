@@ -27,7 +27,7 @@ export default function Hero() {
       <div className="relative lg:mt-24">
         <div className="border border-gray-400 rounded-md bg-white relative z-20">
           <img
-            src="/screenshots/Dashboard.png"
+            src="/screenshots/Dashboard.webp"
             alt="Clario Dashboard Screenshot"
             className="rounded-2xl shadow-2xl"
           />
