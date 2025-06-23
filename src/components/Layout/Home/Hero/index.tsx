@@ -1,6 +1,9 @@
 export default function Hero() {
   return (
-    <div className="lg:my-24 text-center max-w-6xl mx-auto space-y-10">
+    <section
+      aria-label="hero-section"
+      className="lg:my-24 text-center max-w-6xl mx-auto space-y-10"
+    >
       <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
         Manage Your Finances with{" "}
         <strong className="text-primary underline underline-offset-6">
@@ -41,6 +44,6 @@ export default function Hero() {
         </div>
         <div className="absolute -inset-1 rounded-md blur-md bg-gradient-to-br from-primary via-primary/85 to-primary/60 z-10"></div>
       </div>
-    </div>
+    </section>
   );
 }
