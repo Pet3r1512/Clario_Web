@@ -27,9 +27,10 @@ export default function Hero() {
       <div className="relative lg:mt-24">
         <div className="border border-gray-400 rounded-md bg-white relative z-20">
           <img
-            src="/screenshots/Dashboard.png"
+            src="/screenshots/Dashboard.webp"
             alt="Clario Dashboard Screenshot"
             className="rounded-2xl shadow-2xl"
+            loading="lazy"
           />
         </div>
         <div className="absolute -inset-1 rounded-md blur-md bg-gradient-to-br from-primary via-primary/85 to-primary/60 z-10"></div>
