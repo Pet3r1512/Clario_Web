@@ -15,6 +15,7 @@ export const HoverEffect = ({
 
   return (
     <div
+      role="card-hover-effect"
       className={cn(
         "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[0.425rem]",
         className,
