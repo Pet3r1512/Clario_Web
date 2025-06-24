@@ -6,7 +6,10 @@ export default function Features() {
       aria-label="features-section"
       className="lg:my-24 text-center max-w-6xl mx-auto space-y-6"
     >
-      <h1 className="text-3xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
+      <h1
+        role="heading"
+        className="text-3xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl"
+      >
         Powerful <strong className="text-primary">Features</strong>
       </h1>
       <p
