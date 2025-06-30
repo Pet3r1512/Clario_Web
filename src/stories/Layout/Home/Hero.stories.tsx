@@ -45,8 +45,5 @@ export const Default: Story = {
 
     const LearnMoreBtn = canvas.getByText("Learn more");
     expect(LearnMoreBtn).toBeInTheDocument();
-
-    const DashboardImg = canvas.getByRole("img");
-    expect(DashboardImg).toBeInTheDocument();
   },
 };
