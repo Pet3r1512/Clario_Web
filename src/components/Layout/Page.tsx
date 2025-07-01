@@ -15,6 +15,7 @@ export default function Page({
     <main className="body bg-cover bg-center h-full">
       <Header />
       <section
+        role="page-body"
         className={cn(
           "flex flex-col mx-auto max-w-[1440px] min-h-screen",
           pageName,
