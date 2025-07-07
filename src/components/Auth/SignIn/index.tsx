@@ -1,9 +1,9 @@
-import SignUpForm from "./SignUpForm";
+import SignInForm from "./SignInForm";
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <article className="w-full flex flex-col justify-center items-center py-8">
-      <SignUpForm />
+      <SignInForm />
     </article>
   );
 }
