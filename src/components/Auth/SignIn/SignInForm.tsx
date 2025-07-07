@@ -1,0 +1,97 @@
+import GoogleSVG from "@/components/svg/GoogleSVG";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { Label } from "@radix-ui/react-label";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+
+export default function SignInForm({ className }: { className?: string }) {
+  const [hidePassword, setHidePassword] = useState<boolean>(true);
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col gap-6 w-full md:max-w-md lg:max-w-lg",
+        className,
+      )}
+    >
+      <Card className="dark:bg-black/50 shadow-2xl">
+        <CardHeader className="text-center flex flex-col items-center gap-y-3">
+          <div className="flex items-center gap-x-2.5">
+            <img src="/logo/Icon.png" alt="" className="w-auto h-8" />
+            <p className="font-semibold text-primary text-lg">Clario</p>
+          </div>
+          <CardTitle className="text-xl lg:text-2xl text-primary-dark">
+            Welcome back
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form>
+            <div className="grid gap-6">
+              <div className="flex flex-col gap-4">
+                <Button variant="outline" className="w-full">
+                  <GoogleSVG />
+                  Login with Google
+                </Button>
+              </div>
+              <p className="bg-card text-center text-muted-foreground relative z-10 px-2">
+                Or continue with
+              </p>
+              <div className="grid gap-6">
+                <div className="grid gap-3">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    required
+                  />
+                </div>
+                <div className="grid gap-3">
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Password</Label>
+                    <a
+                      href="#"
+                      className="ml-auto text-sm underline-offset-4 hover:underline"
+                    >
+                      Forgot your password?
+                    </a>
+                  </div>
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={hidePassword ? "password" : "text"}
+                      required
+                    />
+                    <button
+                      className="absolute top-1/2 right-2.5 -translate-y-1/2"
+                      onClick={() => {
+                        setHidePassword(!hidePassword);
+                      }}
+                    >
+                      {hidePassword ? <Eye /> : <EyeOff />}
+                    </button>
+                  </div>
+                </div>
+                <Button type="submit" className="w-full bg-primary-dark">
+                  Sign In
+                </Button>
+              </div>
+              <div className="text-center text-sm">
+                Don't have an account?{" "}
+                <a
+                  href="/auth/signup"
+                  className="underline underline-offset-4 font-semibold"
+                >
+                  Sign Up
+                </a>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
