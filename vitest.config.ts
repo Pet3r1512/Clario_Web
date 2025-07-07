@@ -11,6 +11,7 @@ export default defineConfig({
       reporter: ["text"],
       exclude: [
         "src/stories/**",
+        "src/components/svg/**",
         "**/*.stories.tsx",
         "**/*.stories.ts",
         "**/*.test.ts",
