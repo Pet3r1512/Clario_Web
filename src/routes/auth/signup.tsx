@@ -9,7 +9,7 @@ export const Route = createFileRoute("/auth/signup")({
 function RouteComponent() {
   return (
     <Page>
-      <SignUp></SignUp>
+      <SignUp />
     </Page>
   );
 }
