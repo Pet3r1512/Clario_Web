@@ -28,7 +28,6 @@ export default function Screenshot() {
         onLoad={() => {
           setIsScreenshotLoaded(true);
         }}
-        loading="lazy"
       />
     </>
   );
