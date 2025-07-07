@@ -1,6 +1,7 @@
 import { useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
+import Sidebar from "../Sidebar";
 
 export default function NavbarContainer() {
   const [includeNavbar, setIncludeNavbar] = useState<boolean>(true);
@@ -13,7 +14,7 @@ export default function NavbarContainer() {
   }, [router.latestLocation]);
 
   if (!includeNavbar) {
-    return <></>;
+    return <Sidebar></Sidebar>;
   }
 
   return <Navbar />;
