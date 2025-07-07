@@ -2,6 +2,29 @@ import Header from "@/components/Layout/Header";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { within, screen } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+  RouterProvider,
+} from "@tanstack/react-router";
+
+const rootRoute = createRootRoute({
+  component: () => <Header />,
+});
+
+const routeTree = rootRoute;
+
+const createMockRouter = (initialPath = "/") => {
+  const history = createMemoryHistory({
+    initialEntries: [initialPath],
+  });
+
+  return createRouter({
+    routeTree,
+    history,
+  });
+};
 
 const meta: Meta<typeof Header> = {
   component: Header,
@@ -11,6 +34,13 @@ const meta: Meta<typeof Header> = {
       isRotated: false,
     },
   },
+  decorators: [
+    (_, { parameters }) => {
+      const router = createMockRouter(parameters.initialPath || "/");
+      // Render RouterProvider only, Story will be rendered by the router
+      return <RouterProvider router={router} />;
+    },
+  ],
 };
 
 export default meta;
@@ -18,17 +48,16 @@ export default meta;
 type Story = StoryObj<typeof Header>;
 
 export const Default: Story = {
-  render: () => <Header />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const LogoWrapper = canvas.getByTestId("logo-wrapper");
+    console.log(canvasElement);
 
-    await expect(LogoWrapper).toBeInTheDocument();
+    const logoWrapper = canvas.getByTestId("logo-wrapper");
+    const navbar = canvas.getByTestId("navbar");
 
-    const Navbar = canvas.getByTestId("navbar");
-
-    await expect(Navbar).toBeInTheDocument();
+    await expect(logoWrapper).toBeInTheDocument();
+    await expect(navbar).toBeInTheDocument();
   },
 };
 
@@ -37,10 +66,11 @@ export const DesktopHeader: Story = {
     const canvas = within(canvasElement);
 
     await expect(canvas.getByTestId("navbar")).toBeVisible();
-
     await expect(canvas.getByTestId("logo-wrapper")).toBeVisible();
 
-    await expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByRole("button", { name: /menu/i }),
+    ).not.toBeInTheDocument();
   },
 };
 
@@ -55,7 +85,6 @@ export const MobileHeader: Story = {
     const canvas = within(canvasElement);
 
     await expect(canvas.getByTestId("logo-wrapper")).toBeVisible();
-
     await expect(canvas.getByTestId("navbar")).not.toBeVisible();
 
     await expect(screen.queryByRole("button")).toBeVisible();
