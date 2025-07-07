@@ -113,7 +113,7 @@ export default function SignUpForm({ className }: { className?: string }) {
               <div className="text-center text-sm">
                 Already have an account?{" "}
                 <a
-                  href="/auth/sign-in"
+                  href="/auth/signin"
                   className="underline underline-offset-4 font-semibold"
                 >
                   Sign In
