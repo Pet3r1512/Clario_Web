@@ -1,9 +1,17 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Screenshot() {
   const [isScreenshotLoaded, setIsScreenshotLoaded] = useState<boolean>(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const img = ref.current;
+
+    if (img?.complete && img?.naturalHeight != 0) {
+      setIsScreenshotLoaded(true);
+    }
+  }, [isScreenshotLoaded]);
 
   return (
     <>
@@ -20,7 +28,6 @@ export default function Screenshot() {
         onLoad={() => {
           setIsScreenshotLoaded(true);
         }}
-        loading="lazy"
       />
     </>
   );

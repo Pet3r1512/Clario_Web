@@ -51,8 +51,6 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    console.log(canvasElement);
-
     const logoWrapper = canvas.getByTestId("logo-wrapper");
     const navbar = canvas.getByTestId("navbar");
 
