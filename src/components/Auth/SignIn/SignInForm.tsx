@@ -30,7 +30,10 @@ export default function SignInForm({ className }: { className?: string }) {
         <CardContent>
           <form>
             <div className="grid gap-6">
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 relative">
+                <p className="absolute -top-3 -right-4.5 text-white rounded-2xl font-semibold text-xs bg-blue-400 px-1.5 py-0.5">
+                  Coming Soon
+                </p>
                 <Button variant="outline" className="w-full">
                   <GoogleSVG />
                   Login with Google
