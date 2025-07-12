@@ -12,13 +12,26 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { SignUpFormType } from "@/lib/types/signupform";
 
 export default function SignUpForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState<boolean>(true);
 
+  const {
+    register,
+    handleSubmit,
+    // watch,
+    formState: { errors },
+  } = useForm<SignUpFormType>();
+
+  const onSubmit: SubmitHandler<SignUpFormType> = (credential) => {
+    console.log(credential);
+  };
+
   return (
-    <form
+    <div
       className={cn(
         "flex flex-col gap-6 w-full md:max-w-md lg:max-w-lg",
         className,
@@ -47,7 +60,7 @@ export default function SignUpForm({ className }: { className?: string }) {
               Login with Google
             </Button>
           </div>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               <p className="bg-card text-center text-muted-foreground relative z-10 px-2 mt-8">
                 Or continue with
@@ -58,6 +71,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                   <Input
                     id="email"
                     type="email"
+                    {...register("email")}
                     placeholder="example@email.com"
                     required
                   />
@@ -69,6 +83,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                     type="text"
                     placeholder="example_username"
                     required
+                    {...register("username")}
                   />
                 </div>
                 <div className="grid gap-3">
@@ -78,6 +93,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                       id="password"
                       type={hidePassword ? "password" : "text"}
                       required
+                      {...register("password")}
                     />
                     <button
                       tabIndex={-1}
@@ -91,12 +107,13 @@ export default function SignUpForm({ className }: { className?: string }) {
                   </div>
                 </div>
                 <div className="grid gap-3">
-                  <Label htmlFor="confirm_password">Confirm Password</Label>
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
                   <div className="relative">
                     <Input
                       id="confirm_password"
                       type={hideConfirmPassword ? "password" : "text"}
                       required
+                      {...register("confirmPassword")}
                     />
                     <button
                       tabIndex={-1}
@@ -126,6 +143,6 @@ export default function SignUpForm({ className }: { className?: string }) {
           </form>
         </CardContent>
       </Card>
-    </form>
+    </div>
   );
 }
