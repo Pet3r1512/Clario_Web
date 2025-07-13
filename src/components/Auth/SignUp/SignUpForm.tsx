@@ -23,7 +23,7 @@ export default function SignUpForm({ className }: { className?: string }) {
     register,
     handleSubmit,
     // watch,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<SignUpFormType>();
 
   const onSubmit: SubmitHandler<SignUpFormType> = (credential) => {
