@@ -110,7 +110,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
                   <div className="relative">
                     <Input
-                      id="confirm_password"
+                      id="confirmPassword"
                       type={hideConfirmPassword ? "password" : "text"}
                       required
                       {...register("confirmPassword")}
