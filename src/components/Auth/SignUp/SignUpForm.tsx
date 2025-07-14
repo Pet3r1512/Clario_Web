@@ -11,9 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SignUpFormType } from "@/lib/types/signupform";
+import FormErrorMessage from "../FormErrorMessage";
 
 export default function SignUpForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -22,9 +23,12 @@ export default function SignUpForm({ className }: { className?: string }) {
   const {
     register,
     handleSubmit,
-    // watch,
-    // formState: { errors },
+    watch,
+    formState: { errors },
   } = useForm<SignUpFormType>();
+
+  const passwordRef = useRef({});
+  passwordRef.current = watch("password", "");
 
   const onSubmit: SubmitHandler<SignUpFormType> = (credential) => {
     console.log(credential);
@@ -71,10 +75,18 @@ export default function SignUpForm({ className }: { className?: string }) {
                   <Input
                     id="email"
                     type="email"
-                    {...register("email")}
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Invalid email address",
+                      },
+                    })}
                     placeholder="example@email.com"
-                    required
                   />
+                  {errors.email && errors.email.message && (
+                    <FormErrorMessage message={errors.email.message} />
+                  )}
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="username">Username</Label>
@@ -83,8 +95,20 @@ export default function SignUpForm({ className }: { className?: string }) {
                     type="text"
                     placeholder="example_username"
                     required
-                    {...register("username")}
+                    {...register("username", {
+                      minLength: {
+                        value: 3,
+                        message: "Username is too short",
+                      },
+                      pattern: {
+                        value: /^[a-zA-Z][a-zA-Z0-9_]{2,15}$/,
+                        message: "Invalid username",
+                      },
+                    })}
                   />
+                  {errors.username && errors.username.message && (
+                    <FormErrorMessage message={errors.username.message} />
+                  )}
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="password">Password</Label>
@@ -93,7 +117,18 @@ export default function SignUpForm({ className }: { className?: string }) {
                       id="password"
                       type={hidePassword ? "password" : "text"}
                       required
-                      {...register("password")}
+                      {...register("password", {
+                        minLength: {
+                          value: 8,
+                          message:
+                            "Password must be at least 8 characters long",
+                        },
+                        pattern: {
+                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                          message:
+                            "Minimum eight characters, at least one letter and one number",
+                        },
+                      })}
                     />
                     <button
                       tabIndex={-1}
@@ -105,6 +140,9 @@ export default function SignUpForm({ className }: { className?: string }) {
                       {hidePassword ? <Eye /> : <EyeOff />}
                     </button>
                   </div>
+                  {errors.password && errors.password.message && (
+                    <FormErrorMessage message={errors.password.message} />
+                  )}
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
@@ -113,8 +151,13 @@ export default function SignUpForm({ className }: { className?: string }) {
                       id="confirmPassword"
                       type={hideConfirmPassword ? "password" : "text"}
                       required
-                      {...register("confirmPassword")}
+                      {...register("confirmPassword", {
+                        validate: (value) =>
+                          value === passwordRef.current ||
+                          "The passwords do not match",
+                      })}
                     />
+
                     <button
                       tabIndex={-1}
                       className="absolute top-1/2 right-2.5 -translate-y-1/2"
@@ -125,6 +168,11 @@ export default function SignUpForm({ className }: { className?: string }) {
                       {hideConfirmPassword ? <Eye /> : <EyeOff />}
                     </button>
                   </div>
+                  {errors.confirmPassword && errors.confirmPassword.message && (
+                    <FormErrorMessage
+                      message={errors.confirmPassword.message}
+                    />
+                  )}
                 </div>
                 <Button type="submit" className="w-full bg-primary-dark">
                   <p>Create New Account</p>
