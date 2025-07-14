@@ -94,7 +94,16 @@ export default function SignUpForm({ className }: { className?: string }) {
                     type="text"
                     placeholder="example_username"
                     required
-                    {...register("username")}
+                    {...register("username", {
+                      minLength: {
+                        value: 3,
+                        message: "Username is too short",
+                      },
+                      pattern: {
+                        value: /^[a-zA-Z][a-zA-Z0-9_]{2,15}$/,
+                        message: "Invalid username",
+                      },
+                    })}
                   />
                 </div>
                 <div className="grid gap-3">
