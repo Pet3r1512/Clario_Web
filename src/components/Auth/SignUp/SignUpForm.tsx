@@ -22,9 +22,12 @@ export default function SignUpForm({ className }: { className?: string }) {
   const {
     register,
     handleSubmit,
-    // watch,
-    // formState: { errors },
+    watch,
+    formState: { errors },
   } = useForm<SignUpFormType>();
+
+  const passwordRef = useRef({});
+  passwordRef.current = watch("password", "");
 
   const onSubmit: SubmitHandler<SignUpFormType> = (credential) => {
     console.log(credential);
@@ -145,6 +148,11 @@ export default function SignUpForm({ className }: { className?: string }) {
                       type={hideConfirmPassword ? "password" : "text"}
                       required
                       {...register("confirmPassword")}
+                      {...register("confirmPassword", {
+                        validate: (value) =>
+                          value === passwordRef.current ||
+                          "The passwords do not match",
+                      })}
                     />
                     <button
                       tabIndex={-1}
