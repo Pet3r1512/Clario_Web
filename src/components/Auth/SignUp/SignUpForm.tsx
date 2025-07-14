@@ -154,6 +154,9 @@ export default function SignUpForm({ className }: { className?: string }) {
                           "The passwords do not match",
                       })}
                     />
+                    {errors.confirmPassword && (
+                      <p>{errors.confirmPassword.message}</p>
+                    )}
                     <button
                       tabIndex={-1}
                       className="absolute top-1/2 right-2.5 -translate-y-1/2"
