@@ -84,6 +84,9 @@ export default function SignUpForm({ className }: { className?: string }) {
                     })}
                     placeholder="example@email.com"
                   />
+                  {errors.email && errors.email.message && (
+                    <FormErrorMessage message={errors.email.message} />
+                  )}
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="username">Username</Label>
@@ -103,6 +106,9 @@ export default function SignUpForm({ className }: { className?: string }) {
                       },
                     })}
                   />
+                  {errors.username && errors.username.message && (
+                    <FormErrorMessage message={errors.username.message} />
+                  )}
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="password">Password</Label>
