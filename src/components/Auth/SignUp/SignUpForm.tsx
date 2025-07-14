@@ -113,7 +113,18 @@ export default function SignUpForm({ className }: { className?: string }) {
                       id="password"
                       type={hidePassword ? "password" : "text"}
                       required
-                      {...register("password")}
+                      {...register("password", {
+                        minLength: {
+                          value: 8,
+                          message:
+                            "Password must be at least 8 characters long",
+                        },
+                        pattern: {
+                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                          message:
+                            "Minimum eight characters, at least one letter and one number",
+                        },
+                      })}
                     />
                     <button
                       tabIndex={-1}
