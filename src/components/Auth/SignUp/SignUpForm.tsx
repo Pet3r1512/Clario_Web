@@ -134,6 +134,9 @@ export default function SignUpForm({ className }: { className?: string }) {
                       {hidePassword ? <Eye /> : <EyeOff />}
                     </button>
                   </div>
+                  {errors.password && errors.password.message && (
+                    <FormErrorMessage message={errors.password.message} />
+                  )}
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
