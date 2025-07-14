@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SignUpFormType } from "@/lib/types/signupform";
 
@@ -75,19 +75,13 @@ export default function SignUpForm({ className }: { className?: string }) {
                     id="email"
                     type="email"
                     {...register("email", {
-                      required: true,
+                      required: "Email is required",
                       pattern: {
-                        value:
-                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: "Invalid email address",
-                      },
-                      minLength: {
-                        value: 5,
-                        message: "Email is too short",
                       },
                     })}
                     placeholder="example@email.com"
-                    required
                   />
                 </div>
                 <div className="grid gap-3">
@@ -147,7 +141,6 @@ export default function SignUpForm({ className }: { className?: string }) {
                       id="confirmPassword"
                       type={hideConfirmPassword ? "password" : "text"}
                       required
-                      {...register("confirmPassword")}
                       {...register("confirmPassword", {
                         validate: (value) =>
                           value === passwordRef.current ||
