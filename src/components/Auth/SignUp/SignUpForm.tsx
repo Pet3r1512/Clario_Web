@@ -71,7 +71,18 @@ export default function SignUpForm({ className }: { className?: string }) {
                   <Input
                     id="email"
                     type="email"
-                    {...register("email")}
+                    {...register("email", {
+                      required: true,
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                        message: "Invalid email address",
+                      },
+                      minLength: {
+                        value: 5,
+                        message: "Email is too short",
+                      },
+                    })}
                     placeholder="example@email.com"
                     required
                   />
