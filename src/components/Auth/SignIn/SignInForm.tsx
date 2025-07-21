@@ -101,6 +101,9 @@ export default function SignInForm({ className }: { className?: string }) {
                       {hidePassword ? <Eye /> : <EyeOff />}
                     </button>
                   </div>
+                  {errors.password && errors.password.message && (
+                    <FormErrorMessage message={errors.password.message} />
+                  )}
                 </div>
                 <Button type="submit" className="w-full bg-primary-dark">
                   Sign In
