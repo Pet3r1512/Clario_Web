@@ -63,7 +63,13 @@ export default function SignInForm({ className }: { className?: string }) {
                     id="email"
                     type="email"
                     placeholder="m@example.com"
-                    required
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Invalid email address",
+                      },
+                    })}
                   />
                 </div>
                 <div className="grid gap-3">
