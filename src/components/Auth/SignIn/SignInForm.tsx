@@ -71,6 +71,9 @@ export default function SignInForm({ className }: { className?: string }) {
                       },
                     })}
                   />
+                  {errors.email && errors.email.message && (
+                    <FormErrorMessage message={errors.email.message} />
+                  )}
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center">
