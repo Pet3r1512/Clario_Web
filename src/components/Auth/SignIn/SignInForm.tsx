@@ -16,7 +16,6 @@ export default function SignInForm({ className }: { className?: string }) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<SignInFormType>();
 
