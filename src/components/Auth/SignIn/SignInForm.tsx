@@ -89,7 +89,9 @@ export default function SignInForm({ className }: { className?: string }) {
                     <Input
                       id="password"
                       type={hidePassword ? "password" : "text"}
-                      required
+                      {...register("password", {
+                        required: "Password is required",
+                      })}
                     />
                     <button
                       className="absolute top-1/2 right-2.5 -translate-y-1/2"
