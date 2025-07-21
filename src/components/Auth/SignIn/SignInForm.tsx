@@ -2,13 +2,27 @@ import GoogleSVG from "@/components/svg/GoogleSVG";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { SignInFormType } from "@/lib/types/signinform";
 import { cn } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import FormErrorMessage from "../FormErrorMessage";
 
 export default function SignInForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<SignInFormType>();
+
+  const onSubmit: SubmitHandler<SignInFormType> = (credential) => {
+    console.log(credential);
+  };
 
   return (
     <div
