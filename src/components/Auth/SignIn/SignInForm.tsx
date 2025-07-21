@@ -2,13 +2,26 @@ import GoogleSVG from "@/components/svg/GoogleSVG";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { SignInFormType } from "@/lib/types/signinform";
 import { cn } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import FormErrorMessage from "../FormErrorMessage";
 
 export default function SignInForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormType>();
+
+  const onSubmit: SubmitHandler<SignInFormType> = (credential) => {
+    console.log(credential);
+  };
 
   return (
     <div
@@ -28,7 +41,7 @@ export default function SignInForm({ className }: { className?: string }) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4 relative">
                 <p className="absolute -top-3 -right-4.5 text-white rounded-2xl font-semibold text-xs bg-blue-400 px-1.5 py-0.5">
@@ -49,8 +62,17 @@ export default function SignInForm({ className }: { className?: string }) {
                     id="email"
                     type="email"
                     placeholder="m@example.com"
-                    required
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Invalid email address",
+                      },
+                    })}
                   />
+                  {errors.email && errors.email.message && (
+                    <FormErrorMessage message={errors.email.message} />
+                  )}
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center">
@@ -66,7 +88,9 @@ export default function SignInForm({ className }: { className?: string }) {
                     <Input
                       id="password"
                       type={hidePassword ? "password" : "text"}
-                      required
+                      {...register("password", {
+                        required: "Password is required",
+                      })}
                     />
                     <button
                       className="absolute top-1/2 right-2.5 -translate-y-1/2"
