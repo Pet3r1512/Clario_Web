@@ -15,6 +15,8 @@ import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SignUpFormType } from "@/lib/types/signupform";
 import FormErrorMessage from "../FormErrorMessage";
+import { useMutation } from "@tanstack/react-query";
+import SignUpEmail from "@/api/users/auth/SignUpEmail";
 
 export default function SignUpForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -27,11 +29,16 @@ export default function SignUpForm({ className }: { className?: string }) {
     formState: { errors },
   } = useForm<SignUpFormType>();
 
+  const mutation = useMutation({
+    mutationKey: ["signup"],
+    mutationFn: SignUpEmail,
+  });
+
   const passwordRef = useRef({});
   passwordRef.current = watch("password", "");
 
   const onSubmit: SubmitHandler<SignUpFormType> = (credential) => {
-    console.log(credential);
+    mutation.mutate(credential);
   };
 
   return (
@@ -89,25 +96,25 @@ export default function SignUpForm({ className }: { className?: string }) {
                   )}
                 </div>
                 <div className="grid gap-3">
-                  <Label htmlFor="username">Username</Label>
+                  <Label htmlFor="name">Name</Label>
                   <Input
-                    id="username"
+                    id="name"
                     type="text"
-                    placeholder="example_username"
+                    placeholder="Clario"
                     required
-                    {...register("username", {
+                    {...register("name", {
                       minLength: {
                         value: 3,
-                        message: "Username is too short",
+                        message: "Name is too short",
                       },
                       pattern: {
                         value: /^[a-zA-Z][a-zA-Z0-9_]{2,15}$/,
-                        message: "Invalid username",
+                        message: "Invalid name",
                       },
                     })}
                   />
-                  {errors.username && errors.username.message && (
-                    <FormErrorMessage message={errors.username.message} />
+                  {errors.name && errors.name.message && (
+                    <FormErrorMessage message={errors.name.message} />
                   )}
                 </div>
                 <div className="grid gap-3">
