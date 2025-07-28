@@ -11,8 +11,6 @@ export default async function SignUpEmail(credentials: SignUpFormType) {
     body: JSON.stringify(credentials),
   });
 
-  console.log(response);
-
   if (!response.ok) {
     const res = await response.json();
     throw new Error(res.error || "Unknown Error");
