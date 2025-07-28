@@ -5,10 +5,13 @@ import { Input } from "@/components/ui/input";
 import { SignInFormType } from "@/lib/types/signinform";
 import { cn } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormErrorMessage from "../FormErrorMessage";
+import { useMutation } from "@tanstack/react-query";
+import SignInEmail from "@/api/users/auth/SignInEmail";
+import { toast } from "sonner";
 
 export default function SignInForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -116,8 +119,16 @@ export default function SignInForm({ className }: { className?: string }) {
                     <FormErrorMessage message={errors.password.message} />
                   )}
                 </div>
-                <Button type="submit" className="w-full bg-primary-dark">
-                  Sign In
+                <Button
+                  disabled={mutation.isPending}
+                  type="submit"
+                  className="w-full bg-primary-dark"
+                >
+                  {mutation.isPending ? (
+                    <LoaderCircle className="animate-spin" />
+                  ) : (
+                    <p>Sign In</p>
+                  )}
                 </Button>
               </div>
               <div className="text-center text-sm">
