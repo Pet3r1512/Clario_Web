@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "../../lib/utils";
 import Header from "./Header";
+import { Toaster } from "../ui/sonner";
 
 export default function Page({
   children,
@@ -30,6 +31,7 @@ export default function Page({
           {children}
         </div>
       </section>
+      <Toaster richColors />
     </main>
   );
 }
