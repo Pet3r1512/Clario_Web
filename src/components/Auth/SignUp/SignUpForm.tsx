@@ -188,7 +188,11 @@ export default function SignUpForm({ className }: { className?: string }) {
                     />
                   )}
                 </div>
-                <Button type="submit" className="w-full bg-primary-dark">
+                <Button
+                  disabled={mutation.isPending}
+                  type="submit"
+                  className="w-full bg-primary-dark"
+                >
                   {mutation.isPending ? (
                     <LoaderCircle className="animate-spin" />
                   ) : (

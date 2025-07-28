@@ -1,8 +1,8 @@
 import { SERVER_URL } from "@/constant/auth";
-import { SignUpFormType } from "@/lib/types/signupform";
+import { SignInFormType } from "@/lib/types/signinform";
 
-export default async function SignUpEmail(credentials: SignUpFormType) {
-  const response = await fetch(`${SERVER_URL}/trpc/auth.signUpViaEmail`, {
+export default async function SignInEmail(credentials: SignInFormType) {
+  const response = await fetch(`${SERVER_URL}/trpc/auth.signInViaEmail`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -17,6 +17,6 @@ export default async function SignUpEmail(credentials: SignUpFormType) {
 
   return {
     success: true,
-    message: "User Registered Successfully",
+    message: "User Signed In Successfully",
   };
 }
