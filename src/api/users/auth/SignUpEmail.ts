@@ -13,7 +13,7 @@ export default async function SignUpEmail(credentials: SignUpFormType) {
 
   if (!response.ok) {
     const res = await response.json();
-    throw new Error(res.error || "Unknown Error");
+    throw new Error(res.error.message || "Unknown Error");
   }
 
   return {
