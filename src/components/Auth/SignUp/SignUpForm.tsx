@@ -10,13 +10,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SignUpFormType } from "@/lib/types/signupform";
 import FormErrorMessage from "../FormErrorMessage";
 import { useMutation } from "@tanstack/react-query";
 import SignUpEmail from "@/api/users/auth/SignUpEmail";
+import { toast } from "sonner";
 
 export default function SignUpForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -32,6 +33,12 @@ export default function SignUpForm({ className }: { className?: string }) {
   const mutation = useMutation({
     mutationKey: ["signup"],
     mutationFn: SignUpEmail,
+    onError: (error) => {
+      return toast.error(error.message);
+    },
+    onSuccess: (res) => {
+      return toast.success(res.message);
+    },
   });
 
   const passwordRef = useRef({});
@@ -101,8 +108,8 @@ export default function SignUpForm({ className }: { className?: string }) {
                     id="name"
                     type="text"
                     placeholder="Clario"
-                    required
                     {...register("name", {
+                      required: "Your name is required",
                       minLength: {
                         value: 3,
                         message: "Name is too short",
@@ -182,7 +189,11 @@ export default function SignUpForm({ className }: { className?: string }) {
                   )}
                 </div>
                 <Button type="submit" className="w-full bg-primary-dark">
-                  <p>Create New Account</p>
+                  {mutation.isPending ? (
+                    <LoaderCircle className="animate-spin" />
+                  ) : (
+                    <p>Create New Account</p>
+                  )}
                 </Button>
               </div>
               <div className="text-center text-sm">
