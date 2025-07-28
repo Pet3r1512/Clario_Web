@@ -1,6 +1,5 @@
+import { SERVER_URL } from "@/constant/auth";
 import { SignUpFormType } from "@/lib/types/signupform";
-
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export default async function SignUpEmail(credentials: SignUpFormType) {
   const response = await fetch(`${SERVER_URL}/trpc/auth.signUpViaEmail`, {
