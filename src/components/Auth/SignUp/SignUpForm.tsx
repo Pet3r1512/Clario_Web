@@ -101,8 +101,8 @@ export default function SignUpForm({ className }: { className?: string }) {
                     id="name"
                     type="text"
                     placeholder="Clario"
-                    required
                     {...register("name", {
+                      required: "Your name is required",
                       minLength: {
                         value: 3,
                         message: "Name is too short",
