@@ -20,7 +20,7 @@ export default function SignInForm({ className }: { className?: string }) {
   } = useForm<SignInFormType>();
 
   const onSubmit: SubmitHandler<SignInFormType> = (credential) => {
-    console.log(credential);
+    mutation.mutate(credential);
   };
 
   return (
