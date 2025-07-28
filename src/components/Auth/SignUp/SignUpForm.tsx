@@ -17,6 +17,7 @@ import { SignUpFormType } from "@/lib/types/signupform";
 import FormErrorMessage from "../FormErrorMessage";
 import { useMutation } from "@tanstack/react-query";
 import SignUpEmail from "@/api/users/auth/SignUpEmail";
+import { toast } from "sonner";
 
 export default function SignUpForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -32,6 +33,12 @@ export default function SignUpForm({ className }: { className?: string }) {
   const mutation = useMutation({
     mutationKey: ["signup"],
     mutationFn: SignUpEmail,
+    onError: (error) => {
+      return toast.error(error.message);
+    },
+    onSuccess: (res) => {
+      return toast.success(res.message);
+    },
   });
 
   const passwordRef = useRef({});
