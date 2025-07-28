@@ -19,6 +19,17 @@ export default function SignInForm({ className }: { className?: string }) {
     formState: { errors },
   } = useForm<SignInFormType>();
 
+  const mutation = useMutation({
+    mutationKey: ["signin"],
+    mutationFn: SignInEmail,
+    onError: (error) => {
+      return toast.error(error.message);
+    },
+    onSuccess: (res) => {
+      return toast.success(res.message);
+    },
+  });
+
   const onSubmit: SubmitHandler<SignInFormType> = (credential) => {
     mutation.mutate(credential);
   };
