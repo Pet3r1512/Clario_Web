@@ -50,6 +50,7 @@ export default function SignUpForm({ className }: { className?: string }) {
 
   return (
     <div
+      data-testid="signup-form-container"
       className={cn(
         "flex flex-col gap-6 w-full md:max-w-md lg:max-w-lg",
         className,
@@ -78,7 +79,7 @@ export default function SignUpForm({ className }: { className?: string }) {
               Login with Google
             </Button>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form role="form" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               <p className="bg-card text-center text-muted-foreground relative z-10 px-2 mt-8">
                 Or continue with
@@ -128,6 +129,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                   <Label htmlFor="password">Password</Label>
                   <div className="relative">
                     <Input
+                      role="password"
                       id="password"
                       type={hidePassword ? "password" : "text"}
                       required
@@ -162,6 +164,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
                   <div className="relative">
                     <Input
+                      role="confirmPassword"
                       id="confirmPassword"
                       type={hideConfirmPassword ? "password" : "text"}
                       required
@@ -189,6 +192,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                   )}
                 </div>
                 <Button
+                  role="submit-btn"
                   disabled={mutation.isPending}
                   type="submit"
                   className="w-full bg-primary-dark"
@@ -200,7 +204,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                   )}
                 </Button>
               </div>
-              <div className="text-center text-sm">
+              <div role="signin-nav" className="text-center text-sm">
                 Already have an account?{" "}
                 <a
                   href="/auth/signin"
