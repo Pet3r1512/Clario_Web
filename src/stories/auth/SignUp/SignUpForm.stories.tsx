@@ -124,7 +124,6 @@ export const InvalidEmailForm: Story = {
 
     await userEvent.click(canvas.getByRole("submit-btn"));
 
-    // Wait for error messages to appear
     const errorMessages = await canvas.findAllByTestId("form-error-msg");
 
     expect(errorMessages.length).toBe(1);
@@ -139,7 +138,6 @@ export const MissmatchPassword: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Use getByTestId or other stable selectors instead of getByRole with non-standard roles
     const emailInp = canvas.getByRole("email-input");
     await userEvent.type(emailInp, "exampleemail@gmail.com");
     await userEvent.tab();
@@ -153,16 +151,14 @@ export const MissmatchPassword: Story = {
     await userEvent.tab();
 
     const confirmPasswordInp = canvas.getByRole("confirmPassword");
-    await userEvent.type(confirmPasswordInp, "15122002"); // intentionally mismatched
+    await userEvent.type(confirmPasswordInp, "15122002");
     await userEvent.tab();
 
     await userEvent.click(canvas.getByRole("submit-btn"));
 
-    // Wait for error messages to appear
     const errorMessages = await canvas.findAllByTestId("form-error-msg");
     expect(errorMessages.length).toBe(1);
 
-    // Wait for the specific error message text to appear
     await waitFor(() => {
       expect(
         canvas.getByText("The passwords do not match"),
