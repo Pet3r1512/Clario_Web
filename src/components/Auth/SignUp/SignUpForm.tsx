@@ -88,6 +88,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                 <div className="grid gap-3">
                   <Label htmlFor="email">Email</Label>
                   <Input
+                    role="email-input"
                     id="email"
                     type="email"
                     {...register("email", {
@@ -106,6 +107,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                 <div className="grid gap-3">
                   <Label htmlFor="name">Name</Label>
                   <Input
+                    role="name-input"
                     id="name"
                     type="text"
                     placeholder="Clario"
