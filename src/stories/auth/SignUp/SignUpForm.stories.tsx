@@ -1,7 +1,7 @@
 import SignUpForm from "@/components/Auth/SignUp/SignUpForm";
 import { expect } from "@storybook/jest";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { userEvent, within } from "@storybook/testing-library";
+import { userEvent, waitFor, within } from "@storybook/testing-library";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -44,8 +44,11 @@ export const DefaultForm: Story = {
 
     expect(canvas.getByText("Email")).toBeInTheDocument();
 
-    const textboxes = canvas.getAllByRole("textbox");
-    expect(textboxes.length).toBe(2);
+    const emailInp = canvas.getByRole("email-input");
+    expect(emailInp).toBeInTheDocument();
+
+    const nameInp = canvas.getByRole("name-input");
+    expect(nameInp).toBeInTheDocument();
 
     const passwordInp = canvas.getByRole("password");
     expect(passwordInp).toBeInTheDocument();
@@ -75,21 +78,25 @@ export const SuccessForm: Story = {
 
     const emailInp = canvas.getByRole("email-input");
     await userEvent.type(emailInp, "exampleemail@gmail.com");
+    await userEvent.tab();
 
     expect(errorMessages.length).toBe(0);
 
     const nameInp = canvas.getByRole("name-input");
     await userEvent.type(nameInp, "Example Name");
+    await userEvent.tab();
 
     expect(errorMessages.length).toBe(0);
 
     const passwordInp = canvas.getByRole("password");
     await userEvent.type(passwordInp, "15122002P");
+    await userEvent.tab();
 
     expect(errorMessages.length).toBe(0);
 
     const confirmPasswordInp = canvas.getByRole("confirmPassword");
     await userEvent.type(confirmPasswordInp, "15122002P");
+    await userEvent.tab();
 
     expect(errorMessages.length).toBe(0);
   },
@@ -99,10 +106,9 @@ export const InvalidEmailForm: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const storybookRoot = document.getElementById("storybook-root");
-
     const emailInp = canvas.getByRole("email-input");
     await userEvent.type(emailInp, "invalidemail");
+    await userEvent.tab();
 
     const nameInp = canvas.getByRole("name-input");
     await userEvent.type(nameInp, "Example Name");
@@ -110,18 +116,57 @@ export const InvalidEmailForm: Story = {
 
     const passwordInp = canvas.getByRole("password");
     await userEvent.type(passwordInp, "15122002P");
+    await userEvent.tab();
 
     const confirmPasswordInp = canvas.getByRole("confirmPassword");
     await userEvent.type(confirmPasswordInp, "15122002P");
+    await userEvent.tab();
 
     await userEvent.click(canvas.getByRole("submit-btn"));
 
-    const errorMessages = storybookRoot
-      ? within(storybookRoot).queryAllByTestId("form-error-msg")
-      : [];
+    // Wait for error messages to appear
+    const errorMessages = await canvas.findAllByTestId("form-error-msg");
 
     expect(errorMessages.length).toBe(1);
 
-    expect(canvas.getByText("Invalid email address")).toBeInTheDocument();
+    await waitFor(() =>
+      expect(canvas.getByText("Invalid email address")).toBeInTheDocument(),
+    );
+  },
+};
+
+export const MissmatchPassword: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Use getByTestId or other stable selectors instead of getByRole with non-standard roles
+    const emailInp = canvas.getByRole("email-input");
+    await userEvent.type(emailInp, "exampleemail@gmail.com");
+    await userEvent.tab();
+
+    const nameInp = canvas.getByRole("name-input");
+    await userEvent.type(nameInp, "Example Name");
+    await userEvent.tab();
+
+    const passwordInp = canvas.getByRole("password");
+    await userEvent.type(passwordInp, "15122002P");
+    await userEvent.tab();
+
+    const confirmPasswordInp = canvas.getByRole("confirmPassword");
+    await userEvent.type(confirmPasswordInp, "15122002"); // intentionally mismatched
+    await userEvent.tab();
+
+    await userEvent.click(canvas.getByRole("submit-btn"));
+
+    // Wait for error messages to appear
+    const errorMessages = await canvas.findAllByTestId("form-error-msg");
+    expect(errorMessages.length).toBe(1);
+
+    // Wait for the specific error message text to appear
+    await waitFor(() => {
+      expect(
+        canvas.getByText("The passwords do not match"),
+      ).toBeInTheDocument();
+    });
   },
 };
