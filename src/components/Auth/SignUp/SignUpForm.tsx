@@ -117,7 +117,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                         message: "Name is too short",
                       },
                       pattern: {
-                        value: /^[a-zA-Z][a-zA-Z0-9_ ]{2,15}$/,
+                        value: /^[A-Za-z]+(?: [A-Za-z]+)*$/,
                         message: "Invalid name",
                       },
                     })}
