@@ -90,7 +90,6 @@ export default function SignUpForm({ className }: { className?: string }) {
                   <Input
                     role="email-input"
                     id="email"
-                    type="email"
                     {...register("email", {
                       required: "Email is required",
                       pattern: {
@@ -118,7 +117,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                         message: "Name is too short",
                       },
                       pattern: {
-                        value: /^[a-zA-Z][a-zA-Z0-9_]{2,15}$/,
+                        value: /^[a-zA-Z][a-zA-Z0-9_ ]{2,15}$/,
                         message: "Invalid name",
                       },
                     })}
