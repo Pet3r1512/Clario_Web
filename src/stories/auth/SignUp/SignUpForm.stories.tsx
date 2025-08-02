@@ -94,3 +94,34 @@ export const SuccessForm: Story = {
     expect(errorMessages.length).toBe(0);
   },
 };
+
+export const InvalidEmailForm: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const storybookRoot = document.getElementById("storybook-root");
+
+    const emailInp = canvas.getByRole("email-input");
+    await userEvent.type(emailInp, "invalidemail");
+
+    const nameInp = canvas.getByRole("name-input");
+    await userEvent.type(nameInp, "Example Name");
+    await userEvent.tab();
+
+    const passwordInp = canvas.getByRole("password");
+    await userEvent.type(passwordInp, "15122002P");
+
+    const confirmPasswordInp = canvas.getByRole("confirmPassword");
+    await userEvent.type(confirmPasswordInp, "15122002P");
+
+    await userEvent.click(canvas.getByRole("submit-btn"));
+
+    const errorMessages = storybookRoot
+      ? within(storybookRoot).queryAllByTestId("form-error-msg")
+      : [];
+
+    expect(errorMessages.length).toBe(1);
+
+    expect(canvas.getByText("Invalid email address")).toBeInTheDocument();
+  },
+};
