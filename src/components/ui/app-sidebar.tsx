@@ -35,13 +35,13 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader />
-      <SidebarGroupContent>
-        <SidebarMenu>
+      <SidebarHeader className="mb-5" />
+      <SidebarGroupContent className="px-5">
+        <SidebarMenu className="space-y-2.5">
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
-                <a href={item.url}>
+              <SidebarMenuButton asChild className="lg:hover:bg-gray-200 py-5">
+                <a href={item.url} className="text-lg font-semibold">
                   {item.icon}
                   <span>{item.title}</span>
                 </a>
