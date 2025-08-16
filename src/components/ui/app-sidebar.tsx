@@ -1,6 +1,5 @@
 import {
   Sidebar,
-  SidebarFooter,
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
@@ -8,6 +7,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { LayoutDashboard, Banknote, Landmark, Coins } from "lucide-react";
+import SidebarFooter from "../Dashboard/Sidebar/SidebarFooter";
 
 const items = [
   {
@@ -36,7 +36,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="mb-5" />
-      <SidebarGroupContent className="px-5">
+      <SidebarGroupContent className="px-5 flex-1">
         <SidebarMenu className="space-y-2.5">
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
