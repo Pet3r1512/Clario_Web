@@ -10,8 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardIncomeRouteImport } from './routes/dashboard/income'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthSigninRouteImport } from './routes/auth/signin'
 
@@ -20,14 +21,19 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardIncomeRoute = DashboardIncomeRouteImport.update({
+  id: '/dashboard/income',
+  path: '/dashboard/income',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
@@ -43,46 +49,63 @@ const AuthSigninRoute = AuthSigninRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/pricing': typeof PricingRoute
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/income': typeof DashboardIncomeRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/pricing': typeof PricingRoute
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/income': typeof DashboardIncomeRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/pricing': typeof PricingRoute
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/income': typeof DashboardIncomeRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/pricing' | '/auth/signin' | '/auth/signup'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/pricing' | '/auth/signin' | '/auth/signup'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
-    | '/dashboard'
     | '/pricing'
     | '/auth/signin'
     | '/auth/signup'
+    | '/dashboard/income'
+    | '/dashboard'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/pricing'
+    | '/auth/signin'
+    | '/auth/signup'
+    | '/dashboard/income'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/pricing'
+    | '/auth/signin'
+    | '/auth/signup'
+    | '/dashboard/income'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
   PricingRoute: typeof PricingRoute
   AuthSigninRoute: typeof AuthSigninRoute
   AuthSignupRoute: typeof AuthSignupRoute
+  DashboardIncomeRoute: typeof DashboardIncomeRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -94,18 +117,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/income': {
+      id: '/dashboard/income'
+      path: '/dashboard/income'
+      fullPath: '/dashboard/income'
+      preLoaderRoute: typeof DashboardIncomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/signup': {
@@ -127,10 +157,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
   PricingRoute: PricingRoute,
   AuthSigninRoute: AuthSigninRoute,
   AuthSignupRoute: AuthSignupRoute,
+  DashboardIncomeRoute: DashboardIncomeRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
