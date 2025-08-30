@@ -8,26 +8,27 @@ import {
 } from "@/components/ui/sidebar";
 import { LayoutDashboard, Banknote, Landmark, Coins } from "lucide-react";
 import SidebarFooter from "../Dashboard/Sidebar/SidebarFooter";
+import { Link } from "@tanstack/react-router";
 
 const items = [
   {
     title: "Dashboard",
-    url: "dashboard/",
+    url: "/dashboard",
     icon: <LayoutDashboard />,
   },
   {
     title: "Transactions",
-    url: "dashboard/transactions/",
+    url: "/dashboard/transactions",
     icon: <Banknote />,
   },
   {
     title: "Income",
-    url: "dashboard/income/",
+    url: "/dashboard/income",
     icon: <Landmark />,
   },
   {
     title: "Expenses",
-    url: "dashborad/expenses/",
+    url: "/dashboard/expenses",
     icon: <Coins />,
   },
 ];
@@ -41,10 +42,10 @@ export function AppSidebar() {
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild className="lg:hover:bg-gray-200 py-5">
-                <a href={item.url} className="text-lg font-semibold">
+                <Link to={item.url} className="text-lg font-semibold">
                   {item.icon}
                   <span>{item.title}</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

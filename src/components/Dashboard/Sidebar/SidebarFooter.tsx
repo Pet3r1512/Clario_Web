@@ -5,12 +5,12 @@ import { User } from "./User";
 const items = [
   {
     title: "Settings",
-    url: "dashboard/settings",
+    url: "/settings",
     icon: <Settings />,
   },
   {
     title: "Helps",
-    url: "dashboard/helps",
+    url: "/helps",
     icon: <MessageCircleQuestion />,
   },
 ];
