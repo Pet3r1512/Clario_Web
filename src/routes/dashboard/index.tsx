@@ -1,5 +1,4 @@
-import { AppSidebar } from "@/components/ui/app-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import DashboardLayout from "@/components/Dashboard/DashboardLayout";
 import { useCurrentUrl } from "@/hooks/useCurrentUrl";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -15,12 +14,5 @@ function RouteComponent() {
     console.log(currUrl);
   }, [currUrl]);
 
-  return (
-    <SidebarProvider className="p-5">
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-      </main>
-    </SidebarProvider>
-  );
+  return <DashboardLayout>Dashboard</DashboardLayout>;
 }
