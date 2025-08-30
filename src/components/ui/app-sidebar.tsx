@@ -9,6 +9,8 @@ import {
 import { LayoutDashboard, Banknote, Landmark, Coins } from "lucide-react";
 import SidebarFooter from "../Dashboard/Sidebar/SidebarFooter";
 import { Link } from "@tanstack/react-router";
+import { useCurrentUrl } from "@/hooks/useCurrentUrl";
+import { cn } from "@/lib/utils";
 
 const items = [
   {
@@ -34,6 +36,7 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const currentUrl = useCurrentUrl().currUrl;
   return (
     <Sidebar>
       <SidebarHeader className="mb-5" />
@@ -41,7 +44,15 @@ export function AppSidebar() {
         <SidebarMenu className="space-y-2.5">
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild className="lg:hover:bg-gray-200 py-5">
+              <SidebarMenuButton
+                asChild
+                className={cn(
+                  "py-5 ",
+                  currentUrl === item.url
+                    ? "bg-primary text-white lg:hover:bg-primary lg:hover:text-white"
+                    : "lg:hover:bg-gray-100",
+                )}
+              >
                 <Link to={item.url} className="text-lg font-semibold">
                   {item.icon}
                   <span>{item.title}</span>
@@ -51,7 +62,7 @@ export function AppSidebar() {
           ))}
         </SidebarMenu>
       </SidebarGroupContent>
-      <SidebarFooter />
+      <SidebarFooter currUrl={currentUrl} />
     </Sidebar>
   );
 }
