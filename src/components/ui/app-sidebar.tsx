@@ -53,7 +53,7 @@ export function AppSidebar() {
                     : "lg:hover:bg-gray-100",
                 )}
               >
-                <Link to={item.url} className="text-lg font-semibold">
+                <Link from="/" to={item.url} className="text-lg font-semibold">
                   {item.icon}
                   <span>{item.title}</span>
                 </Link>
