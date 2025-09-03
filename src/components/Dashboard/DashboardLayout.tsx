@@ -12,8 +12,8 @@ export default function DashboardLayout({
   return (
     <SidebarProvider className="p-5">
       <AppSidebar />
-      <main>
-        <div>
+      <main className="w-full space-y-10">
+        <div className="space-y-5">
           <SidebarTrigger />
           <p className="lg:text-3xl font-bold">{section}</p>
         </div>
