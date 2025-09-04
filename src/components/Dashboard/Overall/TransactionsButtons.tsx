@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export default function TransactionButtons() {
   return (
-    <div className="flex items-center gap-x-5 justify-end">
+    <div className="flex items-center gap-x-5 lg:justify-end">
       <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl text-lg h-10.5">
         + Add Income
       </Button>
