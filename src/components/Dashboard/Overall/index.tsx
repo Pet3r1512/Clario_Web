@@ -32,7 +32,7 @@ export default function Overall() {
     },
   ];
   return (
-    <section className="flex items-center lg:gap-x-5 max-w-7xl">
+    <section className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 max-w-7xl">
       {data.map((data) => {
         return <Data key={data.name} data={data} />;
       })}
