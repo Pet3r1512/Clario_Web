@@ -15,7 +15,7 @@ export default function DashboardLayout({
       <main className="w-full max-w-7xl space-y-10">
         <div className="space-y-5">
           <SidebarTrigger />
-          <p className="lg:text-3xl font-bold">{section}</p>
+          <p className="text-xl md:text-2xl lg:text-3xl font-bold">{section}</p>
         </div>
         {children}
       </main>
