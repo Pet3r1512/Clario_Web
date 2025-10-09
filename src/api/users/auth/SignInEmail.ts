@@ -8,6 +8,7 @@ export default async function SignInEmail(credentials: SignInFormType) {
       "Content-type": "application/json",
     },
     body: JSON.stringify(credentials),
+    credentials: "include",
   });
 
   if (!response.ok) {
