@@ -18,6 +18,7 @@ function RouteComponent() {
   }, [isAuthenticated, isLoading, navigate]);
 
   if (isLoading || !isAuthenticated) return null;
+
   return (
     <DashboardLayout>
       <div>Hello "/dashboard/settings"!</div>
