@@ -12,9 +12,11 @@ import FormErrorMessage from "../FormErrorMessage";
 import { useMutation } from "@tanstack/react-query";
 import SignInEmail from "@/api/users/auth/SignInEmail";
 import { toast } from "sonner";
+import { useRouter } from "@tanstack/react-router";
 
 export default function SignInForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
+  const router = useRouter();
 
   const {
     register,
@@ -29,7 +31,10 @@ export default function SignInForm({ className }: { className?: string }) {
       return toast.error(error.message);
     },
     onSuccess: (res) => {
-      return toast.success(res.message);
+      toast.success(res.message);
+      return setTimeout(() => {
+        router.navigate({ to: "/dashboard" });
+      }, 2000);
     },
   });
 
