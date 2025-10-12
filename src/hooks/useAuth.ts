@@ -2,6 +2,15 @@ import { SERVER_URL } from "@/constant/auth";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useAuth() {
+  const rawCookie = typeof document !== "undefined" ? document.cookie : "";
+  const cookies = Object.fromEntries(
+    rawCookie.split("; ").map((c) => {
+      const [key, ...v] = c.split("=");
+      return [key, decodeURIComponent(v.join("="))];
+    }),
+  );
+  const token = cookies["__Secure-better-auth.session_token"];
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["auth", "session"],
     queryFn: async () => {
@@ -11,21 +20,19 @@ export default function useAuth() {
         credentials: "include",
       });
 
-      if (!res.ok) {
-        throw new Error("Not Authenticated");
-      }
+      if (!res.ok) throw new Error("Not Authenticated");
 
       const json = await res.json();
-
       return json.result?.data?.data;
     },
+    enabled: !token,
     retry: false,
   });
 
   return {
-    user: data?.user ?? null,
-    isAuthenticated: !!data?.user,
-    isLoading,
-    isError,
+    user: token ? { token } : (data?.user ?? null),
+    isAuthenticated: !!token || !!data?.user,
+    isLoading: token ? false : isLoading,
+    isError: token ? false : isError,
   };
 }
