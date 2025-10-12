@@ -17,7 +17,9 @@ function RouteComponent() {
     }
   }, [isAuthenticated, isLoading, navigate]);
 
-  if (isLoading || !isAuthenticated) return null;
+  if (isLoading) return null;
+
+  if (!isAuthenticated) return null;
 
   return (
     <DashboardLayout>
