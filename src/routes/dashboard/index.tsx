@@ -1,9 +1,8 @@
 import DashboardLayout from "@/components/Dashboard/DashboardLayout";
 import Overall from "@/components/Dashboard/Overall";
 import TransactionButtons from "@/components/Dashboard/Overall/TransactionsButtons";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
 import useAuth from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/dashboard/")({
@@ -11,18 +10,16 @@ export const Route = createFileRoute("/dashboard/")({
 });
 
 function RouteComponent() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isLoading && !isAuthenticated) {
       navigate({ to: "/auth/signin" });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, isLoading, navigate]);
 
-  if (!isAuthenticated) {
-    return null;
-  }
+  if (isLoading || !isAuthenticated) return null;
 
   return (
     <DashboardLayout section="Dashboard">
