@@ -2,7 +2,7 @@ import { SERVER_URL } from "@/constant/auth";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useAuth() {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isError, status } = useQuery({
     queryKey: ["auth", "session"],
     queryFn: async () => {
       const res = await fetch(`${SERVER_URL}/trpc/auth.getSession`, {
@@ -16,13 +16,15 @@ export default function useAuth() {
       const json = await res.json();
       return json.result?.data?.data;
     },
-    retry: false,
+    retry: 1,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
   });
 
   return {
     user: data?.user ?? null,
     isAuthenticated: !!data?.user,
-    isLoading,
+    isLoading: status === "pending",
     isError,
   };
 }
