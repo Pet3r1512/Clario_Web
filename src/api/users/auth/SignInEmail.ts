@@ -2,10 +2,11 @@ import { SERVER_URL } from "@/constant/auth";
 import { SignInFormType } from "@/lib/types/signinform";
 
 export default async function SignInEmail(credentials: SignInFormType) {
-  const response = await fetch(`${SERVER_URL}/trpc/auth.signInViaEmail`, {
+  const response = await fetch(`${SERVER_URL}/api/auth/sign-in/email`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
     },
     credentials: "include",
     body: JSON.stringify(credentials),
@@ -16,6 +17,8 @@ export default async function SignInEmail(credentials: SignInFormType) {
   if (!response.ok || data.error) {
     throw new Error(data.error?.message || "Unknown error");
   }
+
+  console.log(data);
 
   const result = data?.result?.data;
 
