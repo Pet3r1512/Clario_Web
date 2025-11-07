@@ -6,21 +6,22 @@ export default function useAuth() {
     queryKey: ["auth", "session"],
     queryFn: async () => {
       try {
-        console.log("[useAuth] Fetching session from:", SERVER_URL);
+        console.log(
+          "[useAuth] Fetching session from:",
+          `${SERVER_URL}/session`,
+        );
 
-        const res = await fetch(`${SERVER_URL}/trpc/auth.getSession`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const res = await fetch(`${SERVER_URL}/session`, {
+          method: "GET",
           credentials: "include",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+          },
         });
 
         console.log("[useAuth] Response status:", res.status);
-        console.log("[useAuth] Response headers:", {
-          contentType: res.headers.get("content-type"),
-          setCookie: res.headers.get("set-cookie"),
-        });
 
         if (!res.ok) {
           const text = await res.text();
@@ -31,8 +32,12 @@ export default function useAuth() {
         const json = await res.json();
         console.log("[useAuth] Session data:", json);
 
-        const sessionData = json.result?.data?.data;
-        console.log("[useAuth] Extracted user:", sessionData?.user);
+        const sessionData = {
+          user: json.user ?? null,
+          session: json.session ?? null,
+        };
+
+        console.log("[useAuth] Extracted user:", sessionData.user);
 
         return sessionData;
       } catch (err) {
@@ -40,10 +45,10 @@ export default function useAuth() {
         throw err;
       }
     },
-    retry: 2,
+    retry: 1,
     retryDelay: 500,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    gcTime: 1000 * 60 * 10, // 10 minutes
+    staleTime: 1000 * 60 * 5, // cache for 5 minutes
+    gcTime: 1000 * 60 * 10, // garbage collect after 10 minutes
   });
 
   console.log("[useAuth] Current state:", {
@@ -56,6 +61,7 @@ export default function useAuth() {
 
   return {
     user: data?.user ?? null,
+    session: data?.session ?? null,
     isAuthenticated: !!data?.user,
     isLoading,
     isError,
