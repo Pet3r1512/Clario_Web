@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 export default function useAuth() {
   const { data, isLoading, isError, error, status } = useQuery({
   const tokenExpiresTime = localStorage.getItem("tokenExpiresAt")
+  const isExpired = !tokenExpiresTime || Date.now() >= new Date(tokenExpiresTime).getTime()
     queryKey: ["auth", "session"],
     queryFn: async () => {
       try {
