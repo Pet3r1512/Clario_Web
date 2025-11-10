@@ -16,8 +16,6 @@ export default function useAuth() {
           },
         });
 
-        console.log("[useAuth] Response status:", res.status);
-
         if (!res.ok) {
           const text = await res.text();
           console.error("[useAuth] Response not ok:", text);
@@ -25,7 +23,6 @@ export default function useAuth() {
         }
 
         const json = await res.json();
-        console.log("[useAuth] Session data:", json);
 
         const sessionData = {
           user: json.user ?? null,
@@ -44,14 +41,6 @@ export default function useAuth() {
     retryDelay: 500,
     staleTime: 1000 * 60 * 5, // cache for 5 minutes
     gcTime: 1000 * 60 * 10, // garbage collect after 10 minutes
-  });
-
-  console.log("[useAuth] Current state:", {
-    status,
-    isLoading,
-    isError,
-    hasUser: !!data?.user,
-    user: data?.user,
   });
 
   return {
