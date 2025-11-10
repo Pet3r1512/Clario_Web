@@ -34,7 +34,12 @@ export default function useAuth() {
           session: json.session ?? null,
         };
 
-        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem(
+          "tokenExpiresAt",
+          sessionData.session.expiresAt.toString(),
+        );
+        localStorage.setItem("user", sessionData.user.name);
+        localStorage.setItem("email", sessionData.user.email);
 
         return sessionData;
       } catch (err) {
