@@ -32,7 +32,7 @@ export default function useAuth() {
           session: json.session ?? null,
         };
 
-        console.log("[useAuth] Extracted user:", sessionData.user);
+        localStorage.setItem("isAuthenticated", "true");
 
         return sessionData;
       } catch (err) {
