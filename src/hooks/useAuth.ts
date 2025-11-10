@@ -6,11 +6,6 @@ export default function useAuth() {
     queryKey: ["auth", "session"],
     queryFn: async () => {
       try {
-        console.log(
-          "[useAuth] Fetching session from:",
-          `${SERVER_URL}/session`,
-        );
-
         const res = await fetch(`${SERVER_URL}/session`, {
           method: "GET",
           credentials: "include",
