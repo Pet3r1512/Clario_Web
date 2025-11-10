@@ -49,6 +49,12 @@ export default function useAuth() {
     },
     retry: 1,
     retryDelay: 500,
+  const restoredUser = !isExpired ? {
+    name: localStorage.getItem("name") || null,
+    email: localStorage.getItem("email") || null
+  } : null
+
+  const isAuthenticated = data?.user || restoredUser
     staleTime: 1000 * 60 * 5, // cache for 5 minutes
     gcTime: 1000 * 60 * 10, // garbage collect after 10 minutes
   });
