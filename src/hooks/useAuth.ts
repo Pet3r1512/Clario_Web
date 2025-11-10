@@ -2,10 +2,13 @@ import { SERVER_URL } from "@/constant/auth";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useAuth() {
-  const { data, isLoading, isError, error, status } = useQuery({
-  const tokenExpiresTime = localStorage.getItem("tokenExpiresAt")
-  const isExpired = !tokenExpiresTime || Date.now() >= new Date(tokenExpiresTime).getTime()
+  const tokenExpiresTime = localStorage.getItem("tokenExpiresAt");
+  const isExpired =
+    !tokenExpiresTime || Date.now() >= new Date(tokenExpiresTime).getTime();
+
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["auth", "session"],
+    enabled: isExpired,
     queryFn: async () => {
       try {
         const res = await fetch(`${SERVER_URL}/session`, {
