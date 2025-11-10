@@ -1,5 +1,8 @@
 import { SERVER_URL } from "@/constant/auth";
 import { SignInFormType } from "@/lib/types/signinform";
+import { QueryClient } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default async function SignInEmail(credentials: SignInFormType) {
   const response = await fetch(`${SERVER_URL}/api/auth/sign-in/email`, {
@@ -18,9 +21,11 @@ export default async function SignInEmail(credentials: SignInFormType) {
     throw new Error(data.error?.message || "Unknown error");
   }
 
-  console.log(data);
-
   const result = data?.result?.data;
+
+  await new Promise((r) => setTimeout(r, 500));
+
+  await queryClient.invalidateQueries({ queryKey: ["auth", "session"] });
 
   return {
     success: true,
