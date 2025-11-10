@@ -9,7 +9,7 @@ import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormErrorMessage from "../FormErrorMessage";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SignInEmail from "@/api/users/auth/SignInEmail";
 import { toast } from "sonner";
 import { useRouter } from "@tanstack/react-router";
@@ -17,6 +17,8 @@ import { useRouter } from "@tanstack/react-router";
 export default function SignInForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -30,8 +32,11 @@ export default function SignInForm({ className }: { className?: string }) {
     onError: (error) => {
       return toast.error(error.message);
     },
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
       toast.success(res.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["auth", "session"],
+      });
       return setTimeout(() => {
         router.navigate({ to: "/dashboard" });
       }, 2000);

@@ -2,8 +2,13 @@ import { SERVER_URL } from "@/constant/auth";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useAuth() {
-  const { data, isLoading, isError, error, status } = useQuery({
+  const tokenExpiresTime = localStorage.getItem("tokenExpiresAt");
+  const isExpired =
+    !tokenExpiresTime || Date.now() >= new Date(tokenExpiresTime).getTime();
+
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["auth", "session"],
+    enabled: isExpired,
     queryFn: async () => {
       try {
         const res = await fetch(`${SERVER_URL}/session`, {
@@ -16,8 +21,6 @@ export default function useAuth() {
           },
         });
 
-        console.log("[useAuth] Response status:", res.status);
-
         if (!res.ok) {
           const text = await res.text();
           console.error("[useAuth] Response not ok:", text);
@@ -25,14 +28,18 @@ export default function useAuth() {
         }
 
         const json = await res.json();
-        console.log("[useAuth] Session data:", json);
 
         const sessionData = {
           user: json.user ?? null,
           session: json.session ?? null,
         };
 
-        console.log("[useAuth] Extracted user:", sessionData.user);
+        localStorage.setItem(
+          "tokenExpiresAt",
+          sessionData.session.expiresAt.toString(),
+        );
+        localStorage.setItem("user", sessionData.user.name);
+        localStorage.setItem("email", sessionData.user.email);
 
         return sessionData;
       } catch (err) {
@@ -46,18 +53,19 @@ export default function useAuth() {
     gcTime: 1000 * 60 * 10, // garbage collect after 10 minutes
   });
 
-  console.log("[useAuth] Current state:", {
-    status,
-    isLoading,
-    isError,
-    hasUser: !!data?.user,
-    user: data?.user,
-  });
+  const restoredUser = !isExpired
+    ? {
+        name: localStorage.getItem("name") || null,
+        email: localStorage.getItem("email") || null,
+      }
+    : null;
+
+  const isAuthenticated = data?.user || restoredUser;
 
   return {
     user: data?.user ?? null,
     session: data?.session ?? null,
-    isAuthenticated: !!data?.user,
+    isAuthenticated: !!isAuthenticated,
     isLoading,
     isError,
     error,
