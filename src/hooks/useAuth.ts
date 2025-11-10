@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function useAuth() {
   const { data, isLoading, isError, error, status } = useQuery({
+  const tokenExpiresTime = localStorage.getItem("tokenExpiresAt")
     queryKey: ["auth", "session"],
     queryFn: async () => {
       try {
