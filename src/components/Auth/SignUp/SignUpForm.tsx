@@ -1,4 +1,3 @@
-import GoogleSVG from "@/components/svg/GoogleSVG";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,6 +17,7 @@ import FormErrorMessage from "../FormErrorMessage";
 import { useMutation } from "@tanstack/react-query";
 import SignUpEmail from "@/api/users/auth/SignUpEmail";
 import { toast } from "sonner";
+import SignInViaGoogleBtn from "../SignInViaGoogleBtn";
 
 export default function SignUpForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -70,15 +70,7 @@ export default function SignUpForm({ className }: { className?: string }) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col gap-4 relative">
-            <p className="absolute -top-3 -right-4.5 text-white rounded-2xl font-semibold text-xs bg-blue-400 px-1.5 py-0.5">
-              Coming Soon
-            </p>
-            <Button variant="outline" className="w-full">
-              <GoogleSVG />
-              Login with Google
-            </Button>
-          </div>
+          <SignInViaGoogleBtn />
           <form role="form" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               <p className="bg-card text-center text-muted-foreground relative z-10 px-2 mt-8">
