@@ -1,4 +1,3 @@
-import GoogleSVG from "@/components/svg/GoogleSVG";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,14 +8,17 @@ import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormErrorMessage from "../FormErrorMessage";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SignInEmail from "@/api/users/auth/SignInEmail";
 import { toast } from "sonner";
 import { useRouter } from "@tanstack/react-router";
+import SignInViaGoogleBtn from "../SignInViaGoogleBtn";
 
 export default function SignInForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -30,8 +32,11 @@ export default function SignInForm({ className }: { className?: string }) {
     onError: (error) => {
       return toast.error(error.message);
     },
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
       toast.success(res.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["auth", "session"],
+      });
       return setTimeout(() => {
         router.navigate({ to: "/dashboard" });
       }, 2000);
@@ -62,15 +67,7 @@ export default function SignInForm({ className }: { className?: string }) {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
-              <div className="flex flex-col gap-4 relative">
-                <p className="absolute -top-3 -right-4.5 text-white rounded-2xl font-semibold text-xs bg-blue-400 px-1.5 py-0.5">
-                  Coming Soon
-                </p>
-                <Button variant="outline" className="w-full">
-                  <GoogleSVG />
-                  Login with Google
-                </Button>
-              </div>
+              <SignInViaGoogleBtn />
               <p className="bg-card text-center text-muted-foreground relative z-10 px-2">
                 Or continue with
               </p>
