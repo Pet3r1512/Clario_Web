@@ -1,6 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 import { AppSidebar } from "../ui/app-sidebar";
+import useAuth from "@/hooks/useAuth";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function DashboardLayout({
   children,
@@ -9,6 +11,17 @@ export default function DashboardLayout({
   children: ReactNode;
   section?: string;
 }) {
+  const { isAuthenticated, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      navigate({
+        to: "/auth/signin",
+      });
+    }
+  }, [isAuthenticated, isLoading, navigate]);
+
   return (
     <SidebarProvider className="p-5">
       <AppSidebar />
