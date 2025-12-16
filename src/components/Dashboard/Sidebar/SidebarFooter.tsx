@@ -3,7 +3,6 @@ import { Settings, MessageCircleQuestion } from "lucide-react";
 import { User } from "./User";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import useAuth from "@/hooks/useAuth";
 import ShortenUserName from "@/helpers/shortenUserName";
 
 const items = [
@@ -20,7 +19,6 @@ const items = [
 ];
 
 export default function SidebarFooter({ currUrl }: { currUrl: string }) {
-  const { user } = useAuth();
   return (
     <section className="px-5 pb-10">
       <div className="space-y-2.5">
@@ -45,10 +43,10 @@ export default function SidebarFooter({ currUrl }: { currUrl: string }) {
       </div>
       <User
         user={{
-          name: user.name,
-          email: user.email,
+          name: localStorage.getItem("user")!,
+          email: localStorage.getItem("email")!,
           avatar: "",
-          shortenName: ShortenUserName(user.name),
+          shortenName: ShortenUserName(localStorage.getItem("user")!),
         }}
       />
     </section>
