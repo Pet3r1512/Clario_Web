@@ -3,6 +3,7 @@ import { Settings, MessageCircleQuestion } from "lucide-react";
 import { User } from "./User";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import ShortenUserName from "@/helpers/shortenUserName";
 
 const items = [
   {
@@ -42,9 +43,10 @@ export default function SidebarFooter({ currUrl }: { currUrl: string }) {
       </div>
       <User
         user={{
-          name: "Peter Pham",
-          email: "pttp15122002@gmail.com",
+          name: localStorage.getItem("user")!,
+          email: localStorage.getItem("email")!,
           avatar: "",
+          shortenName: ShortenUserName(localStorage.getItem("user")!),
         }}
       />
     </section>
