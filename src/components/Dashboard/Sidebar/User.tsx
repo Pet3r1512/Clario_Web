@@ -1,4 +1,3 @@
-import LogOutEmail from "@/api/users/auth/LogOutEmail";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -15,8 +14,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
+import { useLogout } from "@/hooks/useLogOut";
 import {
   Bell,
   CircleUser,
@@ -24,7 +22,6 @@ import {
   EllipsisVertical,
   LogOut,
 } from "lucide-react";
-import { toast } from "sonner";
 
 export function User({
   user,
@@ -37,18 +34,7 @@ export function User({
   };
 }) {
   const { isMobile } = useSidebar();
-  const router = useRouter();
-  const mutation = useMutation({
-    mutationKey: ["logout"],
-    mutationFn: LogOutEmail,
-    onError: (error) => {
-      return toast.error(error.message);
-    },
-    onSuccess: () => {
-      localStorage.clear();
-      return router.navigate({ to: "/auth/signin" });
-    },
-  });
+  const { logout } = useLogout();
 
   return (
     <SidebarMenu>
@@ -112,11 +98,7 @@ export function User({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                mutation.mutate();
-              }}
-            >
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
