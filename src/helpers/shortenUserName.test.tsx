@@ -22,4 +22,8 @@ describe("Shorten User Name helper's test: ", () => {
 
     expect(result).toBe("CP");
   });
+
+  it("should return empty string when User Name is null", () => {
+    expect(ShortenUserName(undefined)).toBe("");
+  });
 });
