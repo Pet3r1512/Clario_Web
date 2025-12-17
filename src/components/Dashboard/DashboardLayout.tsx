@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 import { AppSidebar } from "../ui/app-sidebar";
 import useAuth from "@/hooks/useAuth";
@@ -11,16 +11,29 @@ export default function DashboardLayout({
   children: ReactNode;
   section?: string;
 }) {
-  const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
+  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      navigate({
-        to: "/auth/signin",
-      });
+      navigate({ to: "/auth/signin", replace: true });
     }
   }, [isAuthenticated, isLoading, navigate]);
+
+  const hasLocalSession = useMemo(() => {
+    const tokenExpiresAt = localStorage.getItem("tokenExpiresAt");
+    return !!tokenExpiresAt && Date.now() < new Date(tokenExpiresAt).getTime();
+  }, []);
+
+  useEffect(() => {
+    if (!hasLocalSession) {
+      navigate({ to: "/auth/signin", replace: true });
+    }
+  }, [hasLocalSession, navigate]);
+
+  if (!hasLocalSession) return null;
+
+  if (isLoading) return null;
 
   return (
     <SidebarProvider className="p-5">
