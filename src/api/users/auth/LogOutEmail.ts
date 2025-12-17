@@ -1,21 +1,26 @@
 import { SERVER_URL } from "@/constant/auth";
 
-export default async function LogOutEmail() {
-  const response = await fetch(`${SERVER_URL}/api/auth/sign-out`, {
+export default async function logOutEmail() {
+  const res = await fetch(`${SERVER_URL}/api/auth/sign-out`, {
     method: "POST",
     credentials: "include",
+    headers: { Accept: "application/json" },
   });
 
-  const data = await response.json();
+  // handle 204 / empty bodies safely
+  const text = await res.text();
+  const data = text ? JSON.parse(text) : null;
 
-  if (!response.ok || data.error) {
-    throw new Error(data.error?.message || "Unknown Error");
+  if (!res.ok) {
+    const msg =
+      data?.error?.message ||
+      data?.message ||
+      `Sign out failed (${res.status})`;
+    throw new Error(msg);
   }
-
-  const result = data?.result?.data;
 
   return {
     success: true,
-    message: result?.message || "Logged Out Successfully",
+    message: data?.result?.data?.message || "Logged Out Successfully",
   };
 }
