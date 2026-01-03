@@ -5,8 +5,9 @@ export default async function SignUpEmail(credentials: SignUpFormType) {
   const response = await fetch(`${SERVER_URL}/api/auth/sign-up/email`, {
     method: "POST",
     headers: {
-      "Content-type": "application/json",
+      "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(credentials),
   });
 
