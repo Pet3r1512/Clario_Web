@@ -1,7 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { MoveDown, MoveUp, Wallet } from "lucide-react";
 import Data from "./Data";
+import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import getCurrentBalance from "@/api/users/balances/getCurrentBalance";
+import useFetchUser from "@/hooks/useFetchUser";
 
 export default function Overall() {
+  const [currentBalance, setCurrentBalance] = useState<number>(0);
+  const userId = useFetchUser();
+
   const data = [
     {
       name: "Total Balance",
@@ -11,6 +19,7 @@ export default function Overall() {
           <Wallet className="text-blue-500" />
         </div>
       ),
+      amount: currentBalance,
     },
     {
       name: "Income",
@@ -20,6 +29,7 @@ export default function Overall() {
           <MoveDown className="text-green-500" />
         </div>
       ),
+      amount: 0,
     },
     {
       name: "Expenses",
@@ -29,8 +39,22 @@ export default function Overall() {
           <MoveUp className="text-red-500" />
         </div>
       ),
+      amount: 0,
     },
   ];
+
+  const currentBalanceMutation = useMutation({
+    mutationKey: ["balance"],
+    mutationFn: getCurrentBalance,
+    onSuccess: (data) => {
+      setCurrentBalance(data.balance.balance);
+    },
+  });
+
+  useEffect(() => {
+    currentBalanceMutation.mutate({ userId: userId });
+  }, [userId]);
+
   return (
     <section className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 max-w-7xl">
       {data.map((data) => {
