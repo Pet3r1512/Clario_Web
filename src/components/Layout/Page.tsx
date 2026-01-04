@@ -16,17 +16,9 @@ export default function Page({
       <Header />
       <section
         role="page-body"
-        className={cn(
-          "flex flex-col mx-auto max-w-[1440px] min-h-screen",
-          pageName,
-        )}
+        className={cn("flex flex-col mx-auto max-w-[1440px]", pageName)}
       >
-        <div
-          className={cn(
-            "mx-auto w-full max-w-7xl px-6 min-h-screen",
-            className,
-          )}
-        >
+        <div className={cn("mx-auto w-full max-w-7xl px-6", className)}>
           {children}
         </div>
       </section>
