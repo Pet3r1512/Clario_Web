@@ -61,7 +61,7 @@ export default function SignUpForm({ className }: { className?: string }) {
       )}
     >
       {creatingAccount ? (
-        <InitAccount />
+        <InitAccount setCreatingAccount={setCreatingAccount} />
       ) : (
         <Card className="dark:bg-black/50 shadow-2xl">
           <CardHeader className="text-center flex flex-col items-center gap-y-3">
