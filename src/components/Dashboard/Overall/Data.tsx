@@ -8,6 +8,7 @@ export default function Data({
     name: string;
     subtitle: string;
     icon: ReactNode;
+    amount: number;
   };
 }) {
   return (
@@ -16,7 +17,9 @@ export default function Data({
         <p className="lg:text-xl font-extrabold">{data.name}</p>
         {data.icon}
       </div>
-      <p className="lg:text-xl font-semibold">$2000.00</p>
+      <p className="lg:text-xl font-semibold">
+        ${Number(data.amount ?? 0).toFixed(2)}
+      </p>
       <p className="text-gray-400 lg:text-sm">{data.subtitle}</p>
     </Card>
   );
