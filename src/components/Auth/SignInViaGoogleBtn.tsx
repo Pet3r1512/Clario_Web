@@ -7,7 +7,7 @@ export default function SignInViaGoogleBtn() {
       <p className="absolute -top-3 z-100 -right-4.5 text-white rounded-2xl font-semibold text-xs bg-blue-400 px-1.5 py-0.5">
         Coming Soon
       </p>
-      <Button disabled variant="outline" className="w-full">
+      <Button type="button" disabled variant="outline" className="w-full">
         <GoogleSVG />
         Login with Google
       </Button>

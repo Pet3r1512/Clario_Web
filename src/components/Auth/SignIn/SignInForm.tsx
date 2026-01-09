@@ -95,6 +95,7 @@ export default function SignInForm({ className }: { className?: string }) {
                     <Label htmlFor="password">Password</Label>
                     <a
                       href="#"
+                      tabIndex={-1}
                       className="ml-auto text-sm underline-offset-4 hover:underline"
                     >
                       Forgot your password?
@@ -103,17 +104,17 @@ export default function SignInForm({ className }: { className?: string }) {
                   <div className="relative">
                     <Input
                       id="password"
+                      autoComplete="off"
                       type={hidePassword ? "password" : "text"}
                       {...register("password", {
                         required: "Password is required",
                       })}
                     />
                     <button
+                      type="button"
                       tabIndex={-1}
                       className="absolute top-1/2 right-2.5 -translate-y-1/2"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
+                      onClick={() => {
                         setHidePassword((prev) => !prev);
                       }}
                     >
@@ -125,6 +126,7 @@ export default function SignInForm({ className }: { className?: string }) {
                   )}
                 </div>
                 <Button
+                  role="submit-btn"
                   disabled={mutation.isPending}
                   type="submit"
                   className="w-full bg-primary-dark"
