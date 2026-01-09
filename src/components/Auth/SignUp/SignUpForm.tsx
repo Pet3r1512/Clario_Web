@@ -151,7 +151,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                         tabIndex={-1}
                         className="absolute top-1/2 right-2.5 -translate-y-1/2"
                         onClick={() => {
-                          setHidePassword(!hidePassword);
+                          setHidePassword((prev) => !prev);
                         }}
                       >
                         {hidePassword ? <Eye /> : <EyeOff />}
@@ -167,6 +167,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                       <Input
                         role="confirmPassword"
                         id="confirmPassword"
+                        autoComplete="off"
                         type={hideConfirmPassword ? "password" : "text"}
                         required
                         {...register("confirmPassword", {
@@ -180,7 +181,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                         tabIndex={-1}
                         className="absolute top-1/2 right-2.5 -translate-y-1/2"
                         onClick={() => {
-                          setHideConfirmPassword(!hideConfirmPassword);
+                          setHideConfirmPassword((prev) => !prev);
                         }}
                       >
                         {hideConfirmPassword ? <Eye /> : <EyeOff />}
