@@ -103,6 +103,7 @@ export default function SignInForm({ className }: { className?: string }) {
                   <div className="relative">
                     <Input
                       id="password"
+                      autoComplete="off"
                       type={hidePassword ? "password" : "text"}
                       {...register("password", {
                         required: "Password is required",
