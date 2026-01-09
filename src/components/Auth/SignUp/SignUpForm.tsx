@@ -131,6 +131,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                       <Input
                         role="password"
                         id="password"
+                        autoComplete="off"
                         type={hidePassword ? "password" : "text"}
                         required
                         {...register("password", {
