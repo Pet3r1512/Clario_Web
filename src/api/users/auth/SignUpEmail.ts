@@ -13,6 +13,14 @@ export default async function SignUpEmail(credentials: SignUpFormType) {
 
   if (!response.ok) {
     const res = await response.json();
+    if (res.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL") {
+      throw new Error(
+        JSON.stringify({
+          success: false,
+          code: "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL",
+        }),
+      );
+    }
     throw new Error(res.error.message || "Unknown Error");
   }
 
