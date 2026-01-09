@@ -111,6 +111,7 @@ export default function SignInForm({ className }: { className?: string }) {
                       })}
                     />
                     <button
+                      type="button"
                       tabIndex={-1}
                       className="absolute top-1/2 right-2.5 -translate-y-1/2"
                       onClick={() => {
@@ -125,6 +126,7 @@ export default function SignInForm({ className }: { className?: string }) {
                   )}
                 </div>
                 <Button
+                  role="submit-btn"
                   disabled={mutation.isPending}
                   type="submit"
                   className="w-full bg-primary-dark"
