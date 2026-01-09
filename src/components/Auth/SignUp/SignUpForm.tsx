@@ -150,6 +150,10 @@ export default function SignUpForm({ className }: { className?: string }) {
                       <button
                         tabIndex={-1}
                         className="absolute top-1/2 right-2.5 -translate-y-1/2"
+                        aria-label={
+                          hidePassword ? "Show password" : "Hide password"
+                        }
+                        type="button"
                         onClick={() => {
                           setHidePassword((prev) => !prev);
                         }}
@@ -180,6 +184,10 @@ export default function SignUpForm({ className }: { className?: string }) {
                       <button
                         tabIndex={-1}
                         className="absolute top-1/2 right-2.5 -translate-y-1/2"
+                        aria-label={
+                          hidePassword ? "Show password" : "Hide password"
+                        }
+                        type="button"
                         onClick={() => {
                           setHideConfirmPassword((prev) => !prev);
                         }}
