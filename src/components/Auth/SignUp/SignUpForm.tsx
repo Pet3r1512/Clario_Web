@@ -36,7 +36,12 @@ export default function SignUpForm({ className }: { className?: string }) {
     mutationKey: ["signup"],
     mutationFn: SignUpEmail,
     onError: (error) => {
-      setCreatingAccount(true);
+      const parsedError = JSON.parse(error.message);
+      if (parsedError.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL") {
+        return toast.error(
+          "This Email Is Existed. Please Sign In or Use Another Email",
+        );
+      }
       return toast.error(error.message);
     },
     onSuccess: (res) => {
