@@ -113,9 +113,7 @@ export default function SignInForm({ className }: { className?: string }) {
                     <button
                       tabIndex={-1}
                       className="absolute top-1/2 right-2.5 -translate-y-1/2"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
+                      onClick={() => {
                         setHidePassword((prev) => !prev);
                       }}
                     >
