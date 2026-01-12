@@ -43,6 +43,15 @@ export default function DashboardLayout({
 
   if (isLoading) return null;
 
+  if (!getGlobalCategoriesQuery.isLoading && getGlobalCategoriesQuery.data) {
+    sessionStorage.setItem(
+      "globalCategories",
+      JSON.stringify(
+        getGlobalCategoriesQuery.data.globalCategories.globalCategories,
+      ),
+    );
+  }
+
   return (
     <SidebarProvider className="p-5">
       <AppSidebar />
