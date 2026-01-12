@@ -1,4 +1,8 @@
 import { TransactionInfo } from "./ListByDate";
+enum CategoryType {
+  "EXPENSE",
+  "INCOME",
+}
 
 export default function TransactionSummary({
   transaction,
