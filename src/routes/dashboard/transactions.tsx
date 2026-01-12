@@ -1,4 +1,7 @@
 import DashboardLayout from "@/components/Dashboard/DashboardLayout";
+import TransactionsHeader from "@/components/Dashboard/Transactions/TransactionsHeader";
+import TransactionsTable from "@/components/Dashboard/Transactions/TransactionsTable";
+import useFetchUser from "@/hooks/useFetchUser";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/dashboard/transactions")({
@@ -6,9 +9,12 @@ export const Route = createFileRoute("/dashboard/transactions")({
 });
 
 function RouteComponent() {
+  const userId = useFetchUser();
+
   return (
     <DashboardLayout>
-      <div>Hello "/dashboard/transactions"!</div>
+      <TransactionsHeader />
+      <TransactionsTable userId={userId} />
     </DashboardLayout>
   );
 }
