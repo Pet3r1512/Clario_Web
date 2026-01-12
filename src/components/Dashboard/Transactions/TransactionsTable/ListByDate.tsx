@@ -15,8 +15,6 @@ export default function ListByDate({
 }: {
   transactions: TransactionInfo[];
 }) {
-  console.log(transactions);
-
   return (
     <div>
       <div className="p-1.5 rounded-lg bg-gray-200 text-black font-semibold lg:hover:pl-5 lg:hover:bg-primary/50 transition-all duration-150 ease-linear">
