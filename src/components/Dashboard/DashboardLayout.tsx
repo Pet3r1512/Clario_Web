@@ -3,6 +3,8 @@ import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 import { AppSidebar } from "../ui/app-sidebar";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import getGlobalCategories from "@/api/categories/getGlobalCategories";
 
 export default function DashboardLayout({
   children,
@@ -13,6 +15,12 @@ export default function DashboardLayout({
 }) {
   const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useAuth();
+
+  const getGlobalCategoriesQuery = useQuery({
+    queryKey: ["globalCategories"],
+    queryFn: () => getGlobalCategories(),
+    enabled: !sessionStorage.getItem("globalCategories"),
+  });
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
