@@ -17,8 +17,6 @@ export default async function getTransactions(input?: {
 
   const res = await response.json();
 
-  console.log(res);
-
   if (!response.ok) {
     throw new Error(res.error?.message ?? "Unknown error");
   }
