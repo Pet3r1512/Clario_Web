@@ -4,6 +4,13 @@ enum CategoryType {
   "INCOME",
 }
 
+type CurrentCategory = {
+  id: number;
+  type: CategoryType;
+  name: string;
+  description: string;
+};
+
 export default function TransactionSummary({
   transaction,
 }: {
