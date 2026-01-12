@@ -16,11 +16,11 @@ export default function ListByDate({
   transactions: TransactionInfo[];
 }) {
   return (
-    <div>
+    <div className="space-y-5">
       <div className="p-1.5 rounded-lg bg-gray-200 text-black font-semibold lg:hover:pl-5 lg:hover:bg-primary/50 transition-all duration-150 ease-linear">
         Friday, 09 Jan 2026
       </div>
-      <div>
+      <div className="space-y-5">
         {transactions.map((transaction, index) => {
           return <TransactionSummary key={index} transaction={transaction} />;
         })}
