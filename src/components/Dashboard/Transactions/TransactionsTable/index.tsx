@@ -17,5 +17,5 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>{(error as Error).message}</div>;
 
-  return <ListByDate transactions={data?.transactions.transactions} />;
+  return <ListByDate transactions={data?.transactions} />;
 }
