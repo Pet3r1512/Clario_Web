@@ -1,5 +1,6 @@
 import { Currency } from "@/api/users/createBalance";
 import TransactionSummary from "./TransactionSummary";
+import groupTransactions from "@/lib/groupTransactions";
 
 export type TransactionInfo = {
   id: string;
@@ -15,17 +16,7 @@ export default function ListByDate({
 }: {
   transactions?: TransactionInfo[];
 }) {
-  const groupedByDate = transactions.reduce(
-    (acc, tx) => {
-      const dateKey = new Date(tx.date).toLocaleDateString("en-CA");
-
-      acc[dateKey] ??= [];
-      acc[dateKey].push(tx);
-
-      return acc;
-    },
-    {} as Record<string, TransactionInfo[]>,
-  );
+  const groupedByDate = groupTransactions(transactions);
 
   if (Object.keys(groupedByDate).length === 0) {
     return <div className="text-gray-500">No transactions</div>;
