@@ -8,7 +8,7 @@ import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormErrorMessage from "../FormErrorMessage";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import SignInEmail from "@/api/users/auth/SignInEmail";
 import { toast } from "sonner";
 import { useRouter } from "@tanstack/react-router";
@@ -17,8 +17,6 @@ import SignInViaGoogleBtn from "../SignInViaGoogleBtn";
 export default function SignInForm({ className }: { className?: string }) {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
   const router = useRouter();
-
-  const queryClient = useQueryClient();
 
   const {
     register,
@@ -30,21 +28,15 @@ export default function SignInForm({ className }: { className?: string }) {
     mutationKey: ["signin"],
     mutationFn: SignInEmail,
     onError: (error) => {
-      return toast.error(error.message);
+      toast.error(error?.message || "Sign in failed");
     },
-    onSuccess: async (res) => {
-      toast.success(res.message);
-      await queryClient.invalidateQueries({
-        queryKey: ["auth", "session"],
-      });
-      return setTimeout(() => {
-        router.navigate({ to: "/dashboard" });
-      }, 2000);
+    onSuccess: async () => {
+      router.navigate({ to: "/dashboard" });
     },
   });
 
-  const onSubmit: SubmitHandler<SignInFormType> = (credential) => {
-    mutation.mutate(credential);
+  const onSubmit: SubmitHandler<SignInFormType> = async (credentials) => {
+    mutation.mutate(credentials);
   };
 
   return (
