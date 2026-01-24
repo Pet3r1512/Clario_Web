@@ -1,9 +1,9 @@
-import { ReactNode, useEffect, useMemo } from "react";
+import { ReactNode, useEffect } from "react";
 import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 import { AppSidebar } from "../ui/app-sidebar";
-import useAuth from "@/hooks/useAuth";
-import { useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { authClient } from "@/lib/auth-client";
+import { useNavigate } from "@tanstack/react-router";
 import getGlobalCategories from "@/api/categories/getGlobalCategories";
 
 export default function DashboardLayout({
@@ -14,7 +14,6 @@ export default function DashboardLayout({
   section?: string;
 }) {
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading } = useAuth();
 
   const getGlobalCategoriesQuery = useQuery({
     queryKey: ["globalCategories"],
@@ -22,26 +21,29 @@ export default function DashboardLayout({
     enabled: !sessionStorage.getItem("globalCategories"),
   });
 
+  const sessionQuery = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => {
+      const session = await authClient.getSession();
+      localStorage.setItem(
+        "expiredDate",
+        session.data?.session.expiresAt.toDateString() || "",
+      );
+      return session;
+    },
+    retry: false,
+  });
+
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    const expiredDate = localStorage.getItem("expiredDate");
+
+    const isExpired =
+      !expiredDate || Date.now() >= new Date(expiredDate).getTime();
+
+    if (sessionQuery.isFetched && (!sessionQuery.data || isExpired)) {
       navigate({ to: "/auth/signin", replace: true });
     }
-  }, [isAuthenticated, isLoading, navigate]);
-
-  const hasLocalSession = useMemo(() => {
-    const tokenExpiresAt = localStorage.getItem("tokenExpiresAt");
-    return !!tokenExpiresAt && Date.now() < new Date(tokenExpiresAt).getTime();
-  }, []);
-
-  useEffect(() => {
-    if (!hasLocalSession) {
-      navigate({ to: "/auth/signin", replace: true });
-    }
-  }, [hasLocalSession, navigate]);
-
-  if (!hasLocalSession) return null;
-
-  if (isLoading) return null;
+  }, [sessionQuery.isFetched, sessionQuery.data, navigate]);
 
   if (!getGlobalCategoriesQuery.isLoading && getGlobalCategoriesQuery.data) {
     sessionStorage.setItem(
@@ -50,6 +52,14 @@ export default function DashboardLayout({
         getGlobalCategoriesQuery.data.globalCategories.globalCategories,
       ),
     );
+  }
+
+  if (sessionQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!sessionQuery.data) {
+    return null;
   }
 
   return (
