@@ -46,7 +46,7 @@ export default function SignUpForm({ className }: { className?: string }) {
     },
     onSuccess: (res) => {
       setCreatingAccount(true);
-      return toast.success(res.message);
+      return toast.success(res.user.name + ", Everything is done!");
     },
   });
 
