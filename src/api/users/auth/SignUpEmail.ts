@@ -1,31 +1,18 @@
-import { SERVER_URL } from "@/constant/auth";
+import { authClient } from "@/lib/auth-client";
 import { SignUpFormType } from "@/lib/types/signupform";
 
 export default async function SignUpEmail(credentials: SignUpFormType) {
-  const response = await fetch(`${SERVER_URL}/api/auth/sign-up/email`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(credentials),
+  const { name, email, password } = credentials;
+
+  const { data, error } = await authClient.signUp.email({
+    name: name,
+    email: email,
+    password: password,
   });
 
-  if (!response.ok) {
-    const res = await response.json();
-    if (res.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL") {
-      throw new Error(
-        JSON.stringify({
-          success: false,
-          code: "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL",
-        }),
-      );
-    }
-    throw new Error(res.error.message || "Unknown Error");
+  if (error) {
+    throw new Error(error.message || "Sign in failed");
   }
 
-  return {
-    success: true,
-    message: "User Registered Successfully",
-  };
+  return data;
 }

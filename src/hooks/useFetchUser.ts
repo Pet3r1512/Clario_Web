@@ -1,34 +1,25 @@
-import { SERVER_URL } from "@/constant/auth";
 import { useQuery } from "@tanstack/react-query";
+import { authClient } from "@/lib/auth-client";
 
 export default function useFetchUser() {
-  const { data } = useQuery({
-    queryKey: ["user"],
+  const { data: sessionData } = useQuery({
+    queryKey: ["user-session"],
     queryFn: async () => {
       try {
-        const res = await fetch(`${SERVER_URL}/session`, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-          },
-        });
-
-        if (!res.ok) {
-          throw new Error(res.statusText);
+        // Get the session from the auth client
+        const session = await authClient.getSession(); // or .useSession() depending on your client
+        if (!session || !session.data?.session.userId || session === null) {
+          throw new Error("No active session");
         }
 
-        const json = await res.json();
-
-        return json;
+        return session;
       } catch (err) {
-        console.error(err);
+        console.error("Failed to fetch session:", err);
         throw err;
       }
     },
+    staleTime: 5 * 60 * 1000, // optional: cache for 5 minutes
   });
 
-  return data?.user.id;
+  return sessionData?.data?.session.userId;
 }

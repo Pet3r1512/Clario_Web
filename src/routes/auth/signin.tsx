@@ -1,25 +1,19 @@
 import SignIn from "@/components/Auth/SignIn";
 import Page from "@/components/Layout/Page";
-import useAuth from "@/hooks/useAuth";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { authClient } from "@/lib/auth-client";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/auth/signin")({
+  beforeLoad: async () => {
+    const session = await authClient.getSession();
+    if (session?.data?.session) {
+      throw redirect({ to: "/dashboard" });
+    }
+  },
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { isAuthenticated, isLoading } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      navigate({
-        to: "/dashboard",
-      });
-    }
-  }, [isAuthenticated, isLoading, navigate]);
-
   return (
     <Page>
       <SignIn />
