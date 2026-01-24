@@ -68,18 +68,6 @@ export default function Overall() {
     },
   ];
 
-  const currentBalanceMutation = useMutation({
-    mutationKey: ["balance"],
-    mutationFn: getCurrentBalance,
-    onSuccess: (data) => {
-      setCurrentBalance(data.balance.balance);
-    },
-  });
-
-  useEffect(() => {
-    currentBalanceMutation.mutate({ userId: userId });
-  }, [userId]);
-
   return (
     <section className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 max-w-7xl">
       {data.map((data) => {
