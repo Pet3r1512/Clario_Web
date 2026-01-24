@@ -1,34 +1,22 @@
-import { SERVER_URL } from "@/constant/auth";
+import { authClient } from "@/lib/auth-client";
 import { SignInFormType } from "@/lib/types/signinform";
-import { QueryClient } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
 
 export default async function SignInEmail(credentials: SignInFormType) {
-  const response = await fetch(`${SERVER_URL}/api/auth/sign-in/email`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Requested-With": "XMLHttpRequest",
-    },
-    credentials: "include",
-    body: JSON.stringify(credentials),
+  const { data, error } = await authClient.signIn.email({
+    email: credentials.email,
+    password: credentials.password,
   });
 
-  const data = await response.json();
-
-  if (!response.ok || data.error) {
-    throw new Error(data.error?.message || "Unknown error");
+  if (error) {
+    throw new Error(error.message || "Sign in failed");
   }
 
-  const result = data?.result?.data;
+  const session = await authClient.getSession();
 
-  await new Promise((r) => setTimeout(r, 500));
+  localStorage.setItem(
+    "expiredDate",
+    session.data?.session.expiresAt.toDateString() || "",
+  );
 
-  await queryClient.invalidateQueries({ queryKey: ["auth", "session"] });
-
-  return {
-    success: true,
-    message: result?.message || "User Signed In Successfully",
-  };
+  return data;
 }
