@@ -4,6 +4,8 @@ import { User } from "./User";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import ShortenUserName from "@/helpers/shortenUserName";
+import { authClient } from "@/lib/auth-client";
+import { useQuery } from "@tanstack/react-query";
 
 const items = [
   {
@@ -19,6 +21,15 @@ const items = [
 ];
 
 export default function SidebarFooter({ currUrl }: { currUrl: string }) {
+  const sessionQuery = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => {
+      const session = await authClient.getSession();
+      return session;
+    },
+    retry: false,
+  });
+
   return (
     <section className="px-5 pb-10">
       <div className="space-y-2.5">
@@ -43,10 +54,10 @@ export default function SidebarFooter({ currUrl }: { currUrl: string }) {
       </div>
       <User
         user={{
-          name: localStorage.getItem("user")!,
-          email: localStorage.getItem("email")!,
-          avatar: "",
-          shortenName: ShortenUserName(localStorage.getItem("user")!),
+          name: sessionQuery.data?.data?.user.name || "",
+          email: sessionQuery.data?.data?.user.email || "",
+          avatar: sessionQuery.data?.data?.user.image || "",
+          shortenName: ShortenUserName(sessionQuery.data?.data?.user.name),
         }}
       />
     </section>
