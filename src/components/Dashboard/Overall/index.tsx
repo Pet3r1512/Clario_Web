@@ -1,8 +1,9 @@
 import { MoveDown, MoveUp, Wallet } from "lucide-react";
 import Data from "./Data";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import getCurrentBalance from "@/api/users/balances/getCurrentBalance";
 import { authClient } from "@/lib/auth-client";
+import { useEffect } from "react";
 
 export default function Overall() {
   const userQuery = useQuery({
@@ -13,11 +14,17 @@ export default function Overall() {
 
   const userId = userQuery.data?.data?.user?.id;
 
-  const balanceQuery = useQuery({
-    queryKey: ["balance", userId],
-    enabled: !!userId,
-    queryFn: () => getCurrentBalance({ userId: userId ?? "" }),
+  const balanceQuery = useMutation({
+    mutationKey: ["balance", userId],
+    mutationFn: ({ userId }: { userId: string }) =>
+      getCurrentBalance({ userId }),
   });
+
+  useEffect(() => {
+    if (userQuery.data?.data?.user.id) {
+      balanceQuery.mutate({ userId: userQuery.data?.data?.user.id });
+    }
+  }, [balanceQuery, userId, userQuery.data?.data?.user.id]);
 
   const currentBalance = balanceQuery.data?.balance.balance ?? 0;
 
