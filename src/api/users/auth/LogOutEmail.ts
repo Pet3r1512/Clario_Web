@@ -7,7 +7,5 @@ export default async function logOutEmail() {
     throw new Error(error.message || "Sign in failed");
   }
 
-  localStorage.removeItem("expiredDate");
-
   return data;
 }

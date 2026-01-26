@@ -11,12 +11,5 @@ export default async function SignInEmail(credentials: SignInFormType) {
     throw new Error(error.message || "Sign in failed");
   }
 
-  const session = await authClient.getSession();
-
-  localStorage.setItem(
-    "expiredDate",
-    session.data?.session.expiresAt.toDateString() || "",
-  );
-
   return data;
 }

@@ -25,22 +25,13 @@ export default function DashboardLayout({
     queryKey: ["session"],
     queryFn: async () => {
       const session = await authClient.getSession();
-      localStorage.setItem(
-        "expiredDate",
-        session.data?.session.expiresAt.toDateString() || "",
-      );
       return session;
     },
     retry: false,
   });
 
   useEffect(() => {
-    const expiredDate = localStorage.getItem("expiredDate");
-
-    const isExpired =
-      !expiredDate || Date.now() >= new Date(expiredDate).getTime();
-
-    if (sessionQuery.isFetched && (!sessionQuery.data || isExpired)) {
+    if (sessionQuery.isFetched && !sessionQuery.data) {
       navigate({ to: "/auth/signin", replace: true });
     }
   }, [sessionQuery.isFetched, sessionQuery.data, navigate]);
