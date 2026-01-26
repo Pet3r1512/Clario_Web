@@ -6,23 +6,17 @@ import { authClient } from "@/lib/auth-client";
 
 export default function Overall() {
   const userQuery = useQuery({
-    queryKey: ["user"],
-    queryFn: async () => {
-      const session = await authClient.getSession();
-      return session;
-    },
-    retry: false,
+    queryKey: ["auth", "session"],
+    queryFn: () => authClient.getSession(),
+    staleTime: 1000 * 60 * 5,
   });
 
   const userId = userQuery.data?.data?.user?.id;
 
   const balanceQuery = useQuery({
     queryKey: ["balance", userId],
-    enabled: Boolean(userId && userQuery.isSuccess),
-    queryFn: () =>
-      getCurrentBalance({
-        userId: userId!,
-      }),
+    enabled: !!userId,
+    queryFn: () => getCurrentBalance({ userId: userId ?? "" }),
   });
 
   const currentBalance = balanceQuery.data?.balance.balance ?? 0;
