@@ -12,10 +12,6 @@ export function useLogout() {
     } catch (err) {
       console.error("Logout API failed:", err);
     } finally {
-      localStorage.removeItem("tokenExpiresAt");
-      localStorage.removeItem("user");
-      localStorage.removeItem("email");
-
       queryClient.removeQueries({ queryKey: ["auth", "session"] });
 
       router.navigate({ to: "/auth/signin" });
