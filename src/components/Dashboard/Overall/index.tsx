@@ -1,15 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { MoveDown, MoveUp, Wallet } from "lucide-react";
 import Data from "./Data";
-import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import getCurrentBalance from "@/api/users/balances/getCurrentBalance";
 import { authClient } from "@/lib/auth-client";
 
 export default function Overall() {
-  const [currentBalance, setCurrentBalance] = useState<number>(0);
-  const [userId, setUserId] = useState<string>("");
-
   const userQuery = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -19,21 +14,18 @@ export default function Overall() {
     retry: false,
   });
 
-  const currentBalanceMutation = useMutation({
-    mutationKey: ["balance"],
-    mutationFn: getCurrentBalance,
-    onSuccess: (data) => {
-      setCurrentBalance(data.balance.balance);
-    },
+  const userId = userQuery.data?.data?.user?.id;
+
+  const balanceQuery = useQuery({
+    queryKey: ["balance", userId],
+    enabled: !!userId,
+    queryFn: () =>
+      getCurrentBalance({
+        userId: userId!,
+      }),
   });
 
-  useEffect(() => {
-    currentBalanceMutation.mutate({ userId: userId });
-  }, [userId]);
-
-  useEffect(() => {
-    setUserId(userQuery.data?.data?.user.id || "");
-  }, [userQuery.isFetched, userQuery.data]);
+  const currentBalance = balanceQuery.data?.balance.balance ?? 0;
 
   const data = [
     {
@@ -70,9 +62,9 @@ export default function Overall() {
 
   return (
     <section className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 max-w-7xl">
-      {data.map((data) => {
-        return <Data key={data.name} data={data} />;
-      })}
+      {data.map((item) => (
+        <Data key={item.name} data={item} />
+      ))}
     </section>
   );
 }
