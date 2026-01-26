@@ -54,9 +54,9 @@ export default function SidebarFooter({ currUrl }: { currUrl: string }) {
       </div>
       <User
         user={{
-          name: sessionQuery.data?.data?.user.name || "",
-          email: sessionQuery.data?.data?.user.email || "",
-          avatar: sessionQuery.data?.data?.user.image || "",
+          name: sessionQuery.data?.data?.user.name ?? "",
+          email: sessionQuery.data?.data?.user.email ?? "",
+          avatar: sessionQuery.data?.data?.user.image ?? "",
           shortenName: ShortenUserName(sessionQuery.data?.data?.user.name),
         }}
       />
