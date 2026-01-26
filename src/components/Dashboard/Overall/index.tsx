@@ -18,7 +18,7 @@ export default function Overall() {
 
   const balanceQuery = useQuery({
     queryKey: ["balance", userId],
-    enabled: !!userId,
+    enabled: Boolean(userId && userQuery.isSuccess),
     queryFn: () =>
       getCurrentBalance({
         userId: userId!,
