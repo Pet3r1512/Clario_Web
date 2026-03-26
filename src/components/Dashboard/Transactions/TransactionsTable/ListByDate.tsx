@@ -9,6 +9,7 @@ export type TransactionInfo = {
   amount: number;
   currency: Currency;
   date: string;
+  description: string;
 };
 
 export default function ListByDate({
