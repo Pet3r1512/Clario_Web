@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { MoveDown, MoveUp, Wallet } from "lucide-react";
 import Data from "./Data";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -24,7 +25,7 @@ export default function Overall() {
     if (userQuery.data?.data?.user.id) {
       balanceQuery.mutate({ userId: userQuery.data?.data?.user.id });
     }
-  }, [balanceQuery, userId, userQuery.data?.data?.user.id]);
+  }, []);
 
   const currentBalance = balanceQuery.data?.balance.balance ?? 0;
 

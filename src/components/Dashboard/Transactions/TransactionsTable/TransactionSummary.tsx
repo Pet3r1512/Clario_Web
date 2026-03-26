@@ -50,7 +50,7 @@ export default function TransactionSummary({
       {currCategory && TransactionTypeDictionary[currCategory.type]}
       <div className="space-y-2 flex-1">
         <p className="font-semibold">{currCategory.name}</p>
-        <p>{currCategory.description}</p>
+        <p>{transaction.description}</p>
       </div>
       <p
         className={`text-xl font-semibold ${TransactionAmountTextColor[currCategory.type]}`}
