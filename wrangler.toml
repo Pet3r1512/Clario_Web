@@ -1,0 +1,7 @@
+name = "your-worker-name"
+main = "src/index.js"
+compatibility_date = "2026-03-25"
+
+[[routes]]
+pattern = "https://clariofinance.site"
+custom_domain = true
