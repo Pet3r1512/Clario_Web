@@ -3,5 +3,5 @@ main = "./src/index.ts"
 compatibility_date = "2026-04-04"
 
 [[routes]]
-pattern = "https://clariofinance.site"
+pattern = "clariofinance.site"
 custom_domain = true
