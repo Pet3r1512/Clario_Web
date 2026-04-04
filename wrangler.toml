@@ -1,7 +1,11 @@
-name = "your-worker-name"
-main = "src/index.js"
-compatibility_date = "2026-03-25"
+"$schema" = "./node_modules/wrangler/config-schema.json"
+name = "clario-web-worker"
+# Set this to today's date
+compatibility_date = "2026-04-03"
+
+[assets]
+not_found_handling = "single-page-application"
 
 [[routes]]
-pattern = "https://clariofinance.site"
+pattern = "clariofinance.site"
 custom_domain = true
