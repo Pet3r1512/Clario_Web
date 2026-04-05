@@ -7,5 +7,5 @@ compatibility_date = "2026-04-03"
 not_found_handling = "single-page-application"
 
 [[routes]]
-pattern = "clariofinance.site"
+pattern = "clariofinance.site/*"
 custom_domain = true
