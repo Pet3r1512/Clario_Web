@@ -4,10 +4,10 @@ interface Navigations {
 }
 
 const navigations: Navigations[] = [
-  {
-    name: "Pricing",
-    link: "/pricing",
-  },
+  // {
+  //   name: "Pricing",
+  //   link: "/pricing",
+  // },
   {
     name: "Log In",
     link: "/auth/signin",
