@@ -17,12 +17,12 @@ export function DatePicker() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <Popover open={open} onOpenChange={setOpen} modal={false}>
-      <PopoverTrigger asChild id="date">
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild id="date" autoFocus={open}>
         <Button
           type="button"
           variant="outline"
-          className="w-64 justify-start text-left font-normal"
+          className="w-64 justify-start text-left font-normal pointer-events-auto"
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? format(date, "PPP") : "Pick a date"}

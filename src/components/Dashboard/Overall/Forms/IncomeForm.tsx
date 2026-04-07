@@ -16,11 +16,17 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 
 export function IncomeForm() {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger
+        asChild
+        autoFocus={isOpen}
+        onClick={(e) => {
+          e.currentTarget.blur();
+        }}
+      >
         <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl text-lg h-10.5">
           + Add Income
         </Button>
@@ -29,13 +35,13 @@ export function IncomeForm() {
         onInteractOutside={() => {}}
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
-        className="sm:max-w-sm bg-white"
+        className="sm:max-w-sm bg-white pointer-events-auto"
       >
         <form>
           <DialogHeader>
             <DialogTitle>Add Income</DialogTitle>
           </DialogHeader>
-          <DialogDescription></DialogDescription>
+          <DialogDescription className="sr-only"></DialogDescription>
           <FieldGroup className="my-8">
             <Field>
               <Label htmlFor="amount">Amount</Label>
