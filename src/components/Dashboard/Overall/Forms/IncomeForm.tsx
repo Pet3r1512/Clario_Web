@@ -20,23 +20,23 @@ export function IncomeForm() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <form>
-        <DialogTrigger asChild>
-          <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl text-lg h-10.5">
-            + Add Income
-          </Button>
-        </DialogTrigger>
-        <DialogContent
-          onInteractOutside={() => {}}
-          onOpenAutoFocus={(e) => e.preventDefault()}
-          onCloseAutoFocus={(e) => e.preventDefault()}
-          className="sm:max-w-sm bg-white"
-        >
+      <DialogTrigger asChild>
+        <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl text-lg h-10.5">
+          + Add Income
+        </Button>
+      </DialogTrigger>
+      <DialogContent
+        onInteractOutside={() => {}}
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        onCloseAutoFocus={(e) => e.preventDefault()}
+        className="sm:max-w-sm bg-white"
+      >
+        <form>
           <DialogHeader>
             <DialogTitle>Add Income</DialogTitle>
           </DialogHeader>
           <DialogDescription></DialogDescription>
-          <FieldGroup>
+          <FieldGroup className="my-8">
             <Field>
               <Label htmlFor="amount">Amount</Label>
               <Input
@@ -64,10 +64,12 @@ export function IncomeForm() {
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit" className="bg-primary hover:bg-primary/90">
+              Save changes
+            </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }
