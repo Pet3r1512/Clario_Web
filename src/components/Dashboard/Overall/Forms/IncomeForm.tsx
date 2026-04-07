@@ -13,17 +13,25 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 export function IncomeForm() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
           <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl text-lg h-10.5">
             + Add Income
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-sm bg-white">
+        <DialogContent
+          onInteractOutside={() => {}}
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          onCloseAutoFocus={(e) => e.preventDefault()}
+          className="sm:max-w-sm bg-white"
+        >
           <DialogHeader>
             <DialogTitle>Add Income</DialogTitle>
           </DialogHeader>
