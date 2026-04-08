@@ -1,0 +1,69 @@
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+type SourceIncome = {
+  name: string;
+  id: string;
+};
+
+export default function IncomeSelect() {
+  const incomesources: SourceIncome[] = [
+    {
+      name: "Salary",
+      id: "1",
+    },
+    {
+      name: "Bonus",
+      id: "2",
+    },
+    {
+      name: "Freelance",
+      id: "3",
+    },
+    {
+      name: "Investment",
+      id: "4",
+    },
+    {
+      name: "Retail Income",
+      id: "5",
+    },
+    {
+      name: "Gift",
+      id: "6",
+    },
+    {
+      name: "Other",
+      id: "7",
+    },
+  ];
+
+  return (
+    <Select>
+      <SelectTrigger id="source" name="source" className="w-full">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent className="bg-white w-full">
+        <SelectGroup>
+          {incomesources.map((source: SourceIncome) => {
+            return (
+              <SelectItem
+                key={source.id}
+                value={source.id}
+                className="lg:hover:bg-gray-200"
+              >
+                {source.name}
+              </SelectItem>
+            );
+          })}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+}
