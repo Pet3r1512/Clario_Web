@@ -14,6 +14,7 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import IncomeSelect from "./IncomeSelector";
 
 export function IncomeForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -55,11 +56,12 @@ export function IncomeForm() {
             </Field>
             <Field>
               <Label htmlFor="source">Source</Label>
-              <Input
+              <IncomeSelect />
+              {/* <Input
                 id="source"
                 name="source"
                 placeholder="e.g. Salary, Family Support, etc."
-              />
+              /> */}
             </Field>
             <Field>
               <Label htmlFor="date">Date</Label>
