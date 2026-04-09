@@ -42,7 +42,6 @@ export function DatePicker() {
           onSelect={(d) => {
             setDate(d);
             setOpen(false);
-            console.log(d);
           }}
           className="w-full pointer-events-auto"
         />
