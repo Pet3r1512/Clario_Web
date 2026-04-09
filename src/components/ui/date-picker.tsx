@@ -16,6 +16,8 @@ export function DatePicker() {
   const [date, setDate] = React.useState<Date>();
   const [open, setOpen] = React.useState(false);
 
+  const today = new Date();
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild id="date" autoFocus={open}>
@@ -25,7 +27,7 @@ export function DatePicker() {
           className="w-64 justify-start text-left font-normal pointer-events-auto"
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : "Pick a date"}
+          {date ? format(date, "PPP") : format(today, "PPP")}
         </Button>
       </PopoverTrigger>
 
