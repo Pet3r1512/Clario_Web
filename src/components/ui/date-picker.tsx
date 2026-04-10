@@ -11,10 +11,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "./button";
+import { useState } from "react";
 
 export function DatePicker() {
-  const [date, setDate] = React.useState<Date>();
-  const [open, setOpen] = React.useState(false);
+  const [date, setDate] = useState<Date>();
+  const [open, setOpen] = useState(false);
 
   const today = new Date();
 
