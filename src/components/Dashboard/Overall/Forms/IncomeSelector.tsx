@@ -6,13 +6,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { UseFormRegister } from "react-hook-form";
+import { IncomeTransaction } from "./IncomeForm";
 
 type SourceIncome = {
   name: string;
   id: string;
 };
 
-export default function IncomeSelect() {
+export default function IncomeSelect({
+  register,
+}: {
+  register: UseFormRegister<IncomeTransaction>;
+}) {
   const incomesources: SourceIncome[] = [
     {
       name: "Salary",
@@ -45,7 +51,11 @@ export default function IncomeSelect() {
   ];
 
   return (
-    <Select>
+    <Select
+      onValueChange={() => {
+        register("categoryId");
+      }}
+    >
       <SelectTrigger id="source" name="source" className="w-full">
         <SelectValue />
       </SelectTrigger>
