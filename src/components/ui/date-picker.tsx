@@ -2,7 +2,6 @@
 
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -11,16 +10,14 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "./button";
 import { useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { IncomeTransaction } from "../Dashboard/Overall/Forms/IncomeForm";
 
-export function DatePicker({
-  register,
-}: {
-  register: UseFormRegister<IncomeTransaction>;
-}) {
+export function DatePicker() {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
+
+  const { setValue } = useFormContext<IncomeTransaction>();
 
   const today = new Date();
 
@@ -50,7 +47,7 @@ export function DatePicker({
           onSelect={(d) => {
             setDate(d);
             setOpen(false);
-            register("createdAt");
+            setValue("createdAt", d?.toString());
           }}
           className="w-full pointer-events-auto"
         />
