@@ -111,7 +111,7 @@ function Calendar({
           defaultClassNames.range_end,
         ),
         today: cn(
-          "bg-oklch(0.97 0 0) text-oklch(0.205 0 0) rounded-md data-[selected=true]:rounded-none dark:bg-oklch(0.269 0 0) dark:text-oklch(0.985 0 0)",
+          "bg-oklch(0.269 0 0) text-oklch(0.205 0 0) rounded-md data-[selected=true]:rounded-none dark:bg-oklch(0.269 0 0) dark:text-oklch(0.985 0 0)",
           defaultClassNames.today,
         ),
         outside: cn(
@@ -201,6 +201,8 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
+        modifiers.today &&
+          "bg-primary/80 text-white lg:hover:bg-primary/95 dark:bg-gray-700 dark:text-white",
         "data-[selected-single=true]:bg-oklch(0.205 0 0) data-[selected-single=true]:text-oklch(0.985 0 0) data-[range-middle=true]:bg-oklch(0.97 0 0) data-[range-middle=true]:text-oklch(0.205 0 0) data-[range-start=true]:bg-oklch(0.205 0 0) data-[range-start=true]:text-oklch(0.985 0 0) data-[range-end=true]:bg-oklch(0.205 0 0) data-[range-end=true]:text-oklch(0.985 0 0) group-data-[focused=true]/day:border-oklch(0.708 0 0) group-data-[focused=true]/day:ring-oklch(0.708 0 0)/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] [&>span]:text-xs [&>span]:opacity-70 dark:data-[selected-single=true]:bg-oklch(0.922 0 0) dark:data-[selected-single=true]:text-oklch(0.205 0 0) dark:data-[range-middle=true]:bg-oklch(0.269 0 0) dark:data-[range-middle=true]:text-oklch(0.985 0 0) dark:data-[range-start=true]:bg-oklch(0.922 0 0) dark:data-[range-start=true]:text-oklch(0.205 0 0) dark:data-[range-end=true]:bg-oklch(0.922 0 0) dark:data-[range-end=true]:text-oklch(0.205 0 0) dark:group-data-[focused=true]/day:border-oklch(0.556 0 0) dark:group-data-[focused=true]/day:ring-oklch(0.556 0 0)/50",
         defaultClassNames.day,
         className,
