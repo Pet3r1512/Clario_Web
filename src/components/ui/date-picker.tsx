@@ -11,8 +11,14 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "./button";
 import { useState } from "react";
+import { UseFormRegister } from "react-hook-form";
+import { IncomeTransaction } from "../Dashboard/Overall/Forms/IncomeForm";
 
-export function DatePicker() {
+export function DatePicker({
+  register,
+}: {
+  register: UseFormRegister<IncomeTransaction>;
+}) {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
 
@@ -44,6 +50,7 @@ export function DatePicker() {
           onSelect={(d) => {
             setDate(d);
             setOpen(false);
+            register("createdAt");
           }}
           className="w-full pointer-events-auto"
         />
