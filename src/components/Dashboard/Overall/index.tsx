@@ -1,11 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { MoveDown, MoveUp, Wallet } from "lucide-react";
 import Data from "./Data";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import getCurrentBalance from "@/api/users/balances/getCurrentBalance";
 import { authClient } from "@/lib/auth-client";
-import { useEffect } from "react";
 import { ReactElement } from "react";
+
 export type OverallDataType = {
   name: string;
   subtitle: string;
@@ -23,21 +22,14 @@ export default function Overall() {
 
   const userId = userQuery.data?.data?.user?.id;
 
-  const balanceQuery = useMutation({
-    mutationKey: ["balance", userId],
-    mutationFn: ({ userId }: { userId: string }) =>
-      getCurrentBalance({ userId }),
+  const balanceQuery = useQuery({
+    queryKey: ["balance", userId],
+    queryFn: () => getCurrentBalance({ userId: userId! }),
+    enabled: !!userId,
   });
-
-  useEffect(() => {
-    if (userQuery.data?.data?.user.id) {
-      balanceQuery.mutate({ userId: userQuery.data?.data?.user.id });
-    }
-  }, []);
 
   const currentBalance = balanceQuery.data?.balance.balance ?? 0;
 
-  const data = [
   const data: OverallDataType[] = [
     {
       name: "Total Balance",
