@@ -47,7 +47,7 @@ export function DatePicker() {
           onSelect={(d) => {
             setDate(d);
             setOpen(false);
-            setValue("createdAt", d?.toString());
+            setValue("createdAt", d?.toISOString());
           }}
           className="w-full pointer-events-auto"
         />
