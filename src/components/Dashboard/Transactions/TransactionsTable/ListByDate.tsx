@@ -34,7 +34,7 @@ export default function ListByDate({
             </div>
 
             {txs.map((tx) => (
-              <TransactionSummary key={tx.id} transaction={tx} />
+              <TransactionSummary key={tx.description} transaction={tx} />
             ))}
           </div>
         ))}
