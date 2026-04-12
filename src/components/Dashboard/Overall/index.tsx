@@ -5,6 +5,14 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import getCurrentBalance from "@/api/users/balances/getCurrentBalance";
 import { authClient } from "@/lib/auth-client";
 import { useEffect } from "react";
+import { ReactElement } from "react";
+export type OverallDataType = {
+  name: string;
+  subtitle: string;
+  icon: ReactElement;
+  isLoading: boolean;
+  amount: number;
+};
 
 export default function Overall() {
   const userQuery = useQuery({
@@ -30,6 +38,7 @@ export default function Overall() {
   const currentBalance = balanceQuery.data?.balance.balance ?? 0;
 
   const data = [
+  const data: OverallDataType[] = [
     {
       name: "Total Balance",
       subtitle: "Current Balance",
@@ -48,6 +57,7 @@ export default function Overall() {
           <MoveDown className="text-green-500" />
         </div>
       ),
+      isLoading: false,
       amount: 0,
     },
     {
@@ -58,6 +68,7 @@ export default function Overall() {
           <MoveUp className="text-red-500" />
         </div>
       ),
+      isLoading: false,
       amount: 0,
     },
   ];
