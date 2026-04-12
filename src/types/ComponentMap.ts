@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { JSX } from "react";
+
 export type ComponentMap = {
   [key: string]: JSX.Element;
 };
