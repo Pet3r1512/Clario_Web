@@ -15,9 +15,57 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import IncomeSelect from "./IncomeSelector";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import createNewIncome from "@/api/users/transactions/createNewIncome";
+import { toast } from "sonner";
+import { LoaderCircle } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+
+export type IncomeTransaction = {
+  userId: string;
+  categoryId: number;
+  amount: number;
+  currency: string;
+  description: string;
+  createdAt?: string;
+};
 
 export function IncomeForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const methods = useForm<IncomeTransaction>();
+
+  const { register, handleSubmit } = methods;
+
+  const mutation = useMutation({
+    mutationKey: ["income"],
+    mutationFn: createNewIncome,
+    onError: (error) => {
+      console.log(error?.message);
+    },
+    onSuccess: () => {
+      toast.success("Add New Income Sucessfully");
+    },
+  });
+
+  const onSubmit: SubmitHandler<IncomeTransaction> = async (credentials) => {
+    const session = await authClient.getSession();
+    const userId = session?.data?.user.id;
+
+    if (!userId) {
+      toast.error("User session not found");
+      return;
+    }
+
+    const defaultCredentials = {
+      userId,
+      currency: "AUD",
+    };
+
+    mutation.mutate({ ...credentials, ...defaultCredentials });
+
+    setIsOpen(false);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -38,45 +86,51 @@ export function IncomeForm() {
         onCloseAutoFocus={(e) => e.preventDefault()}
         className="sm:max-w-sm bg-white pointer-events-auto"
       >
-        <form>
-          <DialogHeader>
-            <DialogTitle>Add Income</DialogTitle>
-          </DialogHeader>
-          <DialogDescription className="sr-only"></DialogDescription>
-          <FieldGroup className="my-8">
-            <Field>
-              <Label htmlFor="amount">Amount</Label>
-              <Input
-                id="amount"
-                name="amount"
-                type="text"
-                min={1}
-                inlist={"decimal"}
-              />
-            </Field>
-            <Field>
-              <Label htmlFor="source">Source</Label>
-              <IncomeSelect />
-              {/* <Input
-                id="source"
-                name="source"
-                placeholder="e.g. Salary, Family Support, etc."
-              /> */}
-            </Field>
-            <Field>
-              <Label htmlFor="date">Date</Label>
-              <DatePicker />
-            </Field>
-          </FieldGroup>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button type="submit" className="bg-primary hover:bg-primary/90">
-              Save changes
-            </Button>
-          </DialogFooter>
-        </form>
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <DialogHeader>
+              <DialogTitle>Add Income</DialogTitle>
+            </DialogHeader>
+            <DialogDescription className="sr-only"></DialogDescription>
+            <FieldGroup className="my-8">
+              <Field>
+                <Label htmlFor="source">Income Source</Label>
+                <IncomeSelect />
+              </Field>
+              <Field>
+                <Label htmlFor="amount">Amount</Label>
+                <Input
+                  id="amount"
+                  type="number"
+                  {...register("amount", {
+                    required: "Amount is required",
+                    valueAsNumber: true,
+                  })}
+                />
+              </Field>
+              <Field>
+                <Label htmlFor="desc">Description</Label>
+                <Input id="desc" type="text" {...register("description")} />
+              </Field>
+              <Field>
+                <Label htmlFor="date">Date</Label>
+                <DatePicker />
+              </Field>
+            </FieldGroup>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" className="bg-primary hover:bg-primary/90">
+                {mutation.isPending ? (
+                  <LoaderCircle className="animate-spin" />
+                ) : (
+                  "Save changes"
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
+        </FormProvider>
       </DialogContent>
     </Dialog>
   );
