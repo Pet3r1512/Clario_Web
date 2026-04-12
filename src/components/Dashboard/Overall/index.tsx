@@ -39,6 +39,7 @@ export default function Overall() {
           <Wallet className="text-blue-500" />
         </div>
       ),
+      isLoading: balanceQuery.isLoading,
       amount: currentBalance,
     },
     {
