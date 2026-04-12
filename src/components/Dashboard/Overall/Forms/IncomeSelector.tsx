@@ -11,7 +11,7 @@ import { IncomeTransaction } from "./IncomeForm";
 
 type SourceIncome = {
   name: string;
-  id: string;
+  id: number;
 };
 
 export default function IncomeSelect({
@@ -22,38 +22,38 @@ export default function IncomeSelect({
   const incomesources: SourceIncome[] = [
     {
       name: "Salary",
-      id: "1",
+      id: 1,
     },
     {
       name: "Bonus",
-      id: "2",
+      id: 2,
     },
     {
       name: "Freelance",
-      id: "3",
+      id: 3,
     },
     {
       name: "Investment",
-      id: "4",
+      id: 4,
     },
     {
       name: "Retail Income",
-      id: "5",
+      id: 5,
     },
     {
       name: "Gift",
-      id: "6",
+      id: 6,
     },
     {
       name: "Other",
-      id: "7",
+      id: 7,
     },
   ];
 
   return (
     <Select
-      onValueChange={() => {
-        register("categoryId");
+      onValueChange={(value) => {
+        setValue("categoryId", +value);
       }}
     >
       <SelectTrigger id="source" name="source" className="w-full">
@@ -65,7 +65,7 @@ export default function IncomeSelect({
             return (
               <SelectItem
                 key={source.id}
-                value={source.id}
+                value={source.id.toString()}
                 className="lg:hover:bg-gray-200"
               >
                 {source.name}
