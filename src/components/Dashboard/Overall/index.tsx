@@ -10,6 +10,7 @@ export type OverallDataType = {
   subtitle: string;
   icon: ReactElement;
   isLoading: boolean;
+  isError: boolean;
   amount: number;
 };
 
@@ -40,6 +41,7 @@ export default function Overall() {
         </div>
       ),
       isLoading: balanceQuery.isLoading,
+      isError: balanceQuery.isError,
       amount: currentBalance,
     },
     {
@@ -51,6 +53,7 @@ export default function Overall() {
         </div>
       ),
       isLoading: false,
+      isError: false,
       amount: 0,
     },
     {
@@ -62,6 +65,7 @@ export default function Overall() {
         </div>
       ),
       isLoading: false,
+      isError: false,
       amount: 0,
     },
   ];
