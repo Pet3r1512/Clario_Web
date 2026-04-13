@@ -117,7 +117,7 @@ export function IncomeForm() {
                 <DatePicker />
               </Field>
             </FieldGroup>
-            <DialogFooter>
+            <DialogFooter className="flex-col gap-y-3.5">
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
