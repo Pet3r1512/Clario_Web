@@ -3,12 +3,12 @@ import Data from "./Data";
 import { useQuery } from "@tanstack/react-query";
 import getCurrentBalance from "@/api/users/balances/getCurrentBalance";
 import { authClient } from "@/lib/auth-client";
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 
 export type OverallDataType = {
   name: string;
   subtitle: string;
-  icon: ReactElement;
+  icon: ReactNode;
   isLoading: boolean;
   isError: boolean;
   amount: number;
