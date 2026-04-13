@@ -12,7 +12,7 @@ export default function Data({ data }: { data: OverallDataType }) {
       </div>
       {data.isError ? (
         <p className="lg:text-xl font-semibold text-red-500 flex items-center gap-x-2">
-          Error <CircleAlert />
+          Failed To Load <CircleAlert />
         </p>
       ) : (
         <p className="lg:text-xl font-semibold">
