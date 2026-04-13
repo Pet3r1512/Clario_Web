@@ -1,10 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { MoveDown, MoveUp, Wallet } from "lucide-react";
 import Data from "./Data";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import getCurrentBalance from "@/api/users/balances/getCurrentBalance";
 import { authClient } from "@/lib/auth-client";
-import { useEffect } from "react";
+import { ReactNode } from "react";
+
+export type OverallDataType = {
+  name: string;
+  subtitle: string;
+  icon: ReactNode;
+  isLoading: boolean;
+  isError: boolean;
+  amount: number;
+};
 
 export default function Overall() {
   const userQuery = useQuery({
@@ -15,21 +23,15 @@ export default function Overall() {
 
   const userId = userQuery.data?.data?.user?.id;
 
-  const balanceQuery = useMutation({
-    mutationKey: ["balance", userId],
-    mutationFn: ({ userId }: { userId: string }) =>
-      getCurrentBalance({ userId }),
+  const balanceQuery = useQuery({
+    queryKey: ["balance", userId],
+    queryFn: () => getCurrentBalance({ userId: userId! }),
+    enabled: !!userId,
   });
-
-  useEffect(() => {
-    if (userQuery.data?.data?.user.id) {
-      balanceQuery.mutate({ userId: userQuery.data?.data?.user.id });
-    }
-  }, []);
 
   const currentBalance = balanceQuery.data?.balance.balance ?? 0;
 
-  const data = [
+  const data: OverallDataType[] = [
     {
       name: "Total Balance",
       subtitle: "Current Balance",
@@ -38,6 +40,8 @@ export default function Overall() {
           <Wallet className="text-blue-500" />
         </div>
       ),
+      isLoading: balanceQuery.isLoading,
+      isError: balanceQuery.isError,
       amount: currentBalance,
     },
     {
@@ -48,6 +52,8 @@ export default function Overall() {
           <MoveDown className="text-green-500" />
         </div>
       ),
+      isLoading: false,
+      isError: false,
       amount: 0,
     },
     {
@@ -58,6 +64,8 @@ export default function Overall() {
           <MoveUp className="text-red-500" />
         </div>
       ),
+      isLoading: false,
+      isError: false,
       amount: 0,
     },
   ];
