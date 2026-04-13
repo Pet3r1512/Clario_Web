@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { OverallDataType } from ".";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CircleAlert } from "lucide-react";
 
 export default function Data({ data }: { data: OverallDataType }) {
   return (
@@ -9,13 +10,19 @@ export default function Data({ data }: { data: OverallDataType }) {
         <p className="lg:text-xl font-extrabold">{data.name}</p>
         {data.icon}
       </div>
-      <p className="lg:text-xl font-semibold">
-        {data.isLoading ? (
-          <Skeleton className="w-1/2 h-7" />
-        ) : (
-          `${Number(data.amount ?? 0).toFixed(2)}`
-        )}
-      </p>
+      {data.isError ? (
+        <p className="lg:text-xl font-semibold text-red-500 flex items-center gap-x-2">
+          Error <CircleAlert />
+        </p>
+      ) : (
+        <p className="lg:text-xl font-semibold">
+          {data.isLoading ? (
+            <Skeleton className="w-1/2 h-7" />
+          ) : (
+            `${Number(data.amount ?? 0).toFixed(2)}`
+          )}
+        </p>
+      )}
       <p className="text-gray-400 lg:text-sm">{data.subtitle}</p>
     </Card>
   );
