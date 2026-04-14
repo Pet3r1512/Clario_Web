@@ -49,7 +49,7 @@ export function DatePicker() {
             setOpen(false);
             setValue("createdAt", d?.toISOString());
           }}
-          className="w-full pointer-events-auto"
+          className="w-full h-full pointer-events-auto"
         />
       </PopoverContent>
     </Popover>
