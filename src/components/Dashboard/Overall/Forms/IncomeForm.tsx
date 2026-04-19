@@ -14,7 +14,7 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import IncomeSelect from "./IncomeSelector";
+import IncomeSelect from "./Selectors/IncomeSelector";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import createNewIncome from "@/api/users/transactions/createNewIncome";
@@ -102,6 +102,7 @@ export function IncomeForm() {
                 <Input
                   id="amount"
                   type="number"
+                  step={"0.01"}
                   {...register("amount", {
                     required: "Amount is required",
                     valueAsNumber: true,
