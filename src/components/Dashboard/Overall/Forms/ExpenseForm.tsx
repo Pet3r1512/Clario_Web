@@ -16,12 +16,12 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import createNewIncome from "@/api/users/transactions/createNewIncome";
 import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { Transaction } from "./IncomeForm";
 import ExpenseSelect from "./Selectors/ExpenseSelector";
+import createNewTransaction from "@/api/users/transactions/createNewTransaction";
 
 export function ExpenseForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -31,7 +31,7 @@ export function ExpenseForm() {
 
   const mutation = useMutation({
     mutationKey: ["income"],
-    mutationFn: createNewIncome,
+    mutationFn: createNewTransaction,
     onError: (error) => {
       console.log(error?.message);
     },

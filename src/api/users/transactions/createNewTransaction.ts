@@ -1,7 +1,7 @@
 import { Transaction } from "@/components/Dashboard/Overall/Forms/IncomeForm";
 import { SERVER_URL } from "@/constant/auth";
 
-export default async function createNewIncome(input: Transaction) {
+export default async function createNewTransaction(input: Transaction) {
   const response = await fetch(
     `${SERVER_URL}/api/trpc/transactions.addTransaction`,
     {
