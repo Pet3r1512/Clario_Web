@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
-export type IncomeTransaction = {
+export type Transaction = {
   userId: string;
   categoryId: number;
   amount: number;
@@ -33,7 +33,7 @@ export type IncomeTransaction = {
 
 export function IncomeForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const methods = useForm<IncomeTransaction>();
+  const methods = useForm<Transaction>();
 
   const { register, handleSubmit } = methods;
 
@@ -48,7 +48,7 @@ export function IncomeForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<IncomeTransaction> = async (credentials) => {
+  const onSubmit: SubmitHandler<Transaction> = async (credentials) => {
     const session = await authClient.getSession();
     const userId = session?.data?.user.id;
 
