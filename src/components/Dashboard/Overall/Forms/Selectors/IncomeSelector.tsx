@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
-import { IncomeTransaction } from "./IncomeForm";
+import { Transaction } from "../IncomeForm";
 
 type SourceIncome = {
   name: string;
@@ -15,7 +15,7 @@ type SourceIncome = {
 };
 
 export default function IncomeSelect() {
-  const { setValue } = useFormContext<IncomeTransaction>();
+  const { setValue } = useFormContext<Transaction>();
 
   const incomesources: SourceIncome[] = [
     {
