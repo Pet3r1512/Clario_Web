@@ -36,7 +36,7 @@ export function ExpenseForm() {
       console.log(error?.message);
     },
     onSuccess: () => {
-      toast.success("Add New Expense Sucessfully");
+      toast.success("Add New Expense Successfully");
     },
   });
 

@@ -44,7 +44,7 @@ export function IncomeForm() {
       console.log(error?.message);
     },
     onSuccess: () => {
-      toast.success("Add New Income Sucessfully");
+      toast.success("Add New Income Successfully");
     },
   });
 
