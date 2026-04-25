@@ -107,7 +107,16 @@ export function ExpenseForm() {
               </Field>
               <Field>
                 <Label htmlFor="desc">Description</Label>
-                <Input id="desc" type="text" {...register("description")} />
+                <Input
+                  id="desc"
+                  type="text"
+                  {...register("description", {
+                    maxLength: {
+                      value: 50,
+                      message: "Max length is 50 characters",
+                    },
+                  })}
+                />
               </Field>
               <Field>
                 <Label htmlFor="date">Date</Label>
