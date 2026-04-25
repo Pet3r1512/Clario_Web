@@ -35,7 +35,7 @@ export function DatePicker() {
       </PopoverTrigger>
 
       <PopoverContent
-        className="w-64 p-0 bg-white"
+        className="h-auto w-64 p-0"
         align="start"
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
@@ -49,7 +49,7 @@ export function DatePicker() {
             setOpen(false);
             setValue("createdAt", d?.toISOString());
           }}
-          className="w-full h-full pointer-events-auto"
+          className="w-full h-75 z-100 bg-white rounded-lg pointer-events-auto"
         />
       </PopoverContent>
     </Popover>
