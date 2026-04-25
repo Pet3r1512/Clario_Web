@@ -7,45 +7,49 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
-import { IncomeTransaction } from "./IncomeForm";
+import { Transaction } from "../IncomeForm";
 
-type SourceIncome = {
+type SourceExpense = {
   name: string;
   id: number;
 };
 
-export default function IncomeSelect() {
-  const { setValue } = useFormContext<IncomeTransaction>();
+export default function ExpenseSelect() {
+  const { setValue } = useFormContext<Transaction>();
 
-  const incomesources: SourceIncome[] = [
+  const expenseSources: SourceExpense[] = [
     {
-      name: "Salary",
-      id: 1,
+      name: "Food & Drinks",
+      id: 8,
+    },
+    { name: "Groceries", id: 9 },
+    {
+      name: "Vehicle / Transport",
+      id: 10,
     },
     {
-      name: "Bonus",
-      id: 2,
+      name: "Housing",
+      id: 11,
     },
     {
-      name: "Freelance",
-      id: 3,
+      name: "Bills",
+      id: 12,
     },
     {
-      name: "Investment",
-      id: 4,
+      name: "Study / Education",
+      id: 13,
     },
+    { name: "Health", id: 14 },
+    { name: "Entertainment", id: 15 },
+    { name: "Shopping", id: 16 },
+    { name: "Travel", id: 17 },
+    { name: "Insurance", id: 18 },
+    { name: "Taxes", id: 19 },
     {
-      name: "Retail Income",
-      id: 5,
+      name: "Savings & Investments",
+      id: 20,
     },
-    {
-      name: "Gift",
-      id: 6,
-    },
-    {
-      name: "Other",
-      id: 7,
-    },
+    { name: "Other Expense", id: 21 },
   ];
 
   return (
@@ -59,7 +63,7 @@ export default function IncomeSelect() {
       </SelectTrigger>
       <SelectContent className="bg-white w-full">
         <SelectGroup>
-          {incomesources.map((source: SourceIncome) => {
+          {expenseSources.map((source: SourceExpense) => {
             return (
               <SelectItem
                 key={source.id}

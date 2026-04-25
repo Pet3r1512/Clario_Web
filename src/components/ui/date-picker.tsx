@@ -11,13 +11,13 @@ import {
 import { Button } from "./button";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { IncomeTransaction } from "../Dashboard/Overall/Forms/IncomeForm";
+import { Transaction } from "../Dashboard/Overall/Forms/IncomeForm";
 
 export function DatePicker() {
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
 
-  const { setValue } = useFormContext<IncomeTransaction>();
+  const { setValue } = useFormContext<Transaction>();
 
   const today = new Date();
 
