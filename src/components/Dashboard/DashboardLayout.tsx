@@ -31,8 +31,13 @@ export default function DashboardLayout({
   });
 
   useEffect(() => {
-    if (sessionQuery.isFetched && !sessionQuery.data) {
-      navigate({ to: "/auth/signin", replace: true });
+    if (sessionQuery.isFetched) {
+      const hasValidSession =
+        sessionQuery.data?.data?.user || sessionQuery.data?.data?.session;
+
+      if (!hasValidSession) {
+        navigate({ to: "/auth/signin", replace: true });
+      }
     }
   }, [sessionQuery.isFetched, sessionQuery.data, navigate]);
 
