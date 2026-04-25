@@ -14,24 +14,16 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import IncomeSelect from "./Selectors/IncomeSelector";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import { Transaction } from "./IncomeForm";
+import ExpenseSelect from "./Selectors/ExpenseSelector";
 import createNewTransaction from "@/api/users/transactions/createNewTransaction";
 
-export type Transaction = {
-  userId: string;
-  categoryId: number;
-  amount: number;
-  currency: string;
-  description: string;
-  createdAt?: string;
-};
-
-export function IncomeForm() {
+export function ExpenseForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const methods = useForm<Transaction>();
 
@@ -44,7 +36,7 @@ export function IncomeForm() {
       console.log(error?.message);
     },
     onSuccess: () => {
-      toast.success("Add New Income Successfully");
+      toast.success("Add New Expense Successfully");
     },
   });
 
@@ -76,8 +68,8 @@ export function IncomeForm() {
           e.currentTarget.blur();
         }}
       >
-        <Button className="bg-primary hover:bg-primary/90 text-white rounded-2xl text-lg h-10.5">
-          + Add Income
+        <Button className="bg-white text-black border-[0.5px] border-black hover:bg-white/90 rounded-2xl text-lg h-10.5">
+          + Add Expense
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -89,13 +81,13 @@ export function IncomeForm() {
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Add Income</DialogTitle>
+              <DialogTitle>Add Expense</DialogTitle>
             </DialogHeader>
             <DialogDescription className="sr-only"></DialogDescription>
             <FieldGroup className="my-8">
               <Field>
-                <Label htmlFor="source">Income Source</Label>
-                <IncomeSelect />
+                <Label htmlFor="source">Spend On</Label>
+                <ExpenseSelect />
               </Field>
               <Field>
                 <Label htmlFor="amount">Amount</Label>

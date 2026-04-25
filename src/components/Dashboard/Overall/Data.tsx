@@ -15,13 +15,13 @@ export default function Data({ data }: { data: OverallDataType }) {
           Failed To Load <CircleAlert />
         </p>
       ) : (
-        <p className="lg:text-xl font-semibold">
+        <div className="lg:text-xl font-semibold">
           {data.isLoading ? (
             <Skeleton className="w-1/2 h-7" />
           ) : (
             `${Number(data.amount ?? 0).toFixed(2)}`
           )}
-        </p>
+        </div>
       )}
       <p className="text-gray-400 lg:text-sm">{data.subtitle}</p>
     </Card>
