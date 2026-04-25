@@ -106,6 +106,10 @@ export function IncomeForm() {
                   {...register("amount", {
                     required: "Amount is required",
                     valueAsNumber: true,
+                    min: {
+                      value: 0.01,
+                      message: "Amount must be greater than 0",
+                    },
                   })}
                 />
               </Field>
