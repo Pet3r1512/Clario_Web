@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ListByDate, { TransactionInfo } from "./ListByDate";
 import getTransactions from "@/api/users/transactions/getTransactions";
