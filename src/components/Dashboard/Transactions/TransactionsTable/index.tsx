@@ -63,7 +63,8 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
     [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage],
   );
 
-  const allTransactions = data?.pages[0].transactions?.transactions;
+  const allTransactions: TransactionInfo[] =
+    data?.pages.flatMap((page) => page.transactions.transactions) ?? [];
 
   if (!userId) return null;
   if (isLoading) return <div>Loading...</div>;
