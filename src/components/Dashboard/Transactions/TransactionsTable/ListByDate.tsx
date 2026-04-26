@@ -14,8 +14,11 @@ export type TransactionInfo = {
 
 export default function ListByDate({
   transactions = [],
+  lastElementRef,
 }: {
   transactions?: TransactionInfo[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  lastElementRef: any;
 }) {
   const groupedByDate = groupTransactions(transactions);
 
@@ -23,21 +26,28 @@ export default function ListByDate({
     return <div className="text-gray-500">No transactions</div>;
   }
 
+  const allTxs = Object.entries(groupedByDate)
+    .sort(([a], [b]) => b.localeCompare(a))
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .flatMap(([_, txs]) => txs);
+
+  const lastTxId = allTxs[allTxs.length - 1]?.id;
+
   return (
-    <>
+    <section className="space-y-10 max-h-[82.5%] overflow-y-auto">
       {Object.entries(groupedByDate)
         .sort(([a], [b]) => b.localeCompare(a))
         .map(([date, txs]) => (
-          <div key={date} className="space-y-5">
-            <div className="p-1.5 rounded-lg bg-gray-200 font-semibold">
-              {date}
-            </div>
-
+          <div key={date}>
             {txs.map((tx) => (
-              <TransactionSummary key={tx.description} transaction={tx} />
+              <TransactionSummary
+                key={tx.id}
+                transaction={tx}
+                lastElementRef={tx.id === lastTxId ? lastElementRef : undefined}
+              />
             ))}
           </div>
         ))}
-    </>
+    </section>
   );
 }
