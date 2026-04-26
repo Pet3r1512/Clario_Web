@@ -14,8 +14,10 @@ export type TransactionInfo = {
 
 export default function ListByDate({
   transactions = [],
+  lastElementRef,
 }: {
   transactions?: TransactionInfo[];
+  lastElementRef: (node: HTMLDivElement | null) => void;
 }) {
   const groupedByDate = groupTransactions(transactions);
 
@@ -23,21 +25,31 @@ export default function ListByDate({
     return <div className="text-gray-500">No transactions</div>;
   }
 
-  return (
-    <>
-      {Object.entries(groupedByDate)
-        .sort(([a], [b]) => b.localeCompare(a))
-        .map(([date, txs]) => (
-          <div key={date} className="space-y-5">
-            <div className="p-1.5 rounded-lg bg-gray-200 font-semibold">
-              {date}
-            </div>
+  const sortedEntries = Object.entries(groupedByDate).sort(([a], [b]) =>
+    b.localeCompare(a),
+  );
 
-            {txs.map((tx) => (
-              <TransactionSummary key={tx.description} transaction={tx} />
-            ))}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const allTxs = sortedEntries.flatMap(([_, txs]) => txs);
+  const lastTxId = allTxs[allTxs.length - 1]?.id;
+
+  return (
+    <section className="space-y-10 max-h-[82.5%] overflow-y-auto">
+      {sortedEntries.map(([date, txs]) => (
+        <div key={date} className="space-y-5">
+          <div className="p-1.5 rounded-lg bg-gray-200 font-semibold">
+            {date}
           </div>
-        ))}
-    </>
+
+          {txs.map((tx) => (
+            <TransactionSummary
+              key={tx.id}
+              transaction={tx}
+              lastElementRef={tx.id === lastTxId ? lastElementRef : undefined}
+            />
+          ))}
+        </div>
+      ))}
+    </section>
   );
 }
