@@ -16,8 +16,11 @@ type CurrentCategory = {
 
 export default function TransactionSummary({
   transaction,
+  lastElementRef,
 }: {
   transaction: TransactionInfo;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  lastElementRef?: any;
 }) {
   const TransactionTypeDictionary: ComponentMap = {
     INCOME: (
@@ -41,21 +44,24 @@ export default function TransactionSummary({
     ? JSON.parse(sessionStorage.getItem("globalCategories") || "[]")
     : [];
 
-  const currCategory: CurrentCategory = globalCategories.find(
+  const currCategory: CurrentCategory | undefined = globalCategories.find(
     (c: { id: number | undefined }) => c.id === transaction.categoryId,
   );
 
   return (
-    <div className="rounded-2xl px-2.5 py-3 bg-gray-200 flex items-center gap-x-5">
+    <div
+      ref={lastElementRef}
+      className="rounded-2xl px-2.5 py-3 bg-gray-200 flex items-center gap-x-5"
+    >
       {currCategory && TransactionTypeDictionary[currCategory.type]}
       <div className="space-y-2 flex-1">
-        <p className="font-semibold">{currCategory.name}</p>
+        <p className="font-semibold">{currCategory?.name ?? "Uncategorized"}</p>
         <p>{transaction.description}</p>
       </div>
       <p
-        className={`text-xl font-semibold ${TransactionAmountTextColor[currCategory.type]}`}
+        className={`text-xl font-semibold ${TransactionAmountTextColor[currCategory?.type || ""]}`}
       >
-        {currCategory.type.toString() === "INCOME" ? "+ " : "- "}
+        {currCategory!.type.toString() === "INCOME" ? "+ " : "- "}
         {transaction.amount}
       </p>
     </div>
