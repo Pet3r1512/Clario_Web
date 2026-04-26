@@ -3,8 +3,8 @@ import { TransactionInfo } from "./ListByDate";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 enum CategoryType {
-  "EXPENSE",
-  "INCOME",
+  EXPENSE,
+  INCOME,
 }
 
 type CurrentCategory = {
@@ -19,8 +19,7 @@ export default function TransactionSummary({
   lastElementRef,
 }: {
   transaction: TransactionInfo;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  lastElementRef?: any;
+  lastElementRef?: (node: HTMLDivElement | null) => void;
 }) {
   const TransactionTypeDictionary: ComponentMap = {
     INCOME: (
@@ -40,12 +39,13 @@ export default function TransactionSummary({
     EXPENSE: "text-red-500",
   };
 
-  const globalCategories = sessionStorage.getItem("globalCategories")
-    ? JSON.parse(sessionStorage.getItem("globalCategories") || "[]")
+  const globalCategoriesData = sessionStorage.getItem("globalCategories");
+  const globalCategories: CurrentCategory[] = globalCategoriesData
+    ? JSON.parse(globalCategoriesData)
     : [];
 
   const currCategory: CurrentCategory | undefined = globalCategories.find(
-    (c: { id: number | undefined }) => c.id === transaction.categoryId,
+    (c) => c.id === transaction.categoryId,
   );
 
   return (
@@ -53,15 +53,30 @@ export default function TransactionSummary({
       ref={lastElementRef}
       className="rounded-2xl px-2.5 py-3 bg-gray-200 flex items-center gap-x-5"
     >
-      {currCategory && TransactionTypeDictionary[currCategory.type]}
+      {currCategory &&
+        TransactionTypeDictionary[
+          typeof currCategory.type === "string"
+            ? (currCategory.type as keyof ComponentMap)
+            : (CategoryType[currCategory.type] as keyof ComponentMap)
+        ]}
+
       <div className="space-y-2 flex-1">
-        <p className="font-semibold">{currCategory?.name ?? "Uncategorized"}</p>
+        <p className="font-semibold">{currCategory?.name}</p>
         <p>{transaction.description}</p>
       </div>
+
       <p
-        className={`text-xl font-semibold ${TransactionAmountTextColor[currCategory?.type || ""]}`}
+        className={`text-xl font-semibold ${
+          currCategory
+            ? TransactionAmountTextColor[
+                typeof currCategory.type === "string"
+                  ? currCategory.type
+                  : CategoryType[currCategory.type]
+              ]
+            : "text-gray-500"
+        }`}
       >
-        {currCategory!.type.toString() === "INCOME" ? "+ " : "- "}
+        {currCategory?.type === CategoryType.INCOME ? "+ " : "- "}
         {transaction.amount}
       </p>
     </div>
