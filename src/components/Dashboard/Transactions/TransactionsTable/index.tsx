@@ -78,7 +78,20 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
         </Skeleton>
       </div>
     );
-  if (isError) return <div>{(error as Error).message}</div>;
+  if (isError)
+    return (
+      <div>
+        {(error as Error).message || "Failed to load transactions. Try again?"}
+      </div>
+    );
+
+  if (allTransactions.length === 0) {
+    return (
+      <p className="lg:text-lg italic text-gray-400">
+        You do not have any transactions.
+      </p>
+    );
+  }
 
   return (
     <ListByDate
