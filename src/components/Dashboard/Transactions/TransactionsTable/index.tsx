@@ -2,6 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import ListByDate, { TransactionInfo } from "./ListByDate";
 import getTransactions from "@/api/users/transactions/getTransactions";
 import { useCallback, useRef } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface TransactionsTableProps {
   userId: string | undefined;
@@ -66,7 +67,17 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
     data?.pages.flatMap((page) => page.transactions.transactions) ?? [];
 
   if (!userId) return null;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="space-y-5">
+        <Skeleton className="text-gray-300 bg-gray-300 p-1.5 rounded-lg">
+          Loading
+        </Skeleton>
+        <Skeleton className="rounded-2xl px-2.5 py-3 text-gray-300 bg-gray-300 flex items-center gap-x-5 h-20">
+          Loading
+        </Skeleton>
+      </div>
+    );
   if (isError) return <div>{(error as Error).message}</div>;
 
   return (
