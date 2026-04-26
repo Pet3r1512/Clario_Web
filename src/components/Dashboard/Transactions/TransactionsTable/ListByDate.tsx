@@ -41,9 +41,9 @@ export default function ListByDate({
             {date}
           </div>
 
-          {txs.map((tx, index) => (
+          {txs.map((tx) => (
             <TransactionSummary
-              key={tx.id ?? `${tx.date}-${tx.amount}-${index}`}
+              key={tx.id}
               transaction={tx}
               lastElementRef={tx.id === lastTxId ? lastElementRef : undefined}
             />
