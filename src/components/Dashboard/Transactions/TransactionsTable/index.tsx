@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ListByDate, { TransactionInfo } from "./ListByDate";
 import getTransactions from "@/api/users/transactions/getTransactions";
@@ -8,8 +9,10 @@ interface TransactionsTableProps {
 }
 
 interface TransactionsResponse {
-  success: boolean;
-  transactions: TransactionInfo[];
+  transactions: {
+    transactions: TransactionInfo[];
+    hasMore: boolean;
+  };
 }
 
 export default function TransactionsTable({ userId }: TransactionsTableProps) {
@@ -23,21 +26,28 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
     isLoading,
     isError,
     error,
-  } = useInfiniteQuery({
+  } = useInfiniteQuery<TransactionsResponse>({
     queryKey: ["transactions", userId],
     initialPageParam: 1,
-    queryFn: ({ pageParam = 1 }) =>
-      getTransactions({ userId, page: pageParam as number }),
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await getTransactions({
+        userId,
+        page: pageParam as number,
+      });
+      return {
+        transactions: response.transactions,
+        hasMore: response.transactions.length > 0,
+      };
+    },
     getNextPageParam: (lastPage, allPages) => {
-      if (!(lastPage as TransactionsResponse).success) return undefined;
+      if (!lastPage.transactions.hasMore) return undefined;
       return allPages.length + 1;
     },
     enabled: !!userId,
   });
 
   const lastElementRef = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (node: any) => {
+    (node: HTMLDivElement | null) => {
       if (isLoading || isFetchingNextPage) return;
 
       if (observer.current) observer.current.disconnect();
@@ -53,10 +63,9 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
     [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage],
   );
 
-  const allTransactions =
-    data?.pages.flatMap((page) => page.transactions) ?? [];
+  const allTransactions = data?.pages[0].transactions?.transactions;
 
-  if (!userId) return null; // or loading skeleton
+  if (!userId) return null;
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>{(error as Error).message}</div>;
 
