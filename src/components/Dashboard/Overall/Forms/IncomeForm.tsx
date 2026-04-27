@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import createNewTransaction from "@/api/users/transactions/createNewTransaction";
+import useBalanceStore from "@/store/store";
 
 export type Transaction = {
   userId: string;
@@ -49,6 +50,7 @@ export function IncomeForm() {
       queryClient.invalidateQueries({
         queryKey: ["balance"],
       });
+      useBalanceStore.getState().markUpdated(false);
     },
   });
 

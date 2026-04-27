@@ -22,6 +22,7 @@ import { authClient } from "@/lib/auth-client";
 import { Transaction } from "./IncomeForm";
 import ExpenseSelect from "./Selectors/ExpenseSelector";
 import createNewTransaction from "@/api/users/transactions/createNewTransaction";
+import useBalanceStore from "@/store/store";
 
 export function ExpenseForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -41,6 +42,7 @@ export function ExpenseForm() {
       queryClient.invalidateQueries({
         queryKey: ["balance"],
       });
+      useBalanceStore.getState().markUpdated(false);
     },
   });
 
