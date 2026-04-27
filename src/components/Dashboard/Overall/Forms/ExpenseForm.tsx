@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
@@ -26,6 +26,7 @@ import createNewTransaction from "@/api/users/transactions/createNewTransaction"
 export function ExpenseForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const methods = useForm<Transaction>();
+  const queryClient = useQueryClient();
 
   const { register, handleSubmit } = methods;
 
@@ -37,6 +38,9 @@ export function ExpenseForm() {
     },
     onSuccess: () => {
       toast.success("Add New Expense Successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["balance"],
+      });
     },
   });
 
