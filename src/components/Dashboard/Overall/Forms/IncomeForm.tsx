@@ -16,11 +16,12 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import IncomeSelect from "./Selectors/IncomeSelector";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import createNewTransaction from "@/api/users/transactions/createNewTransaction";
+import useBalanceStore from "@/store/store";
 
 export type Transaction = {
   userId: string;
@@ -34,6 +35,7 @@ export type Transaction = {
 export function IncomeForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const methods = useForm<Transaction>();
+  const queryClient = useQueryClient();
 
   const { register, handleSubmit } = methods;
 
@@ -45,6 +47,10 @@ export function IncomeForm() {
     },
     onSuccess: () => {
       toast.success("Add New Income Successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["balance"],
+      });
+      useBalanceStore.getState().markUpdated(false);
     },
   });
 

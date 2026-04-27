@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
 import getGlobalCategories from "@/api/categories/getGlobalCategories";
+import { Toaster } from "sonner";
 
 export default function DashboardLayout({
   children,
@@ -68,6 +69,7 @@ export default function DashboardLayout({
         </div>
         {children}
       </main>
+      <Toaster />
     </SidebarProvider>
   );
 }
