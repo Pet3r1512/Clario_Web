@@ -1,9 +1,10 @@
 import { MoveDown, MoveUp, Wallet } from "lucide-react";
 import Data from "./Data";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import getCurrentBalance from "@/api/users/balances/getCurrentBalance";
 import { authClient } from "@/lib/auth-client";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import useBalanceStore from "@/store/store";
 
 export type OverallDataType = {
   name: string;
@@ -15,6 +16,9 @@ export type OverallDataType = {
 };
 
 export default function Overall() {
+  const queryClient = useQueryClient();
+  const isBalanceUpdated = useBalanceStore((state) => state.isUpdated);
+
   const userQuery = useQuery({
     queryKey: ["auth", "session"],
     queryFn: () => authClient.getSession(),
@@ -28,6 +32,15 @@ export default function Overall() {
     queryFn: () => getCurrentBalance({ userId: userId! }),
     enabled: !!userId,
   });
+
+  useEffect(() => {
+    if (isBalanceUpdated && userId) {
+      queryClient.invalidateQueries({
+        queryKey: ["balance", userId],
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBalanceUpdated, userId]);
 
   const currentBalance = balanceQuery.data?.balance.balance ?? 0;
 
