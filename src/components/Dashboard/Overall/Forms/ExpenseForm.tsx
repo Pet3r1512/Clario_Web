@@ -137,7 +137,7 @@ export function ExpenseForm() {
                 {mutation.isPending ? (
                   <LoaderCircle className="animate-spin" />
                 ) : (
-                  "Save changes"
+                  "Add New Expense"
                 )}
               </Button>
             </DialogFooter>
