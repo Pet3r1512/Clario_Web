@@ -145,7 +145,7 @@ export function IncomeForm() {
                 {mutation.isPending ? (
                   <LoaderCircle className="animate-spin" />
                 ) : (
-                  "Save changes"
+                  "Add New Income"
                 )}
               </Button>
             </DialogFooter>
