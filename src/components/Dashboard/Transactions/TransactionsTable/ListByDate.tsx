@@ -37,9 +37,7 @@ export default function ListByDate({
     <section className="space-y-10 max-h-[85%] lg:max-h-[92.5%] overflow-y-auto pr-2.5">
       {sortedEntries.map(([date, txs]) => (
         <div key={date} className="space-y-5">
-          <div className="p-1.5 rounded-lg bg-gray-200 font-semibold">
-            {date}
-          </div>
+          <div className="p-1.5 rounded-lg bg-gray-200 font-bold">{date}</div>
 
           {txs.map((tx) => (
             <TransactionSummary
