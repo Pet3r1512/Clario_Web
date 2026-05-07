@@ -2,6 +2,7 @@ import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { Settings, MessageCircleQuestion, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { useLogout } from "@/hooks/useLogOut";
 
 const items = [
   {
@@ -22,13 +23,17 @@ const items = [
 ];
 
 export default function SidebarFooter({ currUrl }: { currUrl: string }) {
-  const sessionQuery = useFetchSession();
+  // const sessionQuery = useFetchSession();
+  const { logout } = useLogout();
 
   return (
     <section className="px-5 pb-10">
       <div className="space-y-2.5">
         {items.map((item) => (
-          <div key={item.title}>
+          <div
+            key={item.title}
+            onClick={item.title === "Log Out" ? logout : () => {}}
+          >
             <SidebarMenuButton
               asChild
               className={cn(
