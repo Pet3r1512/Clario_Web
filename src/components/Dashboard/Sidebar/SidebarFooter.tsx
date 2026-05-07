@@ -1,11 +1,7 @@
 import { SidebarMenuButton } from "@/components/ui/sidebar";
-import { Settings, MessageCircleQuestion } from "lucide-react";
-import { User } from "./User";
 import { Settings, MessageCircleQuestion, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import ShortenUserName from "@/helpers/shortenUserName";
-import useFetchSession from "@/hooks/useFetchSession";
 
 const items = [
   {
@@ -50,14 +46,14 @@ export default function SidebarFooter({ currUrl }: { currUrl: string }) {
           </div>
         ))}
       </div>
-      <User
+      {/* <User
         user={{
           name: sessionQuery.data?.data?.user.name ?? "",
           email: sessionQuery.data?.data?.user.email ?? "",
           avatar: sessionQuery.data?.data?.user.image ?? "",
           shortenName: ShortenUserName(sessionQuery.data?.data?.user.name),
         }}
-      />
+      /> */}
     </section>
   );
 }
