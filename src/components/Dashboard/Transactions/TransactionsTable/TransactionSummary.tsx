@@ -51,7 +51,7 @@ export default function TransactionSummary({
   return (
     <div
       ref={lastElementRef}
-      className="rounded-2xl px-2.5 py-3 bg-gray-200 flex items-center gap-x-5"
+      className="px-2.5 py-3 flex items-center gap-x-5 border-b-[1.5px] border-gray-200 lg:hover:bg-gray-200 transition-all duration-150 ease-linear"
     >
       {currCategory &&
         TransactionTypeDictionary[
