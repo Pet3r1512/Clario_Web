@@ -3,7 +3,12 @@ import { TransactionInfo } from "@/components/Dashboard/Transactions/Transaction
 export default function groupTransactions(transactions: TransactionInfo[]) {
   const groupedByDate = transactions.reduce(
     (acc, tx) => {
-      const dateKey = new Date(tx.date).toLocaleDateString("en-CA");
+      const dateKey = new Date(tx.date).toLocaleDateString("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
 
       acc[dateKey] ??= [];
       acc[dateKey].push(tx);
