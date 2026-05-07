@@ -1,6 +1,7 @@
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { Settings, MessageCircleQuestion } from "lucide-react";
 import { User } from "./User";
+import { Settings, MessageCircleQuestion, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import ShortenUserName from "@/helpers/shortenUserName";
@@ -16,6 +17,11 @@ const items = [
     title: "Helps",
     url: "/dashboard/helps",
     icon: <MessageCircleQuestion />,
+  },
+  {
+    title: "Log Out",
+    url: "",
+    icon: <LogOut />,
   },
 ];
 
