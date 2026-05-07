@@ -1,6 +1,7 @@
 import { ComponentMap } from "@/types/ComponentMap";
 import { TransactionInfo } from "./ListByDate";
 import { ArrowDown, ArrowUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 enum CategoryType {
   EXPENSE,
@@ -51,7 +52,10 @@ export default function TransactionSummary({
   return (
     <div
       ref={lastElementRef}
-      className="rounded-2xl px-2.5 py-3 bg-gray-200 flex items-center gap-x-5"
+      className={cn(
+        "px-2.5 py-3 flex items-center gap-x-5 lg:hover:bg-gray-200 transition-all duration-150 ease-linear",
+        !lastElementRef ? "border-b-[1.5px] border-gray-200" : "",
+      )}
     >
       {currCategory &&
         TransactionTypeDictionary[
