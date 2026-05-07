@@ -4,8 +4,7 @@ import { User } from "./User";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import ShortenUserName from "@/helpers/shortenUserName";
-import { authClient } from "@/lib/auth-client";
-import { useQuery } from "@tanstack/react-query";
+import useFetchSession from "@/hooks/useFetchSession";
 
 const items = [
   {
@@ -21,14 +20,7 @@ const items = [
 ];
 
 export default function SidebarFooter({ currUrl }: { currUrl: string }) {
-  const sessionQuery = useQuery({
-    queryKey: ["session"],
-    queryFn: async () => {
-      const session = await authClient.getSession();
-      return session;
-    },
-    retry: false,
-  });
+  const sessionQuery = useFetchSession();
 
   return (
     <section className="px-5 pb-10">

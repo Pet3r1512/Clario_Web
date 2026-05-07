@@ -2,10 +2,10 @@ import { ReactNode, useEffect } from "react";
 import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 import { AppSidebar } from "../ui/app-sidebar";
 import { useQuery } from "@tanstack/react-query";
-import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
 import getGlobalCategories from "@/api/categories/getGlobalCategories";
 import { Toaster } from "sonner";
+import useFetchSession from "@/hooks/useFetchSession";
 
 export default function DashboardLayout({
   children,
@@ -15,20 +15,12 @@ export default function DashboardLayout({
   section?: string;
 }) {
   const navigate = useNavigate();
+  const sessionQuery = useFetchSession();
 
   const getGlobalCategoriesQuery = useQuery({
     queryKey: ["globalCategories"],
     queryFn: () => getGlobalCategories(),
     enabled: !sessionStorage.getItem("globalCategories"),
-  });
-
-  const sessionQuery = useQuery({
-    queryKey: ["session"],
-    queryFn: async () => {
-      const session = await authClient.getSession();
-      return session;
-    },
-    retry: false,
   });
 
   useEffect(() => {

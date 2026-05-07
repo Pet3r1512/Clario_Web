@@ -28,6 +28,9 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
     error,
   } = useInfiniteQuery<TransactionsResponse>({
     queryKey: ["transactions", userId],
+    staleTime: 5 * 60 * 1000, // cache for 5 mins
+    gcTime: 30 * 60 * 1000, // inactive for 30 mins
+    refetchOnWindowFocus: false, // DO NOT query when the window is NOT FOCUSED
     initialPageParam: 1,
     queryFn: async ({ pageParam = 1 }) => {
       const response = await getTransactions({

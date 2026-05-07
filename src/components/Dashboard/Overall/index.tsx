@@ -31,6 +31,9 @@ export default function Overall() {
     queryKey: ["balance", userId],
     queryFn: () => getCurrentBalance({ userId: userId! }),
     enabled: !!userId,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000, // 5 mins
+    gcTime: 30 * 60 * 1000, // 30 mins
   });
 
   useEffect(() => {
