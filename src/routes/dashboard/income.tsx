@@ -10,8 +10,6 @@ function RouteComponent() {
     <DashboardLayout
       section="Income"
       sectionDesc="Track and manage your income sources"
-    >
-      <div>Hello "/dashboard/income"!</div>
-    </DashboardLayout>
+    ></DashboardLayout>
   );
 }
