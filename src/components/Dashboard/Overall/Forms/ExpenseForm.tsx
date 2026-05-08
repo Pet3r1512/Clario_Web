@@ -35,7 +35,7 @@ export function ExpenseForm() {
     mutationKey: ["income"],
     mutationFn: createNewTransaction,
     onError: (error) => {
-      console.log(error?.message);
+      console.error(error?.message);
     },
     onSuccess: () => {
       toast.success("Add New Expense Successfully");
