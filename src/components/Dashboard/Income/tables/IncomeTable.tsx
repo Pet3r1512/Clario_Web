@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -22,15 +21,17 @@ export function IncomeTable({
   const lastTxId = transactions[transactions.length - 1]?.id;
 
   return (
-    <Table className="flex-1">
-      <TableCaption>A list of your recent income.</TableCaption>
-
+    <Table className="flex-1 overflow-x-auto">
       <TableHeader>
         <TableRow className="text-md lg:text-lg">
-          <TableHead className="w-1/5">Date</TableHead>
-          <TableHead>Source</TableHead>
-          <TableHead>Amount</TableHead>
-          <TableHead className="text-right">Description</TableHead>
+          <TableHead className="w-[25%]">Date</TableHead>
+          <TableHead className="w-[15%]">Source</TableHead>
+          <TableHead className="w-1/5 text-right md:text-left">
+            Amount
+          </TableHead>
+          <TableHead className="w-full text-right hidden md:flex md:items-center md:justify-end">
+            Description
+          </TableHead>
         </TableRow>
       </TableHeader>
 
@@ -41,11 +42,11 @@ export function IncomeTable({
             ref={transaction.id === lastTxId ? lastElementRef : undefined}
             className="lg:hover:bg-gray-100 lg:hover:scale-[99%] transition-all duration-150 ease-linear"
           >
-            <TableCell className="text-gray-800">
+            <TableCell className="w-[25%] text-gray-800">
               {ParseISOStringDate({ date: transaction.date })}
             </TableCell>
 
-            <TableCell>
+            <TableCell className="w-[15%]">
               {
                 <CategoryTag
                   categoryId={transaction.categoryId?.toString() || "0"}
@@ -53,9 +54,11 @@ export function IncomeTable({
               }
             </TableCell>
 
-            <TableCell className="font-medium">{transaction.amount}</TableCell>
+            <TableCell className="w-1/5 font-medium text-right md:text-left">
+              {transaction.amount}
+            </TableCell>
 
-            <TableCell className="text-right">
+            <TableCell className="w-full text-right hidden md:block">
               {transaction.description}
             </TableCell>
           </TableRow>
