@@ -1,14 +1,13 @@
 import { TransactionInfo } from "@/components/Dashboard/Transactions/TransactionsTable/ListByDate";
 
 export default function groupTransactions(transactions: TransactionInfo[]) {
-  const groupedByDate = transactions.reduce(
+  const sortedTransactions = [...transactions].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+
+  return sortedTransactions.reduce(
     (acc, tx) => {
-      const dateKey = new Date(tx.date).toLocaleDateString("en-GB", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
+      const dateKey = new Date(tx.date).toISOString().split("T")[0];
 
       acc[dateKey] ??= [];
       acc[dateKey].push(tx);
@@ -17,6 +16,4 @@ export default function groupTransactions(transactions: TransactionInfo[]) {
     },
     {} as Record<string, TransactionInfo[]>,
   );
-
-  return groupedByDate;
 }
