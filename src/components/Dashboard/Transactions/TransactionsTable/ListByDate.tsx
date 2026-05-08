@@ -1,6 +1,7 @@
 import { Currency } from "@/api/users/createBalance";
 import TransactionSummary from "./TransactionSummary";
 import groupTransactions from "@/lib/groupTransactions";
+import ParseISOStringDate from "@/helpers/parseISOStringData";
 
 export type TransactionInfo = {
   id: string;
@@ -25,8 +26,8 @@ export default function ListByDate({
     return <div className="text-gray-500">No transactions</div>;
   }
 
-  const sortedEntries = Object.entries(groupedByDate).sort(([a], [b]) =>
-    b.localeCompare(a),
+  const sortedEntries = Object.entries(groupedByDate).sort(
+    ([a], [b]) => new Date(b).getTime() - new Date(a).getTime(),
   );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,7 +38,9 @@ export default function ListByDate({
     <section className="space-y-10 max-h-[85%] lg:max-h-[92.5%] overflow-y-auto pr-2.5">
       {sortedEntries.map(([date, txs]) => (
         <div key={date} className="space-y-5">
-          <div className="p-1.5 rounded-lg bg-gray-200 font-bold">{date}</div>
+          <div className="p-1.5 rounded-lg bg-gray-200 font-bold">
+            {ParseISOStringDate({ date: date })}
+          </div>
 
           {txs.map((tx) => (
             <TransactionSummary
