@@ -10,9 +10,11 @@ import useFetchSession from "@/hooks/useFetchSession";
 export default function DashboardLayout({
   children,
   section,
+  sectionDesc,
 }: {
   children: ReactNode;
   section?: string;
+  sectionDesc?: string;
 }) {
   const navigate = useNavigate();
   const sessionQuery = useFetchSession();
@@ -60,6 +62,7 @@ export default function DashboardLayout({
           <p className="text-xl md:text-2xl lg:text-3xl font-bold text-primary">
             {section}
           </p>
+          <p className="text-gray-700">{sectionDesc}</p>
         </div>
         {children}
       </main>
