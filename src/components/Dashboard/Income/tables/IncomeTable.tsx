@@ -10,6 +10,7 @@ import {
 
 import { TransactionInfo } from "../../Transactions/TransactionsTable/ListByDate";
 import ParseISOStringDate from "@/helpers/parseISOStringData";
+import CategoryTag from "../../Category/CategoryTag";
 
 export function IncomeTable({
   transactions,
@@ -44,7 +45,13 @@ export function IncomeTable({
               {ParseISOStringDate({ date: transaction.date })}
             </TableCell>
 
-            <TableCell>{transaction.description}</TableCell>
+            <TableCell>
+              {
+                <CategoryTag
+                  categoryId={transaction.categoryId?.toString() || "0"}
+                />
+              }
+            </TableCell>
 
             <TableCell className="font-medium">{transaction.amount}</TableCell>
 
