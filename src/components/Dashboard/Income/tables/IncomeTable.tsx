@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 
 import { TransactionInfo } from "../../Transactions/TransactionsTable/ListByDate";
+import ParseISOStringDate from "@/helpers/parseISOStringData";
 
 export function IncomeTable({
   transactions,
@@ -24,8 +25,8 @@ export function IncomeTable({
       <TableCaption>A list of your recent income.</TableCaption>
 
       <TableHeader>
-        <TableRow>
-          <TableHead className="w-25">Date</TableHead>
+        <TableRow className="text-md lg:text-lg">
+          <TableHead className="w-1/5">Date</TableHead>
           <TableHead>Source</TableHead>
           <TableHead>Amount</TableHead>
           <TableHead className="text-right">Description</TableHead>
@@ -37,12 +38,15 @@ export function IncomeTable({
           <TableRow
             key={transaction.id}
             ref={transaction.id === lastTxId ? lastElementRef : undefined}
+            className="lg:hover:bg-gray-100 lg:hover:scale-[99%] transition-all duration-150 ease-linear"
           >
-            <TableCell className="font-medium">{transaction.date}</TableCell>
+            <TableCell className="text-gray-800">
+              {ParseISOStringDate({ date: transaction.date })}
+            </TableCell>
 
             <TableCell>{transaction.description}</TableCell>
 
-            <TableCell>{transaction.amount}</TableCell>
+            <TableCell className="font-medium">{transaction.amount}</TableCell>
 
             <TableCell className="text-right">
               {transaction.description}
