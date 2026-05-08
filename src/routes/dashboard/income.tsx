@@ -7,7 +7,10 @@ export const Route = createFileRoute("/dashboard/income")({
 
 function RouteComponent() {
   return (
-    <DashboardLayout>
+    <DashboardLayout
+      section="Income"
+      sectionDesc="Track and manage your income sources"
+    >
       <div>Hello "/dashboard/income"!</div>
     </DashboardLayout>
   );
