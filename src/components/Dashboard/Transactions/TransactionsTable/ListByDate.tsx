@@ -25,8 +25,8 @@ export default function ListByDate({
     return <div className="text-gray-500">No transactions</div>;
   }
 
-  const sortedEntries = Object.entries(groupedByDate).sort(([a], [b]) =>
-    b.localeCompare(a),
+  const sortedEntries = Object.entries(groupedByDate).sort(
+    ([a], [b]) => new Date(b).getTime() - new Date(a).getTime(),
   );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
