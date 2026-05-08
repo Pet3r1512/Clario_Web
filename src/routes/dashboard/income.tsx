@@ -11,7 +11,8 @@ function RouteComponent() {
     <DashboardLayout
       section="Income"
       sectionDesc="Track and manage your income sources"
-    ></DashboardLayout>
+    >
       <IncomeOverallContainer />
+    </DashboardLayout>
   );
 }
