@@ -25,8 +25,6 @@ export default function IncomeTableContainer() {
     [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage],
   );
 
-  console.log(data);
-
   const allTransactions: TransactionInfo[] =
     data?.pages.flatMap((page) => page.transactions) ?? [];
 
