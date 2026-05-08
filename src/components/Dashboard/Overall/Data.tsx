@@ -1,7 +1,10 @@
 import { Card } from "@/components/ui/card";
 import { OverallDataType } from ".";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, TrendingDown, TrendingUp } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const GROWTH_RATE_ICON_SIZE = 16;
 
 export default function Data({ data }: { data: OverallDataType }) {
   return (
@@ -15,11 +18,26 @@ export default function Data({ data }: { data: OverallDataType }) {
           Failed To Load <CircleAlert />
         </p>
       ) : (
-        <div className="lg:text-xl font-semibold">
+        <div
+          className={cn(
+            "lg:text-xl font-semibold flex items-center gap-1",
+            data.name === "Income Growth" &&
+              (data.amount >= 0 ? "text-green-500" : "text-red-500"),
+          )}
+        >
           {data.isLoading ? (
             <Skeleton className="w-1/2 h-7" />
-          ) : (
+          ) : data.name !== "Income Growth" ? (
             `${Number(data.amount ?? 0).toFixed(2)}`
+          ) : (
+            <>
+              {Number(data.amount)}%
+              {data.amount >= 0 ? (
+                <TrendingUp size={GROWTH_RATE_ICON_SIZE} />
+              ) : (
+                <TrendingDown size={GROWTH_RATE_ICON_SIZE} />
+              )}
+            </>
           )}
         </div>
       )}

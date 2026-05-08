@@ -10,9 +10,11 @@ import useFetchSession from "@/hooks/useFetchSession";
 export default function DashboardLayout({
   children,
   section,
+  sectionDesc,
 }: {
   children: ReactNode;
   section?: string;
+  sectionDesc?: string;
 }) {
   const navigate = useNavigate();
   const sessionQuery = useFetchSession();
@@ -54,12 +56,13 @@ export default function DashboardLayout({
   return (
     <SidebarProvider className="p-5">
       <AppSidebar />
-      <main className="w-full max-w-7xl space-y-10 max-h-[93.5dvh] lg:max-h-[95dvh] mx-auto">
+      <main className="w-full max-w-7xl space-y-10 lg:max-h-[95dvh] mx-auto">
         <div className="mb-5 space-y-2.5 lg:space-y-5">
           <SidebarTrigger />
           <p className="text-xl md:text-2xl lg:text-3xl font-bold text-primary">
             {section}
           </p>
+          <p className="text-gray-700">{sectionDesc}</p>
         </div>
         {children}
       </main>

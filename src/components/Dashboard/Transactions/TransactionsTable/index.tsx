@@ -1,14 +1,13 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
 import ListByDate, { TransactionInfo } from "./ListByDate";
-import getTransactions from "@/api/users/transactions/getTransactions";
 import { useCallback, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import useFetchTransactions from "@/hooks/useFetchTransactions";
 
-interface TransactionsTableProps {
+export interface TransactionsTableProps {
   userId: string | undefined;
 }
 
-interface TransactionsResponse {
+export interface TransactionsResponse {
   transactions: {
     transactions: TransactionInfo[];
     hasMore: boolean;
@@ -26,28 +25,7 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
     isLoading,
     isError,
     error,
-  } = useInfiniteQuery<TransactionsResponse>({
-    queryKey: ["transactions", userId],
-    staleTime: 5 * 60 * 1000, // cache for 5 mins
-    gcTime: 30 * 60 * 1000, // inactive for 30 mins
-    refetchOnWindowFocus: false, // DO NOT query when the window is NOT FOCUSED
-    initialPageParam: 1,
-    queryFn: async ({ pageParam = 1 }) => {
-      const response = await getTransactions({
-        userId,
-        page: pageParam as number,
-      });
-      return {
-        transactions: response.transactions,
-        hasMore: response.transactions.length > 0,
-      };
-    },
-    getNextPageParam: (lastPage, allPages) => {
-      if (!lastPage.transactions.hasMore) return undefined;
-      return allPages.length + 1;
-    },
-    enabled: !!userId,
-  });
+  } = useFetchTransactions({ option: "all" });
 
   const lastElementRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -67,7 +45,7 @@ export default function TransactionsTable({ userId }: TransactionsTableProps) {
   );
 
   const allTransactions: TransactionInfo[] =
-    data?.pages.flatMap((page) => page.transactions.transactions) ?? [];
+    data?.pages.flatMap((page) => page.transactions) ?? [];
 
   if (!userId) return null;
   if (isLoading)

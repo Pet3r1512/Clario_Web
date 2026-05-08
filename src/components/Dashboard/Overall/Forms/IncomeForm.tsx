@@ -43,7 +43,7 @@ export function IncomeForm() {
     mutationKey: ["income"],
     mutationFn: createNewTransaction,
     onError: (error) => {
-      console.log(error?.message);
+      console.error(error?.message);
     },
     onSuccess: () => {
       toast.success("Add New Income Successfully");
