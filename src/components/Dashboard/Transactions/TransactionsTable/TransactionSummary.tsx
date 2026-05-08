@@ -76,7 +76,7 @@ export default function TransactionSummary({
             : "text-gray-500"
         }`}
       >
-        {currCategory?.type === CategoryType.INCOME ? "+ " : "- "}
+        {currCategory?.type.toString() === "INCOME" ? "+ " : "- "}
         {transaction.amount}
       </p>
     </div>

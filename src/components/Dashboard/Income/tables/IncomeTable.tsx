@@ -24,9 +24,9 @@ export function IncomeTable({
     <Table className="flex-1 overflow-x-auto">
       <TableHeader>
         <TableRow className="text-md lg:text-lg">
-          <TableHead className="w-1/4 md:w-[30%] lg:w-1/4">Date</TableHead>
-          <TableHead className="w-1/2 md:w-[20%]">Source</TableHead>
-          <TableHead className="w-1/4 md:w-1/5 text-right md:text-left">
+          <TableHead className="w-[35%] md:w-[30%] lg:w-1/4">Date</TableHead>
+          <TableHead className="w-[30%] lg:w-1/2 md:w-[20%]">Source</TableHead>
+          <TableHead className="w-[35%] lg:w-1/4 md:w-1/5 text-right md:text-left">
             Amount
           </TableHead>
           <TableHead className="md:w-full text-right hidden md:flex md:items-center md:justify-end">
@@ -42,11 +42,11 @@ export function IncomeTable({
             ref={transaction.id === lastTxId ? lastElementRef : undefined}
             className="lg:hover:bg-gray-100 lg:hover:scale-[99%] transition-all duration-150 ease-linear"
           >
-            <TableCell className="w-1/4 md:w-[30%] text-gray-800">
+            <TableCell className="w-[35%] md:w-[30%] lg:w-1/4 text-gray-800">
               {ParseISOStringDate({ date: transaction.date })}
             </TableCell>
 
-            <TableCell className="w-1/2 md:w-[20%]">
+            <TableCell className="w-[30%] lg:w-1/2 md:w-[20%]">
               {
                 <CategoryTag
                   categoryId={transaction.categoryId?.toString() || "0"}
@@ -54,7 +54,7 @@ export function IncomeTable({
               }
             </TableCell>
 
-            <TableCell className="w-1/4 md:w-1/5 font-medium text-right md:text-left">
+            <TableCell className="w-[35%] lg:w-1/4 md:w-1/5 font-medium text-right md:text-left">
               {transaction.amount}
             </TableCell>
 
