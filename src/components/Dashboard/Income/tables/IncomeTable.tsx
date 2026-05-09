@@ -40,7 +40,7 @@ export function IncomeTable({
           <TableRow
             key={transaction.id}
             ref={transaction.id === lastTxId ? lastElementRef : undefined}
-            className="lg:hover:bg-gray-100 lg:hover:scale-[99%] transition-all duration-150 ease-linear"
+            className="lg:hover:bg-gray-100 lg:hover:scale-[99%] transition-all duration-150 ease-linear truncate"
           >
             <TableCell className="w-[35%] md:w-[30%] lg:w-1/4 text-gray-800">
               {ParseISOStringDate({ date: transaction.date })}
@@ -58,7 +58,7 @@ export function IncomeTable({
               {transaction.amount}
             </TableCell>
 
-            <TableCell className="md:w-full text-right hidden md:flex md:items-center md:justify-end">
+            <TableCell className="md:w-full text-right hidden md:flex md:items-center md:justify-end truncate">
               {transaction.description}
             </TableCell>
           </TableRow>
