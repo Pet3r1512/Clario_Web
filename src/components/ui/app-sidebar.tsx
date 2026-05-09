@@ -40,7 +40,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="mb-5" />
-      <SidebarGroupContent className="px-5 flex-1">
+      <SidebarGroupContent className="px-5 flex-1 z-50">
         <SidebarMenu className="space-y-2.5">
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>

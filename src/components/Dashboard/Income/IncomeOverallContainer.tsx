@@ -43,7 +43,7 @@ export default function IncomeOverallContainer() {
   ];
 
   return (
-    <section className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 max-w-7xl">
+    <section className="flex flex-col md:flex-row items-stretch gap-y-5 md:gap-x-5 max-w-7xl">
       {placeholderData.map((data) => {
         return <Data key={data.name} data={data} />;
       })}

@@ -29,7 +29,7 @@ export default function IncomeTableContainer() {
     data?.pages.flatMap((page) => page.transactions) ?? [];
 
   return (
-    <section className="bg-white rounded-2xl shadow-2xl p-5 h-[70dvh] overflow-auto flex flex-col gap-y-5">
+    <section className="bg-white rounded-2xl shadow-2xl p-5 h-[60dvh] overflow-auto flex flex-col gap-y-5">
       <p className="text-lg lg:text-xl font-bold">Income Sources</p>
       <IncomeTable
         lastElementRef={lastElementRef}
