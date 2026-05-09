@@ -21,49 +21,54 @@ export function IncomeTable({
   const lastTxId = transactions[transactions.length - 1]?.id;
 
   return (
-    <Table className="flex-1 overflow-x-auto">
-      <TableHeader>
-        <TableRow className="text-md lg:text-lg">
-          <TableHead className="w-[35%] md:w-[30%] lg:w-1/4">Date</TableHead>
-          <TableHead className="w-[30%] lg:w-1/2 md:w-[20%]">Source</TableHead>
-          <TableHead className="w-[35%] lg:w-1/4 md:w-1/5 text-right md:text-left">
-            Amount
-          </TableHead>
-          <TableHead className="md:w-full text-right hidden md:flex md:items-center md:justify-end">
-            Description
-          </TableHead>
-        </TableRow>
-      </TableHeader>
+    <div className="w-full overflow-x-auto rounded-lg border">
+      <Table className="min-w-150 md:min-w-full">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="text-xs sm:text-sm md:text-base">
+              Date
+            </TableHead>
 
-      <TableBody>
-        {transactions.map((transaction) => (
-          <TableRow
-            key={transaction.id}
-            ref={transaction.id === lastTxId ? lastElementRef : undefined}
-            className="lg:hover:bg-gray-100 lg:hover:scale-[99%] transition-all duration-150 ease-linear truncate"
-          >
-            <TableCell className="w-[35%] md:w-[30%] lg:w-1/4 text-gray-800">
-              {ParseISOStringDate({ date: transaction.date })}
-            </TableCell>
+            <TableHead className="text-xs sm:text-sm md:text-base">
+              Source
+            </TableHead>
 
-            <TableCell className="w-[30%] lg:w-1/2 md:w-[20%]">
-              {
+            <TableHead className="text-right text-xs sm:text-sm md:text-base">
+              Amount
+            </TableHead>
+
+            <TableHead className="text-right text-base">Description</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {transactions.map((transaction) => (
+            <TableRow
+              key={transaction.id}
+              ref={transaction.id === lastTxId ? lastElementRef : undefined}
+              className="transition-all duration-150 ease-linear lg:hover:bg-gray-100"
+            >
+              <TableCell className="text-xs sm:text-sm md:text-base whitespace-nowrap">
+                {ParseISOStringDate({ date: transaction.date })}
+              </TableCell>
+
+              <TableCell>
                 <CategoryTag
                   categoryId={transaction.categoryId?.toString() || "0"}
                 />
-              }
-            </TableCell>
+              </TableCell>
 
-            <TableCell className="w-[35%] lg:w-1/4 md:w-1/5 font-medium text-right md:text-left">
-              {transaction.amount}
-            </TableCell>
+              <TableCell className="text-right font-medium text-xs sm:text-sm md:text-base whitespace-nowrap">
+                ${transaction.amount}
+              </TableCell>
 
-            <TableCell className="md:w-full text-right hidden md:flex md:items-center md:justify-end truncate">
-              {transaction.description}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+              <TableCell className="text-right max-w-62.5 truncate">
+                {transaction.description}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
