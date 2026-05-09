@@ -8,8 +8,8 @@ const GROWTH_RATE_ICON_SIZE = 16;
 
 export default function Data({ data }: { data: OverallDataType }) {
   return (
-    <Card className="w-full py-3.5 px-5 gap-2.5 shadow-lg lg:hover:shadow-2xl transition-all duration-150 ease-linear">
-      <div className="flex items-center justify-between">
+    <Card className="flex-1 h-full w-full py-3.5 px-5 gap-2.5 shadow-lg lg:hover:shadow-2xl transition-all duration-150 ease-linear">
+      <div className="flex lg:items-center justify-between">
         <p className="lg:text-xl font-extrabold">{data.name}</p>
         {data.icon}
       </div>
