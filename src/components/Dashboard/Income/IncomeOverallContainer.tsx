@@ -26,7 +26,7 @@ export default function IncomeOverallContainer() {
       ),
       isLoading: false,
       isError: false,
-      amount: 0,
+      amount: data?.totalCurrentMonthIncome.totalIncome,
     },
     {
       name: "Highest Income Source",
@@ -53,7 +53,6 @@ export default function IncomeOverallContainer() {
       amount: -10,
     },
   ];
-
   return (
     <section className="flex flex-col md:flex-row items-stretch gap-y-5 md:gap-x-5 max-w-7xl">
       {placeholderData.map((data) => {
