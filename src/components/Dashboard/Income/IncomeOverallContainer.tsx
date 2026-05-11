@@ -1,8 +1,20 @@
 import { ChartNoAxesCombined, Crown, MoveDown } from "lucide-react";
 import { OverallDataType } from "../Overall";
 import Data from "../Overall/Data";
+import { useQuery } from "@tanstack/react-query";
+import useFetchUser from "@/hooks/useFetchUser";
+import getTotalIncomeByMonth from "@/api/users/transactions/getTotalIncomeByMonth";
 
 export default function IncomeOverallContainer() {
+  const userId = useFetchUser();
+
+  const { data } = useQuery({
+    queryKey: ["totalIncome", userId],
+    queryFn: () =>
+      getTotalIncomeByMonth({ userId: userId!, month: 4, year: 2026 }),
+    enabled: !!userId,
+  });
+
   const placeholderData: OverallDataType[] = [
     {
       name: "Total Income",
