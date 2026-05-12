@@ -21,6 +21,9 @@ export default function IncomeOverallContainer() {
     enabled: !!userId,
   });
 
+  const highestTransaction =
+    highestIncomeOfMonth.data?.highestIncomeOfMonth?.highestIncome;
+
   const placeholderData: OverallDataType[] = [
     {
       name: "Total Income",
@@ -30,25 +33,23 @@ export default function IncomeOverallContainer() {
           <MoveDown className="text-green-500" />
         </div>
       ),
-      isLoading: false,
-      isError: false,
-      amount: totalIncomeQuery.data?.totalCurrentMonthIncome.totalIncome,
+      isLoading: totalIncomeQuery.isLoading,
+      isError: totalIncomeQuery.isError,
+      amount: totalIncomeQuery.data?.totalCurrentMonthIncome?.totalIncome ?? 0,
     },
     {
       name: "Highest Income Source",
-      subtitle:
-        highestIncomeOfMonth.data?.highestIncomeOfMonth.allIncomeAmount[0]
-          .category.name,
+      subtitle: highestIncomeOfMonth.isLoading
+        ? ""
+        : (highestTransaction?.category ?? "N/A"),
       icon: (
         <div className="flex items-center justify-center rounded-full p-2.5 bg-yellow-100">
           <Crown className="text-yellow-600" />
         </div>
       ),
-      isLoading: false,
-      isError: false,
-      amount:
-        highestIncomeOfMonth.data?.highestIncomeOfMonth.allIncomeAmount[0]
-          .amount,
+      isLoading: highestIncomeOfMonth.isLoading,
+      isError: highestIncomeOfMonth.isError,
+      amount: highestTransaction?.amount ?? 0,
     },
     {
       name: "Income Growth",
@@ -63,6 +64,7 @@ export default function IncomeOverallContainer() {
       amount: -10,
     },
   ];
+
   return (
     <section className="flex flex-col md:flex-row items-stretch gap-y-5 md:gap-x-5 max-w-7xl">
       {placeholderData.map((data) => {
