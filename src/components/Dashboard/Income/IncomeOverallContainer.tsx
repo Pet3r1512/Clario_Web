@@ -36,7 +36,9 @@ export default function IncomeOverallContainer() {
     },
     {
       name: "Highest Income Source",
-      subtitle: "Salary",
+      subtitle:
+        highestIncomeOfMonth.data?.highestIncomeOfMonth.allIncomeAmount[0]
+          .category.name,
       icon: (
         <div className="flex items-center justify-center rounded-full p-2.5 bg-yellow-100">
           <Crown className="text-yellow-600" />
@@ -44,7 +46,9 @@ export default function IncomeOverallContainer() {
       ),
       isLoading: false,
       isError: false,
-      amount: 0,
+      amount:
+        highestIncomeOfMonth.data?.highestIncomeOfMonth.allIncomeAmount[0]
+          .amount,
     },
     {
       name: "Income Growth",
