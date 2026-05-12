@@ -45,11 +45,18 @@ export function IncomeForm() {
     onError: (error) => {
       console.error(error?.message);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Add New Income Successfully");
-      queryClient.invalidateQueries({
+
+      await queryClient.invalidateQueries({
+        queryKey: ["transactions"],
+      });
+
+      await queryClient.invalidateQueries({
         queryKey: ["balance"],
       });
+
+      setIsOpen(false);
       useBalanceStore.getState().markUpdated(false);
     },
   });
