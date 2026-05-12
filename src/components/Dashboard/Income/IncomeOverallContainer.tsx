@@ -15,13 +15,23 @@ export default function IncomeOverallContainer() {
 
   const totalIncomeQuery = useQuery({
     queryKey: ["totalIncome", userId],
-    queryFn: () => getTotalIncomeByMonth({ userId: userId! }),
+    queryFn: () =>
+      getTotalIncomeByMonth({
+        userId: userId!,
+        month: currentMonth,
+        year: currentYear,
+      }),
     enabled: !!userId,
   });
 
   const highestIncomeOfMonth = useQuery({
     queryKey: ["highestIncomeOfMonth", userId],
-    queryFn: () => getHighestIncomeOfMonth({ userId: userId! }),
+    queryFn: () =>
+      getHighestIncomeOfMonth({
+        userId: userId!,
+        month: currentMonth,
+        year: currentYear,
+      }),
     enabled: !!userId,
   });
 
