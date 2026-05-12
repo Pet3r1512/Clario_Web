@@ -4,15 +4,25 @@ import Data from "../Overall/Data";
 import { useQuery } from "@tanstack/react-query";
 import useFetchUser from "@/hooks/useFetchUser";
 import getTotalIncomeByMonth from "@/api/users/transactions/getTotalIncomeByMonth";
+import getHighestIncomeOfMonth from "@/api/users/analytics/getHighestIncomeOfMonth";
 
 export default function IncomeOverallContainer() {
   const userId = useFetchUser();
 
-  const { data } = useQuery({
+  const totalIncomeQuery = useQuery({
     queryKey: ["totalIncome", userId],
     queryFn: () => getTotalIncomeByMonth({ userId: userId! }),
     enabled: !!userId,
   });
+
+  const highestIncomeOfMonth = useQuery({
+    queryKey: ["highestIncomeOfMonth", userId],
+    queryFn: () => getHighestIncomeOfMonth({ userId: userId! }),
+    enabled: !!userId,
+  });
+
+  const highestTransaction =
+    highestIncomeOfMonth.data?.highestIncomeOfMonth?.highestIncome;
 
   const placeholderData: OverallDataType[] = [
     {
@@ -23,21 +33,23 @@ export default function IncomeOverallContainer() {
           <MoveDown className="text-green-500" />
         </div>
       ),
-      isLoading: false,
-      isError: false,
-      amount: data?.totalCurrentMonthIncome.totalIncome,
+      isLoading: totalIncomeQuery.isLoading,
+      isError: totalIncomeQuery.isError,
+      amount: totalIncomeQuery.data?.totalCurrentMonthIncome?.totalIncome ?? 0,
     },
     {
       name: "Highest Income Source",
-      subtitle: "Salary",
+      subtitle: highestIncomeOfMonth.isLoading
+        ? ""
+        : (highestTransaction?.category ?? "N/A"),
       icon: (
         <div className="flex items-center justify-center rounded-full p-2.5 bg-yellow-100">
           <Crown className="text-yellow-600" />
         </div>
       ),
-      isLoading: false,
-      isError: false,
-      amount: 0,
+      isLoading: highestIncomeOfMonth.isLoading,
+      isError: highestIncomeOfMonth.isError,
+      amount: highestTransaction?.amount ?? 0,
     },
     {
       name: "Income Growth",
@@ -52,6 +64,7 @@ export default function IncomeOverallContainer() {
       amount: -10,
     },
   ];
+
   return (
     <section className="flex flex-col md:flex-row items-stretch gap-y-5 md:gap-x-5 max-w-7xl">
       {placeholderData.map((data) => {
