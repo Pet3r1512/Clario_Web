@@ -4,6 +4,7 @@ import Data from "../Overall/Data";
 import { useQuery } from "@tanstack/react-query";
 import useFetchUser from "@/hooks/useFetchUser";
 import getTotalIncomeByMonth from "@/api/users/transactions/getTotalIncomeByMonth";
+import getHighestIncomeOfMonth from "@/api/users/analytics/getHighestIncomeOfMonth";
 
 export default function IncomeOverallContainer() {
   const userId = useFetchUser();
@@ -11,6 +12,12 @@ export default function IncomeOverallContainer() {
   const totalIncomeQuery = useQuery({
     queryKey: ["totalIncome", userId],
     queryFn: () => getTotalIncomeByMonth({ userId: userId! }),
+    enabled: !!userId,
+  });
+
+  const highestIncomeOfMonth = useQuery({
+    queryKey: ["highestIncomeOfMonth", userId],
+    queryFn: () => getHighestIncomeOfMonth({ userId: userId! }),
     enabled: !!userId,
   });
 
