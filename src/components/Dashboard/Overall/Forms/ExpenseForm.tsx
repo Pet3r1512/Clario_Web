@@ -29,7 +29,7 @@ export function ExpenseForm() {
   const methods = useForm<Transaction>();
   const queryClient = useQueryClient();
 
-  const { register, handleSubmit } = methods;
+  const { register, handleSubmit, reset } = methods;
 
   const mutation = useMutation({
     mutationKey: ["income"],
@@ -65,6 +65,7 @@ export function ExpenseForm() {
     };
 
     mutation.mutate({ ...credentials, ...defaultCredentials });
+    reset();
 
     setIsOpen(false);
   };
