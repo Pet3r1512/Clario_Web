@@ -8,7 +8,7 @@ import getTotalIncomeByMonth from "@/api/users/transactions/getTotalIncomeByMont
 export default function IncomeOverallContainer() {
   const userId = useFetchUser();
 
-  const { data } = useQuery({
+  const totalIncomeQuery = useQuery({
     queryKey: ["totalIncome", userId],
     queryFn: () => getTotalIncomeByMonth({ userId: userId! }),
     enabled: !!userId,
@@ -25,7 +25,7 @@ export default function IncomeOverallContainer() {
       ),
       isLoading: false,
       isError: false,
-      amount: data?.totalCurrentMonthIncome.totalIncome,
+      amount: totalIncomeQuery.data?.totalCurrentMonthIncome.totalIncome,
     },
     {
       name: "Highest Income Source",
