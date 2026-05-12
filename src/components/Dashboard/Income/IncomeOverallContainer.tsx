@@ -6,6 +6,10 @@ import useFetchUser from "@/hooks/useFetchUser";
 import getTotalIncomeByMonth from "@/api/users/transactions/getTotalIncomeByMonth";
 import getHighestIncomeOfMonth from "@/api/users/analytics/getHighestIncomeOfMonth";
 
+const now = new Date();
+const currentMonth = now.getMonth() + 1; // 1-indexed
+const currentYear = now.getFullYear();
+
 export default function IncomeOverallContainer() {
   const userId = useFetchUser();
 
