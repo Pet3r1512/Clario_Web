@@ -37,9 +37,13 @@ export function ExpenseForm() {
     onError: (error) => {
       console.error(error?.message);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Add New Expense Successfully");
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
+        queryKey: ["transactions"],
+      });
+
+      await queryClient.invalidateQueries({
         queryKey: ["balance"],
       });
       useBalanceStore.getState().markUpdated(false);
