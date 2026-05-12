@@ -37,7 +37,7 @@ export function IncomeForm() {
   const methods = useForm<Transaction>();
   const queryClient = useQueryClient();
 
-  const { register, handleSubmit } = methods;
+  const { register, handleSubmit, reset } = methods;
 
   const mutation = useMutation({
     mutationKey: ["income"],
@@ -45,11 +45,18 @@ export function IncomeForm() {
     onError: (error) => {
       console.error(error?.message);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Add New Income Successfully");
-      queryClient.invalidateQueries({
+
+      await queryClient.invalidateQueries({
+        queryKey: ["transactions"],
+      });
+
+      await queryClient.invalidateQueries({
         queryKey: ["balance"],
       });
+
+      setIsOpen(false);
       useBalanceStore.getState().markUpdated(false);
     },
   });
@@ -69,6 +76,8 @@ export function IncomeForm() {
     };
 
     mutation.mutate({ ...credentials, ...defaultCredentials });
+
+    reset();
 
     setIsOpen(false);
   };

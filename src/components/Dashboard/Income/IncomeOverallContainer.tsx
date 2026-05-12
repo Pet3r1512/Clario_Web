@@ -10,8 +10,7 @@ export default function IncomeOverallContainer() {
 
   const { data } = useQuery({
     queryKey: ["totalIncome", userId],
-    queryFn: () =>
-      getTotalIncomeByMonth({ userId: userId!, month: 4, year: 2026 }),
+    queryFn: () => getTotalIncomeByMonth({ userId: userId! }),
     enabled: !!userId,
   });
 
