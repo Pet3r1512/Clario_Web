@@ -1,0 +1,129 @@
+import { SignUpFormType } from "@/lib/types/signupform";
+import { render, screen } from "@testing-library/react";
+import { describe, it, vi } from "vitest";
+import SignUpForm from "./SignUpForm";
+import { userEvent } from "@storybook/testing-library";
+
+vi.mock("@/api/users/auth/SignUpEmail", () => ({
+  default: vi.fn(),
+}));
+
+vi.mock("sonner", () => ({
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+  },
+}));
+
+vi.mock("@tanstack/react-query", () => ({
+  useMutation: vi.fn(({ onSuccess, onError }) => ({
+    mutate: vi.fn(async (credential: SignUpFormType) => {
+      try {
+        const data = {
+          email: credential.email,
+          name: credential.name,
+          password: credential.password,
+          confirmPassword: credential.confirmPassword,
+        };
+        onSuccess?.(data);
+      } catch (err) {
+        onError?.(err);
+      }
+    }),
+    isPending: false,
+  })),
+}));
+
+vi.mock("../SignInViaGoogleBtn", () => ({
+  default: () => <button>Sign In with Google</button>,
+}));
+
+function renderForm(className?: string) {
+  return render(<SignUpForm className={className} />);
+}
+
+describe("Rendering", () => {
+  it("renders the sign up form container", () => {
+    renderForm();
+    expect(screen.getByTestId("signup-form-container")).toBeInTheDocument();
+  });
+
+  it("renders all form fields", () => {
+    renderForm();
+
+    expect(screen.getByRole("email-input")).toBeInTheDocument();
+    expect(screen.getByRole("name-input")).toBeInTheDocument();
+    expect(screen.getByRole("password")).toBeInTheDocument();
+    expect(screen.getByRole("confirmPassword")).toBeInTheDocument();
+  });
+
+  it("renders the submit button with correct label", () => {
+    renderForm();
+
+    expect(screen.getByRole("submit-btn")).toHaveTextContent(
+      "Create New Account",
+    );
+  });
+
+  it("renders the sign in navigation link", () => {
+    renderForm();
+
+    const nav = screen.getByRole("signin-nav");
+    expect(nav).toBeInTheDocument();
+    expect(nav.querySelector("a")).toHaveAttribute("href", "/auth/signin");
+  });
+
+  it("renders the Google sign-in button", () => {
+    renderForm();
+
+    expect(screen.getByText("Sign In with Google")).toBeInTheDocument();
+  });
+
+  it("renders the Calrio brand name", () => {
+    renderForm();
+
+    expect(screen.getByTestId("brand-name")).toBeInTheDocument();
+    expect(screen.getByTestId("brand-name")).toHaveTextContent("Clario");
+  });
+
+  it("applies the className prop to the container", () => {
+    renderForm("my-custom-class");
+
+    expect(screen.getByTestId("signup-form-container")).toHaveClass(
+      "my-custom-class",
+    );
+  });
+});
+
+describe("Password visibility toggle", () => {
+  it("hides password by default", () => {
+    renderForm();
+
+    expect(screen.getByRole("password")).toHaveAttribute("type", "password");
+  });
+
+  it("toggles password visibility when eye icon is clicked", async () => {
+    renderForm();
+
+    const toggle = screen.getByTestId("password-toggle");
+    await userEvent.click(toggle);
+    expect(screen.getByRole("password")).toHaveAttribute("type", "text");
+  });
+
+  it("hides confirm password by default", () => {
+    renderForm();
+
+    expect(screen.getByRole("confirmPassword")).toHaveAttribute(
+      "type",
+      "password",
+    );
+  });
+
+  it("toggles confirm password visibility when eye icon is clicked", async () => {
+    renderForm();
+
+    const toggle = screen.getByTestId("confirm-password-toggle");
+    await userEvent.click(toggle);
+    expect(screen.getByRole("confirmPassword")).toHaveAttribute("type", "text");
+  });
+});
