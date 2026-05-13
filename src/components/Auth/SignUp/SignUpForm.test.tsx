@@ -118,4 +118,12 @@ describe("Rendering", () => {
       "Create New Account",
     );
   });
+
+  it("renders the sign in navigation link", () => {
+    renderForm();
+
+    const nav = screen.getByRole("signin-nav");
+    expect(nav).toBeInTheDocument();
+    expect(nav.querySelector("a")).toHaveAttribute("href", "/auth/signin");
+  });
 });
