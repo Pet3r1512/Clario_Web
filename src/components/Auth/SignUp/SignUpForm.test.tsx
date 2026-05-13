@@ -110,4 +110,12 @@ describe("Rendering", () => {
     expect(screen.getByRole("password")).toBeInTheDocument();
     expect(screen.getByRole("confirmPassword")).toBeInTheDocument();
   });
+
+  it("renders the submit button with correct label", () => {
+    renderForm();
+
+    expect(screen.getByRole("submit-btn")).toHaveTextContent(
+      "Create New Account",
+    );
+  });
 });
