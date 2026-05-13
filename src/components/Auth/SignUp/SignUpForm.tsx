@@ -188,6 +188,7 @@ export default function SignUpForm({ className }: { className?: string }) {
 
                     <button
                       tabIndex={-1}
+                      data-testid="confirm-password-toggle"
                       className="absolute top-1/2 right-2.5 -translate-y-1/2"
                       aria-label={
                         hidePassword ? "Show password" : "Hide password"
