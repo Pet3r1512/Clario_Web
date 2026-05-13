@@ -101,4 +101,13 @@ describe("Rendering", () => {
     renderForm();
     expect(screen.getByTestId("signup-form-container")).toBeInTheDocument();
   });
+
+  it("renders all form fields", () => {
+    renderForm();
+
+    expect(screen.getByRole("email-input")).toBeInTheDocument();
+    expect(screen.getByRole("name-input")).toBeInTheDocument();
+    expect(screen.getByRole("password")).toBeInTheDocument();
+    expect(screen.getByRole("confirmPassword")).toBeInTheDocument();
+  });
 });
