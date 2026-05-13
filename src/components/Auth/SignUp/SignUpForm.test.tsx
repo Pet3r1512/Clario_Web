@@ -57,38 +57,6 @@ function renderForm(className?: string) {
   return render(<SignUpForm className={className} />);
 }
 
-async function fillForm({
-  email = "test@example.com",
-  name = "John Doe",
-  password = "Password1",
-  confirmPassword = "Password1",
-}: Partial<{
-  email: string;
-  name: string;
-  password: string;
-  confirmPassword: string;
-}> = {}) {
-  const user = userEvent.setup();
-
-  if (email) {
-    await user.type(screen.getByRole("email-input"), email);
-  }
-
-  if (name) {
-    await user.type(screen.getByRole("name-input"), name);
-  }
-
-  if (password) {
-    await user.type(screen.getByRole("password"), password);
-  }
-
-  if (confirmPassword) {
-    await user.type(screen.getByRole("confirmPassword"), confirmPassword);
-  }
-
-  return user;
-}
-
 describe("SignUpForm", () => {
   beforeEach(() => {
     vi.clearAllMocks();
