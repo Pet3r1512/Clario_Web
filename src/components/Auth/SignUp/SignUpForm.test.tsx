@@ -1,7 +1,7 @@
 import { SignUpFormType } from "@/lib/types/signupform";
 import { useMutation } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
-import { describe, vi } from "vitest";
+import { describe, it, vi } from "vitest";
 import SignUpForm from "./SignUpForm";
 import { userEvent } from "@storybook/testing-library";
 
@@ -93,5 +93,12 @@ describe("SignUpForm", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     buildMutation();
+  });
+});
+
+describe("Rendering", () => {
+  it("renders the sign up form container", () => {
+    renderForm();
+    expect(screen.getByTestId("signup-form-container")).toBeInTheDocument();
   });
 });
