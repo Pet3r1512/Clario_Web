@@ -163,4 +163,21 @@ describe("Password visibility toggle", () => {
     await userEvent.click(toggle);
     expect(screen.getByRole("password")).toHaveAttribute("type", "text");
   });
+
+  it("hides confirm password by default", () => {
+    renderForm();
+
+    expect(screen.getByRole("confirmPassword")).toHaveAttribute(
+      "type",
+      "password",
+    );
+  });
+
+  it("toggles confirm password visibility when eye icon is clicked", async () => {
+    renderForm();
+
+    const toggle = screen.getByTestId("confirm-password-toggle");
+    await userEvent.click(toggle);
+    expect(screen.getByRole("confirmPassword")).toHaveAttribute("type", "text");
+  });
 });
