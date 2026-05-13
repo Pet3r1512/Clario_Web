@@ -126,4 +126,10 @@ describe("Rendering", () => {
     expect(nav).toBeInTheDocument();
     expect(nav.querySelector("a")).toHaveAttribute("href", "/auth/signin");
   });
+
+  it("renders the Google sign-in button", () => {
+    renderForm();
+
+    expect(screen.getByText("Sign In with Google")).toBeInTheDocument();
+  });
 });
