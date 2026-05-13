@@ -132,4 +132,11 @@ describe("Rendering", () => {
 
     expect(screen.getByText("Sign In with Google")).toBeInTheDocument();
   });
+
+  it("renders the Calrio brand name", () => {
+    renderForm();
+
+    expect(screen.getByTestId("brand-name")).toBeInTheDocument();
+    expect(screen.getByTestId("brand-name")).toHaveTextContent("Clario");
+  });
 });
