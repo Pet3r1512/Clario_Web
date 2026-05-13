@@ -1,7 +1,7 @@
 import { SignUpFormType } from "@/lib/types/signupform";
 import { useMutation } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
-import { vi } from "vitest";
+import { describe, vi } from "vitest";
 import SignUpForm from "./SignUpForm";
 import { userEvent } from "@storybook/testing-library";
 
@@ -88,3 +88,10 @@ async function fillForm({
 
   return user;
 }
+
+describe("SignUpForm", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    buildMutation();
+  });
+});
