@@ -1,5 +1,4 @@
 import { SignUpFormType } from "@/lib/types/signupform";
-import { useMutation } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { describe, it, vi } from "vitest";
 import SignUpForm from "./SignUpForm";
@@ -39,30 +38,9 @@ vi.mock("../SignInViaGoogleBtn", () => ({
   default: () => <button>Sign In with Google</button>,
 }));
 
-const mockUseMutation = useMutation as ReturnType<typeof vi.fn>;
-
-function buildMutation(
-  overrides: Partial<{ isPending: boolean; mutateFn: () => void }> = {},
-) {
-  const mutationFn = overrides.mutateFn ?? vi.fn();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-  mockUseMutation.mockImplementation((_opts: any) => ({
-    mutate: mutationFn,
-    isPending: overrides.isPending ?? false,
-  }));
-  return { mutationFn };
-}
-
 function renderForm(className?: string) {
   return render(<SignUpForm className={className} />);
 }
-
-describe("SignUpForm", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    buildMutation();
-  });
-});
 
 describe("Rendering", () => {
   it("renders the sign up form container", () => {
