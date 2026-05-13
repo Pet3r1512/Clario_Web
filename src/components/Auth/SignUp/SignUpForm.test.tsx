@@ -139,11 +139,20 @@ describe("Rendering", () => {
     expect(screen.getByTestId("brand-name")).toBeInTheDocument();
     expect(screen.getByTestId("brand-name")).toHaveTextContent("Clario");
   });
+
   it("applies the className prop to the container", () => {
     renderForm("my-custom-class");
 
     expect(screen.getByTestId("signup-form-container")).toHaveClass(
       "my-custom-class",
     );
+  });
+});
+
+describe("Password visibility toggle", () => {
+  it("hides password by default", () => {
+    renderForm();
+
+    expect(screen.getByRole("password")).toHaveAttribute("type", "password");
   });
 });
