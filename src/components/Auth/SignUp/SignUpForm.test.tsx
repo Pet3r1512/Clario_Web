@@ -155,4 +155,12 @@ describe("Password visibility toggle", () => {
 
     expect(screen.getByRole("password")).toHaveAttribute("type", "password");
   });
+
+  it("toggles password visibility when eye icon is clicked", async () => {
+    renderForm();
+
+    const toggle = screen.getByTestId("password-toggle");
+    await userEvent.click(toggle);
+    expect(screen.getByRole("password")).toHaveAttribute("type", "text");
+  });
 });
