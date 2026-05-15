@@ -146,9 +146,11 @@ export function IncomeForm() {
                 <DatePicker />
               </Field>
             </FieldGroup>
-            <DialogFooter className="flex-col gap-y-3.5">
+            <DialogFooter className="flex flex-row items-center justify-end gap-x-3.5">
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" className="text-red-500">
+                  Cancel
+                </Button>
               </DialogClose>
               <Button type="submit" className="bg-primary hover:bg-primary/90">
                 {mutation.isPending ? (
