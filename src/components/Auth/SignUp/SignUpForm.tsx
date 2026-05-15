@@ -147,7 +147,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                         pattern: {
                           value: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
                           message:
-                            "Minimum eight characters, at least one letter and one number",
+                            "Minimum 8 characters, at least one letter and one number",
                         },
                       })}
                     />
