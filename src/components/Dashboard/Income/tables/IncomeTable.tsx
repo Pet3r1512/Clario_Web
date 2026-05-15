@@ -37,7 +37,9 @@ export function IncomeTable({
               Amount
             </TableHead>
 
-            <TableHead className="text-right text-base">Description</TableHead>
+            <TableHead className="text-right sm:text-sm md:text-base">
+              Description
+            </TableHead>
           </TableRow>
         </TableHeader>
 
