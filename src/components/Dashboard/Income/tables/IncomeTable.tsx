@@ -10,6 +10,9 @@ import {
 import { TransactionInfo } from "../../Transactions/TransactionsTable/ListByDate";
 import ParseISOStringDate from "@/helpers/parseISOStringData";
 import CategoryTag from "../../Category/CategoryTag";
+import { cn } from "@/lib/utils";
+
+const TABLE_TITLE_FONT_SIZE = "text-xs sm:text-sm md:text-base";
 
 export function IncomeTable({
   transactions,
@@ -25,19 +28,15 @@ export function IncomeTable({
       <Table className="min-w-150 md:min-w-full">
         <TableHeader>
           <TableRow>
-            <TableHead className="text-xs sm:text-sm md:text-base">
-              Date
-            </TableHead>
+            <TableHead className={cn(TABLE_TITLE_FONT_SIZE)}>Date</TableHead>
 
-            <TableHead className="text-xs sm:text-sm md:text-base">
-              Source
-            </TableHead>
+            <TableHead className={cn(TABLE_TITLE_FONT_SIZE)}>Source</TableHead>
 
-            <TableHead className="text-right text-xs sm:text-sm md:text-base">
+            <TableHead className={cn(TABLE_TITLE_FONT_SIZE, "text-right")}>
               Amount
             </TableHead>
 
-            <TableHead className="text-right sm:text-sm md:text-base">
+            <TableHead className={cn(TABLE_TITLE_FONT_SIZE, "text-right")}>
               Description
             </TableHead>
           </TableRow>
