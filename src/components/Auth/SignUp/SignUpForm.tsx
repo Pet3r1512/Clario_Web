@@ -116,12 +116,12 @@ export default function SignUpForm({ className }: { className?: string }) {
                     {...register("name", {
                       required: "Your name is required",
                       minLength: {
-                        value: 3,
+                        value: 2,
                         message: "Name is too short",
                       },
                       pattern: {
                         value: /^[A-Za-z]+(?: [A-Za-z]+)*$/,
-                        message: "Invalid name",
+                        message: "Please enter a valid name using letters only",
                       },
                     })}
                   />
@@ -147,7 +147,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                         pattern: {
                           value: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
                           message:
-                            "Minimum eight characters, at least one letter and one number",
+                            "Minimum 8 characters, at least one letter and one number",
                         },
                       })}
                     />
