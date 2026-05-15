@@ -116,7 +116,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                     {...register("name", {
                       required: "Your name is required",
                       minLength: {
-                        value: 3,
+                        value: 2,
                         message: "Name is too short",
                       },
                       pattern: {
