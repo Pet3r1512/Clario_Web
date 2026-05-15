@@ -22,6 +22,9 @@ export default function IncomeOverallContainer() {
         year: currentYear,
       }),
     enabled: !!userId,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000, // 5 mins
+    gcTime: 30 * 60 * 1000, // 30 mins
   });
 
   const highestIncomeOfMonth = useQuery({
@@ -33,6 +36,9 @@ export default function IncomeOverallContainer() {
         year: currentYear,
       }),
     enabled: !!userId,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000, // 5 mins
+    gcTime: 30 * 60 * 1000, // 30 mins
   });
 
   const highestTransaction =
