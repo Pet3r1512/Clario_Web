@@ -121,7 +121,7 @@ export default function SignUpForm({ className }: { className?: string }) {
                       },
                       pattern: {
                         value: /^[A-Za-z]+(?: [A-Za-z]+)*$/,
-                        message: "Invalid name",
+                        message: "Please enter a valid name using letters only",
                       },
                     })}
                   />
