@@ -152,4 +152,19 @@ describe("Email validation", () => {
       expect(screen.getByText("Invalid email address")).toBeInTheDocument();
     });
   });
+
+  it("accepts a valid email address", async () => {
+    renderForm();
+
+    await userEvent.type(
+      screen.getByRole("email-input"),
+      "exampleofgoodemail@email.com",
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Invalid email address"),
+      ).not.toBeInTheDocument();
+    });
+  });
 });
