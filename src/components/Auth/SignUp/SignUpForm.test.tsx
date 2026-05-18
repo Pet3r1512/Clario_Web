@@ -1,5 +1,5 @@
 import { SignUpFormType } from "@/lib/types/signupform";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, it, vi } from "vitest";
 import SignUpForm from "./SignUpForm";
 import { userEvent } from "@storybook/testing-library";
@@ -125,5 +125,46 @@ describe("Password visibility toggle", () => {
     const toggle = screen.getByTestId("confirm-password-toggle");
     await userEvent.click(toggle);
     expect(screen.getByRole("confirmPassword")).toHaveAttribute("type", "text");
+  });
+});
+
+describe("Email validation", () => {
+  it("shows error when email is empty on submit", async () => {
+    renderForm();
+
+    fireEvent.submit(screen.getByRole("form"));
+
+    await waitFor(() => {
+      expect(screen.getByText("Email is required")).toBeInTheDocument();
+    });
+  });
+
+  it("shows error for invalid email format", async () => {
+    renderForm();
+
+    await userEvent.type(
+      screen.getByRole("email-input"),
+      "example-of-bad-email",
+    );
+    fireEvent.submit(screen.getByRole("form"));
+
+    await waitFor(() => {
+      expect(screen.getByText("Invalid email address")).toBeInTheDocument();
+    });
+  });
+
+  it("accepts a valid email address", async () => {
+    renderForm();
+
+    await userEvent.type(
+      screen.getByRole("email-input"),
+      "exampleofgoodemail@email.com",
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Invalid email address"),
+      ).not.toBeInTheDocument();
+    });
   });
 });
