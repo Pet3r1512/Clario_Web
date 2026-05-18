@@ -138,4 +138,18 @@ describe("Email validation", () => {
       expect(screen.getByText("Email is required")).toBeInTheDocument();
     });
   });
+
+  it("shows error for invalid email format", async () => {
+    renderForm();
+
+    await userEvent.type(
+      screen.getByRole("email-input"),
+      "example-of-bad-email",
+    );
+    fireEvent.submit(screen.getByRole("form"));
+
+    await waitFor(() => {
+      expect(screen.getByText("Invalid email address")).toBeInTheDocument();
+    });
+  });
 });
