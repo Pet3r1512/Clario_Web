@@ -1,5 +1,5 @@
 import { SignUpFormType } from "@/lib/types/signupform";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, it, vi } from "vitest";
 import SignUpForm from "./SignUpForm";
 import { userEvent } from "@storybook/testing-library";
@@ -125,5 +125,17 @@ describe("Password visibility toggle", () => {
     const toggle = screen.getByTestId("confirm-password-toggle");
     await userEvent.click(toggle);
     expect(screen.getByRole("confirmPassword")).toHaveAttribute("type", "text");
+  });
+});
+
+describe("Email validation", () => {
+  it("shows error when email is empty on submit", async () => {
+    renderForm();
+
+    fireEvent.submit(screen.getByRole("form"));
+
+    await waitFor(() => {
+      expect(screen.getByText("Email is required")).toBeInTheDocument();
+    });
   });
 });
